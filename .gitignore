@@ -3,3 +3,6 @@
 
 # ignore all .exe files
 *.exe
+
+# ignore all files in any directory named Makefile
+**/Makefile
