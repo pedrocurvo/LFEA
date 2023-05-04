@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 file1 = open('valoreshist_test_OneShot.txt', 'r')
 Lines = file1.readlines()
