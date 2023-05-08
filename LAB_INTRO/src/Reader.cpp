@@ -8,7 +8,7 @@ using namespace std;
 Reader::Reader(string filename, int N){
     ifstream F(filename);
     string s;
-    for (int i = 0; i < 2; i++){
+    for (int i = 0; i < 1; i++){
         getline(F, s);
     }
     int col = 0;
