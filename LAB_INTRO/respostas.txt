@@ -19,6 +19,17 @@ Trigger do osciloscópio:
     o osciloscópio mostra um sinal quando a barra de trigger cruza este sinal: temos de move ro botão de trigger até cruzar o sinal e 
     é aí que o sinal aparece
 
+Pulser:
+    - ligado ao osciloscópio - liga-se à entrada sem pinta
+    - ligado ao amplificador e depois ao PC - liga-se à entrada com pinta
+    - ligar o pulser no PC: abrir a gestão de dispositivos e ver qual a entrada COM# a que o pulser está ligado; abrir o putty
+    e preencher com as especificações das instruções;
+
+Program de aquisição Multicanal (computador 2WW)
+    - mudar a escala: setas e enter (em escala logaritmíca a gaussiana aparece como uma parábola invertida e^(-x^2))
+    - limpar os dados: ctrl + F2
+    - iniciar ou parar medição: F1
+
 Questões: 
     Se utilizar o pulso sem amplificador, qual a taxa máxima para que a amplitude
     dos pulsos não seja alterada em mais de 3%?
