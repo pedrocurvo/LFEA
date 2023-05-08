@@ -18,6 +18,7 @@ Questões:
     dos pulsos não seja alterada em mais de 3%?
     
     E com o uso do amplificador?
+        -
 
     Qual o significado da intensidade da luz? 
         A Intensidade da luz está relacionada com o número de eletrões que atingem
