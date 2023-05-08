@@ -1,0 +1,26 @@
+2. Visualização de Sinais no Osciloscópio
+
+Amplitude do Pulse:
+    0.4V
+Caracterize Temporalmente o Pulso:
+    20ms taxa temporal, exponencial negativa (ver quando o pulso passa a metade)
+
+Entrada Unipolar e Bipolar:
+    Amplitude do Pulso:
+        Unipolar: 1.0V
+        Bipolar: 0.08V
+    Caracterize Temporalmente o Pulso:
+        Unipolar: 20ms taxa temporal, exponencial negativa (ver quando o pulso passa a metade)
+        Bipolar: 20ms taxa temporal, exponencial negativa (ver quando o pulso passa a metade)
+
+Questões: 
+    Se utilizar o pulso sem amplificador, qual a taxa máxima para que a amplitude
+    dos pulsos não seja alterada em mais de 3%?
+    
+    E com o uso do amplificador?
+        -
+
+    Qual o significado da intensidade da luz? 
+        A Intensidade da luz está relacionada com o número de eletrões que atingem
+        a camada de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, 
+        maior a intensidade da luz.
