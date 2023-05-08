@@ -4,13 +4,10 @@ import numpy as np
 file1 = open('valoreshist_test_OneShot.txt', 'r')
 Lines = file1.readlines()
 
-x = []
 sum = 0
 cardinal = 0
 
-for values in Lines: 
-    x.append(float(values))
-
+x = [float(values) for values in Lines]
 for values in Lines:
     sum += float(values)
     cardinal += 1

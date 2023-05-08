@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cmath>
 #include <string>
+#include <vector>
 using namespace std;
 
 void root_example() {
