@@ -1,3 +1,4 @@
+# Valores amplitude do pulso com distribuição gaussiana
 940
 1124
 1027
