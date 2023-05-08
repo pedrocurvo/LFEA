@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from math import sqrt
 
-file1 = open('valoreshist_test_OneShot.txt', 'r')
+file1 = open('src/valoreshist_test_OneShot.txt', 'r')
 Lines = file1.readlines()
 
 sum = 0
