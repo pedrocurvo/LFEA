@@ -13,6 +13,12 @@ Entrada Unipolar e Bipolar:
         Unipolar: 20ms taxa temporal, exponencial negativa (ver quando o pulso passa a metade)
         Bipolar: 20ms taxa temporal, exponencial negativa (ver quando o pulso passa a metade)
 
+Trigger do osciloscópio:
+    quando o trigger está pressionado (botão para dentro), o sinal começa a ser mostrado para valores acima da amplitude de trigger; 
+    Se o trigger não estiver pressionado (botão de trigger para fora), o osciloscópio começa a mostrar o sinal;
+    o osciloscópio mostra um sinal quando a barra de trigger cruza este sinal: temos de move ro botão de trigger até cruzar o sinal e 
+    é aí que o sinal aparece
+
 Questões: 
     Se utilizar o pulso sem amplificador, qual a taxa máxima para que a amplitude
     dos pulsos não seja alterada em mais de 3%?
