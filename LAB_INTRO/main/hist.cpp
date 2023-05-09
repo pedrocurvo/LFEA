@@ -21,7 +21,7 @@ int main(){
     
     TApplication app("app", NULL, NULL);
     TCanvas C("C", "Histograma", 1200, 800);
-	
+
 	int n_bin=20; //INSERIR
 	double minimo=*min_element(data.begin(), data.end()); //inserir canal minimo
 	double maximo=*max_element(data.begin(), data.end()); // inserir o canal maximo 
@@ -33,7 +33,7 @@ int main(){
 	}
     h.SetFillColor(kBlue-8);
 	h.Draw();
-
+    cout << "5" << endl;
 	TF1 f("f","gaus",minimo, maximo);
 	h.Fit("f");
 	f.Draw("same");
