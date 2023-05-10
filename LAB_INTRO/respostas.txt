@@ -94,4 +94,11 @@ Questões (Geiger-Muller):
     O detetor regista a radiação ambiente, a qual provoca um erro sistemático na nossa medição, pelo 
     que é necessário ser feita uma correção.
     - Qual a incerteza na taxa de fundo numa aquisição de 60 segundos? E de 600 segundos?
-    - Como poderá utilizar as fontes para verificar que realmente o detector satura?
+    Num minuto obtivemos 35 counts e em 10 minutos obtivemos 310 counts. A origem destas contagens são os declínios radioativos pelo
+    que sabemos que descrevem uma distribuição de Poisson, pelo que o desvio(erro da medição) é a raiz do valor médio.
+    Pra 1 minuto o erro é aproximadamente 6 e para 10 minutos o erro é sqrt(310). Para comparar os dois erros dividimos o 2º por 10, 
+    para obter o erro por minuto.
+    - Como poderá utilizar as fontes para verificar que realmente o detetor satura?
+    Voltámos a ver o número de counts mas agora com a fonte encostada, tendo obtido 41529 counts para 1 minuto. 
+    O ângulo sólido varia com o quadrado da distância, por isso queremos ver se o número de contagens varia do mesmo modo. 
+    Para uma fonte muito próxima os efeitos geométricos importam.
