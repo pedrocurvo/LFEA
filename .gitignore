@@ -6,3 +6,5 @@
 
 # ignore all files in any directory named Makefile
 **/Makefile
+# ignore all files in the directory .vscode
+/.vscode
