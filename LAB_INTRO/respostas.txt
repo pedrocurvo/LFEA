@@ -37,6 +37,26 @@ Program de aquisição Multicanal (computador 2WW)
     que a amplitude medida em volts no oscilóscopio corresponde ao número de channels medido no PC: esta é 
     calibração.
 
+Detetor de Geiger:
+    - o detetor ativo é um gás raro: deteta interações
+    - partículas carregadas atravessam o gás e ionizam-no: consoante o campo elétrico, as partículas ionizadas podem 
+    ou não ter energia suficiente para ionizar outras partículas que as rodeiem
+    - aplico um campo elétrico aplicando uma diferença de potencial - ligo um cabo de alta tensão ao
+    detetor que está ligada a uma escala de alta tensão em kilovolts;
+    - Regimes do detetor: inicialmente só as partículas ionizadas são detetadas, mas à medida que o campo elétrico 
+    ao qual o detetor está sujeito vai aumentando, as partículas ionizadas detetadas aumentam linearmente até
+    se atingir a saturação no detetor: detetam-se mais partículas à medida que o campo aumenta porque as partículas 
+    ionizadas pelas partículas carregadas que atravessam o gás têm energia suficiente para ionizar as que as 
+    rodeiam. A fonte de partículas ionizadas é uma fonte radioativa que emite eletrões 
+    - para detetar o sinal ligamos o detetor diretamente ao osciloscópio
+    - fonte de tálio: emissor Beta puro (normalmente emissores ebta são também emissores gamma na desexcitação)
+
+    Montagem:
+    - em frente ao detetor Geiger-Muller colocar a fonte radioativa de tálio (moeda) num pequeno suporte
+    - o Geiger-Muller tem duas aberturas: numa liga-se o cabo de alta de tensão e na outra um cabo para ligar ao osciloscópio
+    - ligar o cabo de alta tensão (cabo vermelho) a uma das fontes de alta tensão 
+    - ligar o outro cabo ao ch1 do osciloscópio
+
 Questões: 
     Se utilizar o pulso sem amplificador, qual a taxa máxima para que a amplitude
     dos pulsos não seja alterada em mais de 3%?
@@ -48,3 +68,9 @@ Questões:
         A Intensidade da luz está relacionada com o número de eletrões que atingem
         a camada de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, 
         maior a intensidade da luz.
+
+Questões (Geiger-Muller):
+    -Identifique as diferentes componentes do sistema. 
+      Temos uma fonte de alta tensão, um osciloscópio, 2 cabos de alta tensão, um detetor Geiger-Muller, 
+      uma fonte radioativa de tálio e um suporte para a fonte
+    - 
