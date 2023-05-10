@@ -7,4 +7,4 @@
 # ignore all files in any directory named Makefile
 **/Makefile
 # ignore all files in the directory .vscode
-c_cpp_properties.json
+**/c_cpp_properties.json
