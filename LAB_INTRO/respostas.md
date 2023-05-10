@@ -75,7 +75,7 @@ Questões:
         a camada de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, 
         maior a intensidade da luz.
 
-Questões (Geiger-Muller):
+**Questões (Geiger-Muller)**:
     -Identifique as diferentes componentes do sistema. 
       Temos uma fonte de alta tensão, um osciloscópio, um cabo de alta tensão, um cabo de sinal, um detetor Geiger-Muller, 
       uma fonte radioativa de tálio e um suporte para a fonte
