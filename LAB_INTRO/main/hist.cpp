@@ -11,8 +11,8 @@ using namespace std;
 #include "TH1D.h"
 
 int main(){
-    string filename = "valoreshist_test_OneShot.dat";
-    Reader RR(filename, 1);
+    string filename = "valoreshist_test_OneShot.txt";
+    Reader RR(filename, 0, 1);
     vector<vector<double>> rawdata = RR.GetData();
     vector<double> data;
     for(int i=0; i < rawdata.size(); i++){

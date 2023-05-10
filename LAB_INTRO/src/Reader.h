@@ -20,11 +20,12 @@ class Reader{
         Constructor arguments:
 
                 String containing the absolute path of the file to be read
-		Integer specifying the number of elements in each line
+		        Integer specifying the number of line to skip before the data
+                Integer specifying the number of elements in each line
     */
 
     public:
-        Reader(string, int);
+        Reader(string, int, int);
         vector<vector<double>> GetData(void);
         /*
 	        Method to retrieve 

@@ -5,10 +5,10 @@
 #include <fstream>
 using namespace std;
 
-Reader::Reader(string filename, int N){
+Reader::Reader(string filename, int n, int N){
     ifstream F(filename);
     string s;
-    for (int i = 0; i < 1; i++){
+    for (int i = 0; i < n; i++){
         getline(F, s);
     }
     int col = 0;

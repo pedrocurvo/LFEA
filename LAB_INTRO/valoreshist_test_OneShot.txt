@@ -1,7 +1,3 @@
-<<<<<<< HEAD:LAB_INTRO/valoreshist_test_OneShot.dat
-# Valores da amplitude do pulso com distribuição Gaussiana
-=======
->>>>>>> 992e45b7f99181e4cca19ad6c85c543e60ebef8e:LAB_INTRO/src/valoreshist_test_OneShot.txt
 940
 1124
 1027
