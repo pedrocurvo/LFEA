@@ -50,12 +50,18 @@ Detetor de Geiger:
     rodeiam. A fonte de partículas ionizadas é uma fonte radioativa que emite eletrões 
     - para detetar o sinal ligamos o detetor diretamente ao osciloscópio
     - fonte de tálio: emissor Beta puro (normalmente emissores ebta são também emissores gamma na desexcitação)
+    - fonte radioativa emite eletrões -> eletrões/partículas carregadas entram no detetor gasoso -> os átomos do gás nobre que estão no 
+     detetor são ionizados -> consoante a voltagem do detetor pode haver uma ionização parcial ou total (saturado) -> no osciloscópio
+     quando o detetor está saturado todos os picos negativos têm a mesma amplitude (se tiverem picos diferentes é porque ainda não está saturado)
+    - na saturação todas as partículas do gás estão ionizadas e o efeito da alta voltagem é fazer com que as partículas ionizadas ionizem as restantes
 
     Montagem:
     - em frente ao detetor Geiger-Muller colocar a fonte radioativa de tálio (moeda) num pequeno suporte
     - o Geiger-Muller tem duas aberturas: numa liga-se o cabo de alta de tensão e na outra um cabo para ligar ao osciloscópio
     - ligar o cabo de alta tensão (cabo vermelho) a uma das fontes de alta tensão 
     - ligar o outro cabo ao ch1 do osciloscópio
+    - posteriormente ligar o detetor a um amplificador (caixa in/out) e o amplificador ao osciloscópio; cabo do detetor ligado 
+     à abertura in e cabo ligado da abertura out ao osciloscópio ch1
 
 Questões: 
     Se utilizar o pulso sem amplificador, qual a taxa máxima para que a amplitude
@@ -71,6 +77,21 @@ Questões:
 
 Questões (Geiger-Muller):
     -Identifique as diferentes componentes do sistema. 
-      Temos uma fonte de alta tensão, um osciloscópio, 2 cabos de alta tensão, um detetor Geiger-Muller, 
+      Temos uma fonte de alta tensão, um osciloscópio, um cabo de alta tensão, um cabo de sinal, um detetor Geiger-Muller, 
       uma fonte radioativa de tálio e um suporte para a fonte
-    - 
+    - Identifique o Plateau e caracterize-o.
+     O Plateau corresponde à zona de saturação. Para identifiar o Plateau fomos aumentando lentamente a tensão até encontrar
+     o valor a partir do qual a amplitude do pico já não aumentava, isto é, até encontrar o valor de tensão a partir do qual
+     o sistema fica saturado. Existe um patamar de saturação na qual a amplitude não varia, sendo que a amplitude  volta a aumentar para valores
+     superiores ao fim do patamar. A tensão de início do patamar registada foi 690V e a tensão do fim foi 860V.
+    - Qual a importância deste patamar?
+    
+    Escolhemos 760V como a tensão a utilizar (aproximadamente metade do patamar). 
+
+    -Qual a relação entre o sinal no osciloscópio e o número de contagens?
+     O número de contagens corresponde ao número de vezes que a imagem pisca no osciloscópio.
+    - Qual o sinal que o detector regista na ausência de uma fonte? O que significa? É necessário efectuar uma correcção?
+    O detetor regista a radiação ambiente, a qual provoca um erro sistemático na nossa medição, pelo 
+    que é necessário ser feita uma correção.
+    - Qual a incerteza na taxa de fundo numa aquisição de 60 segundos? E de 600 segundos?
+    - Como poderá utilizar as fontes para verificar que realmente o detector satura?
