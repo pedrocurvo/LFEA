@@ -37,7 +37,7 @@ Program de aquisição Multicanal (computador 2WW)
     que a amplitude medida em volts no oscilóscopio corresponde ao número de channels medido no PC: esta é 
     calibração.
 
-Detetor de Geiger:
+**Detetor de Geiger:**
     - o detetor ativo é um gás raro: deteta interações
     - partículas carregadas atravessam o gás e ionizam-no: consoante o campo elétrico, as partículas ionizadas podem 
     ou não ter energia suficiente para ionizar outras partículas que as rodeiem
