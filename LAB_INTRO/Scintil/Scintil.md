@@ -9,7 +9,8 @@ ola
 
 ## Questões (Detetor de Cintilação)
 - Esboce o esquema do detetor, identificando as componentes principais.
-![Preview Image](/png/Esquema.png)
+![Esquema Cintilador](LAB_Intro/Scintil/png/Esquema.png)
+
 - Procedimento experimental
     - Colocamos o césio perto do cristal do cintilador
     - ligamos a fonte de alta tensão ao detetor
@@ -45,3 +46,5 @@ Para calibrar o sistema vamos recorrer ao pulser para fazer uma regressão linea
 
 O que é que o césio dá?
 >cancro
+
+$\tau \tau$ no rabinho
