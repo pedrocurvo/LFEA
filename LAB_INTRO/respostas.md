@@ -105,10 +105,17 @@ Questões:
 
 Questões (Detetor de Cintilação):
     -Esboce o esquema do detetor, identificando as componentes principais.
-    o detetor de sintilação é constituido por três secções: numa das extremidades temos o cristal que está emvolto de uma camada de metal
-    emissora
+    colocamos o césio perto do cristal do cintilador - ligamos a fonte de alta tensão ao detetor - ligamos o detetor ao amplificador e o amplificador ao osciloscópio - em seguida ligamos um cabo T à entrada do osciloscópio de modo a poder receber o sinal proveniente do amplificador e simultaneamente envia-lo para o computador. de modo a obter o espetro de emissão do césio todo nos 1024 canais do sistema de aquisição, colocamos o amplificar num fator de 10;
+    - queremos establecer uma relação unívoca entre a energia dos eletrões no detetor e o número de canais do sistema de aquisição: calibração do sistema - para calibrar o sistema vamos recorrer ao pulser para fazer uma regressão linear entre o número de canais e a energia do pulso incidente - assim posso estimar qual é a energia correspondente a qualquer ponto - o valor de calibração é o pico dos raios gamma que está tabelado (usamos o tabelado para calibrar)
+    - Calibração com o pulser: medimos o numero de channels correspondentes a cinco pulses diferentes: fizemos o ajuste linear recoorrendo ao python e sabendo que o ponto de calibração é o do centróide visto anteriormente =(538,67 ch;661,657 keV);
+    - o numero de eletrões resultante de cada choque de fotões (com a mesma energia) no cristal segue uma distribuição de poisson - o conjunto de todos os eletrões que chocam com o cristal segue uma distribuição normal daí que facamos o ajus te de uma gaussiana aos picos de energia observados no sistema de aquisição (PC)
+    - o espetro de energia tem uma gaussiana na radiação gamma;
     -Identifique os parâmetros de operação do detetor.
      Os parâmetros são a alta tensão e o pré-amplificador (não vamos mexes neste último)
+
+     -Analise os espectros identificando e caracterizando as diferentes estruturas que possam estar presentes.
+     Conseguimos ver um total de 3 picos. Inicialmente existe o pico mais alto de todos (o qual tem menos energia dado que está no início do eixo dos x). Este pico corresponde aos raios X emitidos pela fonte de césio. De seguida, vê-se o patamar de compton, isto é, uma parte aproximadamente reta onde também se verifica a existência de emissão de radiação gama. No meio do patamar existe um pequeno pico, associado à emissão de radiação gama. Após o patamar de compton temos o maior pico, o qual corresponde também à emissão de radiação gama (neste caso a mais energética).
+
 
 Funcionamento do detetor de sintilação:
      - aceleramos os eletrões com campos elétricos
