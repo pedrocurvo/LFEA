@@ -19,3 +19,7 @@ print(f"slope: {model.coef_}")
 
 f = model.intercept_ + model.coef_ * 26.65
 print(f"Erro sistemático: {f-32} kEv")
+
+# Energy 2
+f = model.intercept_ + model.coef_ * 176
+print(f)
