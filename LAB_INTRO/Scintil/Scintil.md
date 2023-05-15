@@ -8,18 +8,19 @@ ola
 
 
 ## Questões (Detetor de Cintilação)
-- Esboce o esquema do detetor, identificando as componentes principais.
+
+### Esboce o esquema do detetor, identificando as componentes principais.
 ![Esquema Cintilador](/png/Esquema.png)
 
-- Procedimento experimental
-    - Colocamos o césio perto do cristal do cintilador
-    - ligamos a fonte de alta tensão ao detetor
-    - ligamos o detetor ao amplificador e o amplificador ao osciloscópio 
-    - em seguida ligamos um cabo T à entrada do osciloscópio de modo a poder receber o sinal proveniente do amplificador e simultaneamente envia-lo para o computador. de modo a obter o espetro de emissão do césio todo nos 1024 canais do sistema de aquisição, colocamos o amplificar num fator de 10;
+### Procedimento experimental
+- Colocamos o césio perto do cristal do cintilador
+- Ligamos a fonte de alta tensão ao detetor
+- Ligamos o detetor ao amplificador e o amplificador ao osciloscópio 
+- Em seguida, ligamos um cabo T à entrada do osciloscópio de modo a poder receber o sinal proveniente do amplificador e simultaneamente envia-lo para o computador. de modo a obter o espetro de emissão do césio todo nos 1024 canais do sistema de aquisição, colocamos o amplificar num fator de 10;
+- queremos establecer uma relação unívoca entre a energia dos eletrões no detetor e o número de canais do sistema de aquisição:
 
-- queremos establecer uma relação unívoca entre a energia dos eletrões no detetor e o número de canais do sistema de aquisição: 
-## Calibração do sistema 
-Para calibrar o sistema vamos recorrer ao pulser para fazer uma regressão linear entre o número de canais e a energia do pulso incidente - assim posso estimar qual é a energia correspondente a qualquer ponto - o valor de calibração é o pico dos raios gamma que está tabelado (usamos o tabelado para calibrar)
+### Calibração do sistema 
+Para calibrar o sistema vamos recorrer ao _pulser_ para fazer uma regressão linear entre o número de canais e a energia do pulso incidente - assim posso estimar qual é a energia correspondente a qualquer ponto - o valor de calibração é o pico dos raios $\gamma$ que está tabelado (usamos o tabelado para calibrar)
 ### Calibração com o pulser
 - Medimos o numero de channels correspondentes a cinco pulses diferentes: fizemos o ajuste linear recoorrendo ao python e sabendo que o ponto de calibração é o do centróide visto anteriormente =(538,67 ch;661,657 keV);
 - o numero de eletrões resultante de cada choque de fotões (com a mesma energia) no cristal segue uma distribuição de poisson - o conjunto de todos os eletrões que chocam com o cristal segue uma distribuição normal daí que facamos o ajus te de uma gaussiana aos picos de energia observados no sistema de aquisição (PC) - a incerteza da média (o erro) é a média(sigma) a dividir por raiuz de N (n de medições)
