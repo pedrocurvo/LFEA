@@ -113,6 +113,10 @@ Questões (Detetor de Cintilação):
     -Identifique os parâmetros de operação do detetor.
      Os parâmetros são a alta tensão e o pré-amplificador (não vamos mexes neste último)
 
+     -Analise os espectros identificando e caracterizando as diferentes estruturas que possam estar presentes.
+     Conseguimos ver um total de 3 picos. Inicialmente existe o pico mais alto de todos (o qual tem menos energia dado que está no início do eixo dos x). Este pico corresponde aos raios X emitidos pela fonte de césio. De seguida, vê-se o patamar de compton, isto é, uma parte aproximadamente reta onde também se verifica a existência de emissão de radiação gama. No meio do patamar existe um pequeno pico, associado à emissão de radiação gama. Após o patamar de compton temos o maior pico, o qual corresponde também à emissão de radiação gama (neste caso a mais energética).
+
+
 Funcionamento do detetor de sintilação:
      - aceleramos os eletrões com campos elétricos
      - a fonte emite fotões mais ou menos energéticos - no cristal do detetor ocorre efeito fotoelétrico devido à metal coat 
