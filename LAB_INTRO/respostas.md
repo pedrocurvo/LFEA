@@ -102,3 +102,23 @@ Questões (Geiger-Muller):
     Voltámos a ver o número de counts mas agora com a fonte encostada, tendo obtido 41529 counts para 1 minuto. 
     O ângulo sólido varia com o quadrado da distância, por isso queremos ver se o número de contagens varia do mesmo modo. 
     Para uma fonte muito próxima os efeitos geométricos importam.
+
+Questões (Detetor de Cintilação):
+    -Esboce o esquema do detetor, identificando as componentes principais.
+    o detetor de sintilação é constituido por três secções: numa das extremidades temos o cristal que está emvolto de uma camada de metal
+    emissora
+    -Identifique os parâmetros de operação do detetor.
+     Os parâmetros são a alta tensão e o pré-amplificador (não vamos mexes neste último)
+
+Funcionamento do detetor de sintilação:
+     - aceleramos os eletrões com campos elétricos
+     - a fonte emite fotões mais ou menos energéticos - no cristal do detetor ocorre efeito fotoelétrico devido à metal coat 
+     na qual o metal está envolto e há emissão de eletrões (foteletrões) que são tanto mais energéticos consoante os fotões que
+     lhes deram origem - em seguida os eletrões entram no fotomultiplicador onde atravessam diversas placas sujeitas a uma diferença de 
+     potencial - entre as placas existe um campo eleétrico que acelera os eletrões de tal modo que quando eles embatem nas placas 
+     seguintes têm energia suficiente para retirar mais eletrões - no fim atinge o detetor e são detetatos eletrões em diferentes 
+     quantidades consoante as suas energias;
+
+
+
+O que é que o césio dá? cancro
