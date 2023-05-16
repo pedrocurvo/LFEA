@@ -3,7 +3,7 @@
 ## Questões
 
 ### Esboce o esquema do detetor, identificando as componentes principais.
-![Esquema Cintilador](/png/Esquema.png)
+![Esquema Cintilador](LAB_Intro/png/Esquema.png)
 
 ### Procedimento experimental
 - Colocamos o césio perto do cristal do cintilador
