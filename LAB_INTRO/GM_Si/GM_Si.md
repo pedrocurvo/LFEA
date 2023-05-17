@@ -16,7 +16,7 @@
 - Plateau do detetor GM: existe um intervalo de voltagens (normalmente entre 750 e 950 Volts) no qual o aumento da tensão à qual o detetor está sujeito não provoca um aumento das partículas ionizadas - ou seja, não se observa um aumento de amplitude no sinal do osciloscópio proveniente do detetor;
 - Na saturação di detetor, todas as partículas do gás estão ionizadas e o efeito da alta voltagem é fazer com que as partículas ionizadas ionizem as restantes;
 
-## Montagem
+## Montagem detetor GM
 - em frente ao detetor Geiger-Muller colocar a fonte radioativa de tálio (moeda) num pequeno suporte
 - o Geiger-Muller tem duas aberturas: numa liga-se o cabo de alta de tensão e na outra um cabo para ligar ao osciloscópio
 - ligar o cabo de alta tensão (cabo vermelho) a uma das fontes de alta tensão 
@@ -31,7 +31,7 @@
 > ...
 
 ### Qual o significado da intensidade da luz? 
-> A Intensidade da luz está relacionada com o número de eletrões que atingem a camada de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, maior a intensidade da luz.
+> A Intensidade da luz está relacionada com o número de eletrões que atingem as placas de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, maior a intensidade da luz.
 
 ### Identifique as diferentes componentes do sistema. 
 > Temos uma fonte de alta tensão, um osciloscópio, um cabo de alta tensão, um cabo de sinal, um detetor Geiger-Muller, 
