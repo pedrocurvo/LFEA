@@ -1,27 +1,24 @@
 # Introdução ao Detetor de Silício e Geiger-Muller
 
 ## Detetor de Silício
+<<<<<<< HEAD
+ 
 
-O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condutor. 
 
-
+=======
+- 
+>>>>>>> 06c301d8cd35d8a99310960ad5eae3ac6b952e0f
 ## Detetor Geiger-Muller
 - o detetor ativo é um gás raro: deteta interações
- - partículas carregadas atravessam o gás e ionizam-no: consoante o campo elétrico, as partículas ionizadas podem 
+- Partículas carregadas atravessam o gás e ionizam-no: consoante o campo elétrico existente dentro do detetor, as partículas ionizadas podem 
     ou não ter energia suficiente para ionizar outras partículas que as rodeiem
-- aplico um campo elétrico aplicando uma diferença de potencial - ligo um cabo de alta tensão ao
-    detetor que está ligada a uma escala de alta tensão em kilovolts;
-- Regimes do detetor: inicialmente só as partículas ionizadas são detetadas, mas à medida que o campo elétrico 
-    ao qual o detetor está sujeito vai aumentando, as partículas ionizadas detetadas aumentam linearmente até
-    se atingir a saturação no detetor: detetam-se mais partículas à medida que o campo aumenta porque as partículas 
-    ionizadas pelas partículas carregadas que atravessam o gás têm energia suficiente para ionizar as que as 
-    rodeiam. A fonte de partículas ionizadas é uma fonte radioativa que emite eletrões 
-- para detetar o sinal ligamos o detetor diretamente ao osciloscópio
-- fonte de tálio: emissor Beta puro (normalmente emissores ebta são também emissores gamma na desexcitação)
-- fonte radioativa emite eletrões -> eletrões/partículas carregadas entram no detetor gasoso -> os átomos do gás nobre que estão no 
-     detetor são ionizados -> consoante a voltagem do detetor pode haver uma ionização parcial ou total (saturado) -> no osciloscópio
-     quando o detetor está saturado todos os picos negativos têm a mesma amplitude (se tiverem picos diferentes é porque ainda não está saturado)
-- na saturação todas as partículas do gás estão ionizadas e o efeito da alta voltagem é fazer com que as partículas ionizadas ionizem as restantes
+- O campo elétrico dentro do detetor existe devido a uma diferença de potencial - ligo um cabo de alta tensão ao detetor que está ligado a uma escala de alta tensão em kilovolts;
+- Regimes do detetor: inicialmente só as partículas ionizadas são detetadas, mas à medida que o campo elétrico ao qual o detetor está sujeito vai aumentando (aumento da alta tensão), as partículas ionizadas detetadas aumentam linearmente até se atingir a saturação no detetor: detetam-se mais partículas à medida que o campo aumenta porque as partículas ionizadas pelas partículas carregadas que atravessam o gás têm energia suficiente para ionizar as que as rodeiam. A fonte de partículas ionizadas é uma fonte radioativa que emite eletrões; 
+- Para detetar o sinal ligamos o detetor diretamente ao osciloscópio;
+- Fonte de tálio: emissor Beta puro (normalmente emissores beta são também emissores gamma na desexcitação);
+- O que acontece no detetor? a fonte radioativa emite eletrões -> eletrões/partículas carregadas entram no detetor gasoso -> os átomos do gás nobre que estão no detetor são ionizados -> consoante a voltagem à qual o detetor está sujeito, pode haver uma ionização parcial ou total do gás (detetor saturado ou não) -> no osciloscópio quando o detetor está saturado todos os picos negativos têm a mesma amplitude (se tiverem picos diferentes é porque ainda não está saturado) - a amplitude do sinal no osciloscópio proveniente do detetor corresponde à quantidade de partículas ionizadas no detetor;
+- Plateau do detetor GM: existe um intervalo de voltagens (normalmente entre 750 e 950 Volts) no qual o aumento da tensão à qual o detetor está sujeito não provoca um aumento das partículas ionizadas - ou seja, não se observa um aumento de amplitude no sinal do osciloscópio proveniente do detetor;
+- Na saturação di detetor, todas as partículas do gás estão ionizadas e o efeito da alta voltagem é fazer com que as partículas ionizadas ionizem as restantes;
 
 ## Montagem
 - em frente ao detetor Geiger-Muller colocar a fonte radioativa de tálio (moeda) num pequeno suporte
