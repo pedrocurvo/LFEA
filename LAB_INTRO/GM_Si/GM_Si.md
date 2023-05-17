@@ -1,6 +1,9 @@
 # Introdução ao Detetor de Silício e Geiger-Muller
 
 ## Detetor de Silício
+ 
+O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condutor.
+
 - 
 ## Detetor Geiger-Muller
 - o detetor ativo é um gás raro: deteta interações
