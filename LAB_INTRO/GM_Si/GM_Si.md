@@ -2,6 +2,9 @@
 
 ## Detetor de Silício
 
+O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condutor. 
+
+
 ## Detetor Geiger-Muller
 - o detetor ativo é um gás raro: deteta interações
  - partículas carregadas atravessam o gás e ionizam-no: consoante o campo elétrico, as partículas ionizadas podem 
