@@ -2,7 +2,6 @@
 
 ## Detetor de Silício
  
-O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condutor.
 
 - 
 ## Detetor Geiger-Muller
