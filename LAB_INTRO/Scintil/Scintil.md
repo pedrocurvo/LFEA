@@ -4,6 +4,7 @@
 
 ### Esboce o esquema do detetor, identificando as componentes principais.
 ![Esquema Cintilador](png/Esquema.png)
+<img align="center" src="png/Esquema.png" width="400">
 
 
 ### Procedimento experimental
