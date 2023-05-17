@@ -37,8 +37,7 @@ O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condut
 > A Intensidade da luz está relacionada com o número de eletrões que atingem as placas de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, maior a intensidade da luz.
 
 ### Identifique as diferentes componentes do sistema. 
-> Temos uma fonte de alta tensão, um osciloscópio, um cabo de alta tensão, um cabo de sinal, um detetor Geiger-Muller, 
-      uma fonte radioativa de tálio e um suporte para a fonte
+> Temos uma fonte de alta tensão, um osciloscópio, um cabo de alta tensão, um cabo de sinal, um detetor Geiger-Muller, uma fonte radioativa de tálio e um suporte para a fonte
 ### Identifique o Plateau e caracterize-o.
 > O Plateau corresponde à zona de saturação. Para identifiar o Plateau fomos aumentando lentamente a tensão até encontrar o valor a partir do qual a amplitude do pico já não aumentava, isto é, até encontrar o valor de tensão a partir do qual o sistema fica saturado. Existe um patamar de saturação na qual a amplitude não varia, sendo que a amplitude  volta a aumentar para valores superiores ao fim do patamar. A tensão de início do patamar registada foi 690V e a tensão do fim foi 860V.
 

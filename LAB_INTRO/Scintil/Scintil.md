@@ -26,6 +26,24 @@ Para calibrar o sistema vamos recorrer ao **_pulser_** para fazer uma regressão
 ### Analise os espectros identificando e caracterizando as diferentes estruturas que possam estar presentes.
 > Conseguimos ver um total de 3 picos. Inicialmente existe o pico mais alto de todos (o qual tem menos energia dado que está no início do eixo dos x). Este pico corresponde aos raios X emitidos pela fonte de césio. De seguida, vê-se o patamar de compton, isto é, uma parte aproximadamente reta onde também se verifica a existência de emissão de radiação $\gamma$. No meio do patamar existe um pequeno pico, associado à emissão de radiação gama. Após o patamar de compton temos o maior pico, o qual corresponde também à emissão de radiação gama (neste caso a mais energética).
 
+### Qual a estatística que deve ser utilizada por forma a ter uma incerteza de 10% no número de contagens do pico de absorção total do Césio?
+> Estamos perante uma distribuição de Poisson, pelo que a incerteza é dada por sqrt(N), onde N é o número de contagens. Queremos que a incerteza seja 10% do número de contagens, ou seja, sqrt(N)=0.1N. Logo, concluimos que N=10.
+     
+### Qual a estatística que deve ser utilizada por forma a ter uma incerteza de 10% na posição do centroide do pico de absorção total do Césio? 
+> Utilizando o mesmo método que anteriormente, queremos $(\sigma/N)=0.1$. Logo $N=100{\sigma}^2$
+
+### Radiação Ambiente
+### O sistema regista eventos na ausência de uma fonte radioativa? 
+> Sim, a radiação ambiente maioritariamente devida à existência de potássio-40 em muitos dos materiais do dia-a-dia.
+
+### Compare a taxa de eventos com as outras aquisições.  
+> Existem menos eventos do que nas outras aquisições feitas com a fonte radioativa.
+
+### Consegue identificar alguma estrutura? Quanto tempo necessitaria para ter uma incerteza de 10% na taxa de eventos no pico de absorção total do 40K ?
+> Temos que fazer extamente as mesmas contas que realizámos anteriormente, obtendo de novo N=100 e $N=100{\sigma}^2$.
+
+
+
 
 ## Funcionamento do detetor de cintilação
 - aceleramos os eletrões com campos elétricos
