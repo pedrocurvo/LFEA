@@ -14,16 +14,29 @@
 - Inicia e termina a aquisição:
 <kbd>F1</kbd>
 - Bloqueia e desbloqueia limpeza:
-<kbd>F2</kbd>
+<kbd>F2</kbd> (erase fica a vermelho)
 - Apaga a aquisição:
 <kbd>ctrl</kbd> + <kbd>F2</kbd>
 - Seleciona o tempo de aquisição:
-<kbd>F3</kbd>
+<kbd>F3</kbd> (0 = tempo infinito)
 
 ### Visualização
+- Deslocar o cursos pelos canais: <kbd>setas</kbd>
+- Desloca rapidamente pelos canais: <kbd>page up</kbd> <kbd>page down</kbd> 
+- Muda a escala vertical: <kbd>seta cima</kbd> <kbd>seta baixo</kbd> (LOG = escala logarítmica)
 
 ### Análise de Picos
+- Marca início da ROI: <kbd>F9</kbd>
+- Marca fim da ROI: <kbd>F10</kbd>
+- Liga o cálculo de parâmetros do pico: <kbd>Alt</kbd> + <kbd>a</kbd> 
+- Apaga a ROI: <kbd>Del</kbd> (com o cursor na ROI)
 
+
+    #### Parâmetros
+    - ROI Int:
+    - ROI Net: 
+    - Centroid:
+    - FWHM:
 ### Gravar Dados
 Os dados podem ser guardados no disco e posteriormente transferidos com recurso a uma disquete.
 Quando guardados em binário é possível reabrir o espetro no programa.
