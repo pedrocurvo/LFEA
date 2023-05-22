@@ -147,7 +147,7 @@ O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condut
 > O Plateau corresponde à zona de saturação. Para identifiar o Plateau fomos aumentando lentamente a tensão até encontrar o valor a partir do qual a amplitude do pico já não aumentava, isto é, até encontrar o valor de tensão a partir do qual o sistema fica saturado. Existe um patamar de saturação na qual a amplitude não varia, sendo que a amplitude  volta a aumentar para valores superiores ao fim do patamar. A tensão de início do patamar registada foi 690V e a tensão do fim foi 860V.
 
 ### Qual a importância deste patamar?
-> Escolhemos 760V como a tensão a utilizar (aproximadamente metade do patamar). 
+> Escolhemos 760V como a tensão a utilizar (aproximadamente metade do patamar). O plateau é importante porque nos permite obter a tensão que queremos utilizar nas seguinte smedições - a tensão de saturação do detetor.
 
 ### Qual a relação entre o sinal no osciloscópio e o número de contagens?
 > O número de contagens corresponde ao número de vezes que a imagem pisca no osciloscópio.
@@ -165,8 +165,7 @@ O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condut
 # 4. Detetor de Cintilação
 ## Questões
 
-### Esboce o esquema do detetor, identificando as componentes principais.
-<img align="center" src="LAB_Intro/Scintil/png/Esquema.png" width="400">
+
 
 
 ### Procedimento experimental
@@ -215,13 +214,14 @@ Para calibrar o sistema vamos recorrer ao **_pulser_** para fazer uma regressão
 - no fim atinge o detetor e são detetatos eletrões em diferentes quantidades consoante as suas energias;
 
 
-## Resolução teste prático 2021:
+## 6. Resolução teste prático 2021:
 - Meça a amplitude do pulso à saída do gerador: comparar o numero de divisões com  escala dada;
 - Caracterize temporalmente o pulso à saída do pulser: dizer qual o período, qual o tempo por divisão e dizer qual a natureza do decaimento (exponencial e oscilatória)
 - Medir a amplitude de dez pulsos e estimar a média e o desvio padrão (desvio padrão = sigma = sum((valor -média)^2))/N - o valor d aamplitude de cada pulso aparece no temrinal do putty em milivolts quando carregamos no enter;
 -  Analise a distribuição obtida com o MCA (Alt +A) - ;
--  Estime o valor da média (média = centróide) e o desvio padrão/sigma (FWHM = 2.355*sigma). A incerteza do valor médio é sigma/desvio padrão sobre a raiz do numero de medições;
+-  Estime o valor da média (média = centróide) e o desvio padrão/sigma (FWHM = 2.355*sigma). A incerteza do valor médio é sigma sobre a raiz do numero de medições - o numero de medições é dado pelo ROI NET - logo a incerteza da média é sigma sobre raíz de ROI NET;
 -  Utilize o detector de cintilador e a fonte de césio -  Adquira o espectro durante o tempo necessário para ter entre 3 e 5% de incerteza no número de contagens no pico de absorção total: a emissão da fonte de césio segue uma distribuição de poisson. A incerteza do número de contagens é raíz de N; se quisermos a incerteza entre 3% e 5% então o N tem de satisfazer as seguintes equações: N^1/2 = 0.03N e N^1/2 = 0.05N. Depois se saber o valor de N. Depois de saber o N vamos fazer a medição durante o tempo suficiente para obter um número de contagens entre os valores pretendidos: temos de selecionar o pico de absorção do pulso e obter um ROI (nº medições) entre os N pretendidos;
 -  Adquira o espectro durante o tempo necessário para ter entre 3 e 5% de incerteza no valor médio do pico de absorção total: a incerteza do valor médio é sigma sobre raíz de N: obtemos sigma com FWHM = 2.355*sigma onde FWHM é o da alínea anterior. Para obter o N de contagens a fazer de modo a respeitar a incerteza temos de resolver a equação 0.03 < sigma/(N^1/2) < 0.05. Mais uma vez vamos fazer uma aquisição no MCA cujo ROI esteja entre os valores pedidos quando selecionamos o pico de absorção total. O ROI dá o número de contagens no espaço selecionado do espetro;
 -  No detector Geiger Müeller foi registado o seguinte gráfico e ajustada uma recta: N = 1.4V - 290. Definiu-se a tensão de operação em 825 V. Qual o erro sistemático se regular a tensão para 800 V? Calcular o N para 825 e para 800 e ver a diferença. Esta reta de ajuste reflete o plateau do detetor de Geiger Muller.
--  última pergunta: média é o valor do meio e sigma é largura a meia altura a dividir por 2.355.
+-  Última pergunta: média é o valor do meio e sigma é largura a meia altura a dividir por 2.355.
+-  ROI INT é om ruído e o ROI NET é com ruído;
