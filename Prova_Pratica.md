@@ -59,6 +59,9 @@ Guardando em Ascii é possível reabrir o programa em casa.
 
 
 # 2. Osciloscópio
+## Qual o significado da intensidade da luz? 
+> A Intensidade da luz está relacionada com o número de eletrões que atingem as placas de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, maior a intensidade da luz.
+
 ## Amplitude do Pulse:
 >   0.4V
 
@@ -138,9 +141,6 @@ O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condut
 ### E com o uso do amplificador?
 > ...
 
-### Qual o significado da intensidade da luz? 
-> A Intensidade da luz está relacionada com o número de eletrões que atingem as placas de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, maior a intensidade da luz.
-
 ### Identifique as diferentes componentes do sistema. 
 > Temos uma fonte de alta tensão, um osciloscópio, um cabo de alta tensão, um cabo de sinal, um detetor Geiger-Muller, uma fonte radioativa de tálio e um suporte para a fonte
 ### Identifique o Plateau e caracterize-o.
@@ -214,7 +214,3 @@ Para calibrar o sistema vamos recorrer ao **_pulser_** para fazer uma regressão
 - entre as placas existe um campo eleétrico que acelera os eletrões de tal modo que quando eles embatem nas placas seguintes têm energia suficiente para retirar mais eletrões
 - no fim atinge o detetor e são detetatos eletrões em diferentes quantidades consoante as suas energias;
 
-
-
-O que é que o césio dá?
->cancro
