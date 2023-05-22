@@ -214,3 +214,14 @@ Para calibrar o sistema vamos recorrer ao **_pulser_** para fazer uma regressão
 - entre as placas existe um campo eleétrico que acelera os eletrões de tal modo que quando eles embatem nas placas seguintes têm energia suficiente para retirar mais eletrões
 - no fim atinge o detetor e são detetatos eletrões em diferentes quantidades consoante as suas energias;
 
+
+## Resolução teste prático 2021:
+- Meça a amplitude do pulso à saída do gerador: comparar o numero de divisões com  escala dada;
+- Caracterize temporalmente o pulso à saída do pulser: dizer qual o período, qual o tempo por divisão e dizer qual a natureza do decaimento (exponencial e oscilatória)
+- Medir a amplitude de dez pulsos e estimar a média e o desvio padrão (desvio padrão = sigma = sum((valor -média)^2))/N - o valor d aamplitude de cada pulso aparece no temrinal do putty em milivolts quando carregamos no enter;
+-  Analise a distribuição obtida com o MCA (Alt +A) - ;
+-  Estime o valor da média (média = centróide) e o desvio padrão/sigma (FWHM = 2.355*sigma). A incerteza do valor médio é sigma/desvio padrão sobre a raiz do numero de medições;
+-  Utilize o detector de cintilador e a fonte de césio -  Adquira o espectro durante o tempo necessário para ter entre 3 e 5% de incerteza no número de contagens no pico de absorção total: a emissão da fonte de césio segue uma distribuição de poisson. A incerteza do número de contagens é raíz de N; se quisermos a incerteza entre 3% e 5% então o N tem de satisfazer as seguintes equações: N^1/2 = 0.03N e N^1/2 = 0.05N. Depois se saber o valor de N. Depois de saber o N vamos fazer a medição durante o tempo suficiente para obter um número de contagens entre os valores pretendidos: temos de selecionar o pico de absorção do pulso e obter um ROI (nº medições) entre os N pretendidos;
+-  Adquira o espectro durante o tempo necessário para ter entre 3 e 5% de incerteza no valor médio do pico de absorção total: a incerteza do valor médio é sigma sobre raíz de N: obtemos sigma com FWHM = 2.355*sigma onde FWHM é o da alínea anterior. Para obter o N de contagens a fazer de modo a respeitar a incerteza temos de resolver a equação 0.03 < sigma/(N^1/2) < 0.05. Mais uma vez vamos fazer uma aquisição no MCA cujo ROI esteja entre os valores pedidos quando selecionamos o pico de absorção total. O ROI dá o número de contagens no espaço selecionado do espetro;
+-  No detector Geiger Müeller foi registado o seguinte gráfico e ajustada uma recta: N = 1.4V - 290. Definiu-se a tensão de operação em 825 V. Qual o erro sistemático se regular a tensão para 800 V? Calcular o N para 825 e para 800 e ver a diferença. Esta reta de ajuste reflete o plateau do detetor de Geiger Muller.
+-  última pergunta: média é o valor do meio e sigma é largura a meia altura a dividir por 2.355.
