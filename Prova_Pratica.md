@@ -59,6 +59,9 @@ Guardando em Ascii é possível reabrir o programa em casa.
 
 
 # 2. Osciloscópio
+## Qual o significado da intensidade da luz? 
+> A Intensidade da luz está relacionada com o número de eletrões que atingem as placas de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, maior a intensidade da luz.
+
 ## Amplitude do Pulse:
 >   0.4V
 
@@ -111,7 +114,7 @@ O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condut
 - Neste caso o detetor é um detetor de partículas alfa que possui um bomba de vácuo
 - Procedimento: abrir a câmara de vácuo do detetor de silício (coiso castanho - deteta partícula alfa) -> introduzir a fonte radiativa dentro da câmara de vácuo -> fechas a câmara -> ligar a bomba de vácuo (muito barulho) -> esperar um minuto até a bomba deixar de fazer estrilho -> rodar a válvula tripla do detetor de diz vacuum para o 'vacuum' -> esperar um minuto -> comutar a válcula tripla para o 'hold' -> desligar a bomba de vácuo -> confirmar que há vácuo -> ligar o output do detetor ao osciloscópio e observar o sinal -> mudar o sinal entre bias e pulser no detetor e observar como o sinal se altera no osciloscópio
 - Quando temos o bias ligado, a placa NP fica polarizada e podemos e observamos o sinal requisitado;
-- 
+
 ## Detetor Geiger-Muller
 - o detetor ativo é um gás raro: deteta interações
 - Partículas carregadas atravessam o gás e ionizam-no: consoante o campo elétrico existente dentro do detetor, as partículas ionizadas podem 
@@ -137,9 +140,6 @@ O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condut
 > ...
 ### E com o uso do amplificador?
 > ...
-
-### Qual o significado da intensidade da luz? 
-> A Intensidade da luz está relacionada com o número de eletrões que atingem as placas de fósforo do Osciloscópio. Quanto maior a corrente, maior o número de eletrões, maior a intensidade da luz.
 
 ### Identifique as diferentes componentes do sistema. 
 > Temos uma fonte de alta tensão, um osciloscópio, um cabo de alta tensão, um cabo de sinal, um detetor Geiger-Muller, uma fonte radioativa de tálio e um suporte para a fonte
@@ -214,7 +214,3 @@ Para calibrar o sistema vamos recorrer ao **_pulser_** para fazer uma regressão
 - entre as placas existe um campo eleétrico que acelera os eletrões de tal modo que quando eles embatem nas placas seguintes têm energia suficiente para retirar mais eletrões
 - no fim atinge o detetor e são detetatos eletrões em diferentes quantidades consoante as suas energias;
 
-
-
-O que é que o césio dá?
->cancro
