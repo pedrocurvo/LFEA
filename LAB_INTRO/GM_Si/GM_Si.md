@@ -3,9 +3,9 @@
 ## Detetor de Silício
  
 O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condutor.
-- neste caso o detetor é um detetor de partículas alfa que possui um bomba de vácuo
+- Neste caso o detetor é um detetor de partículas alfa que possui um bomba de vácuo
 - Procedimento: abrir a câmara de vácuo do detetor de silício (coiso castanho - deteta partícula alfa) -> introduzir a fonte radiativa dentro da câmara de vácuo -> fechas a câmara -> ligar a bomba de vácuo (muito barulho) -> esperar um minuto até a bomba deixar de fazer estrilho -> rodar a válvula tripla do detetor de diz vacuum para o 'vacuum' -> esperar um minuto -> comutar a válcula tripla para o 'hold' -> desligar a bomba de vácuo -> confirmar que há vácuo -> ligar o output do detetor ao osciloscópio e observar o sinal -> mudar o sinal entre bias e pulser no detetor e observar como o sinal se altera no osciloscópio
-
+- Quando temos o bias ligado, a placa NP fica polarizada e podemos e observamos o sinal requisitado;
 - 
 ## Detetor Geiger-Muller
 - o detetor ativo é um gás raro: deteta interações
@@ -27,7 +27,7 @@ O detetor de silício é um detetor onde o meio a ser ionizado é um semi-condut
 - posteriormente ligar o detetor a um amplificador (caixa in/out) e o amplificador ao osciloscópio; cabo do detetor ligado 
      à abertura in e cabo ligado da abertura out ao osciloscópio ch1
 
-## Questões: 
+## Questões GM: 
 ### Se utilizar o pulso sem amplificador, qual a taxa máxima para que a amplitude dos pulsos não seja alterada em mais de 3%?
 > ...
 ### E com o uso do amplificador?
