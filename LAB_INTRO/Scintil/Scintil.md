@@ -30,7 +30,7 @@ Para calibrar o sistema vamos recorrer ao **_pulser_** para fazer uma regressão
 > Estamos perante uma distribuição de Poisson, pelo que a incerteza é dada por sqrt(N), onde N é o número de contagens. Queremos que a incerteza seja 10% do número de contagens, ou seja, sqrt(N)=0.1N. Logo, concluimos que N=10.
      
 ### Qual a estatística que deve ser utilizada por forma a ter uma incerteza de 10% na posição do centroide do pico de absorção total do Césio? 
-> Utilizando o mesmo método que anteriormente, queremos $(\sigma/N)=0.1$. Logo $N=100{\sigma}^2$
+> Utilizando o mesmo método que anteriormente, queremos $\sigma\sqrt(N)=0.1$. Logo $N=100{\sigma}^2$
 
 ### Radiação Ambiente
 ### O sistema regista eventos na ausência de uma fonte radioativa? 
