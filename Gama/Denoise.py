@@ -32,10 +32,15 @@ def read_mca(filename):
     with open(filename, 'r') as f:
         data = f.readlines()
     data = data[5:1029]
-    data = np.array([line.split() for line in data], dtype=int)
+    lista = [line.split() for line in data]
+    for lista1 in lista:
+        lista1[0] = lista1[0].replace(',', '')
+        lista1[1] = lista1[1].replace(',', '')
+    data = np.array(lista, dtype=int)
     data[:, 0] = np.char.replace(data[:, 0].astype(str), ',', '').astype(int)
     data[:, 1] = np.char.replace(data[:, 1].astype(str), ',', '').astype(int)
-    data = np.delete(data, 2, axis=1)
+    if len(data[0]) == 3:
+        data = np.delete(data, 2, axis=1)
     return data
 
 def write_to_file(filename, array):
