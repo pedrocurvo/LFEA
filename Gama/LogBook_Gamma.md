@@ -9,7 +9,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
    - Selecionámos o tempo de aquisição para 2 minutos e iniciàmos a aquisição do espetro de emissão da radiação fonte de césio;
    - Em seguida, registámos os dados relativos aos picos de emissão do césio que pretendiamos estudar, nomeadamente o pico de raio X, o backscattering, o joelho de Compton e o pico de emissão Gamma, obtendo os seguintes dados :
      
-     ### Dados relativos ao espetro de emissão do Césio
+    ### Dados relativos ao espetro de emissão do Césio
 
         |  | Valor [Chn]| Valor Calibrado [keV] | FWHM [Chn] | ROI INT | ROI NET |
         |:--------:|:-----:|:----------:|:------:|:-----:|:-----:|
