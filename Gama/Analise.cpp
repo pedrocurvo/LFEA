@@ -5,6 +5,7 @@
 #include "TCanvas.h"
 #include "TApplication.h"
 #include "TSystem.h"
+#include "TLegend.h"
 #include "TH1F.h"
 #include "TGraph.h"
 #include "TF1.h"
@@ -39,6 +40,9 @@ int main(){
     CalibratioGraph.Draw("AP");
     TF1 *f1 = new TF1("f1", "[0]*x+[1]");
     CalibratioGraph.Fit("f1");
+    double slope = f1->GetParameter(0);
+    double intercept = f1->GetParameter(1);
+    
     c1.Update();
     c1.SaveAs("PNGs/Calibracao.png");
     c1.WaitPrimitive();
@@ -46,6 +50,7 @@ int main(){
 
 
     // Espetro de Radiação do Ambiente
+    /*
     TGraph G_Amb; 
     vector<pair<double, double>> rad_ambiente = ReadFile("Data_Files/Nuno_Cobalto.dat");
     for (int i = 0; i < rad_ambiente.size(); i++){
@@ -63,5 +68,6 @@ int main(){
     c1.SaveAs("PNGs/Espetro_Ambiente4.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    */
 
 }
