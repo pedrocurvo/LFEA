@@ -2,7 +2,7 @@
 
 1. Objetivo:
    - Medição da radiação gamma proveniente de diferentes fontes.
-   - O objectivo deste trabalho é o estudo da interacção da radiação com a matéria, através dos processos fotoeléctrico, de Compton e de produção de pares, bem como das propriedades dos detectores de cintilação. Usa-se um espectrómetro simples, formado por uma fonte emissora de raios γ e um detector de iodeto de sódio activado por tálio, NaI(Tl), com fotomultiplicador acoplado, ao qual se segue a cadeia electrónica composta por gerador de alta tensão (regulado de acordo com o PMT), pré-amplificador e amplificador de tensão, e analisador multicanal (este inserido em PC com software de aquisição de dados)
+   - O objectivo deste trabalho é o estudo da interacção da radiação com a matéria, através dos processos fotoeléctrico, de Compton e de produção de pares, bem como das propriedades dos detectores de cintilação. Usa-se um espectrómetro simples, formado por uma fonte emissora de raios $\gamma$ e um detector de iodeto de sódio activado por tálio, NaI(Tl), com fotomultiplicador acoplado, ao qual se segue a cadeia electrónica composta por gerador de alta tensão (regulado de acordo com o PMT), pré-amplificador e amplificador de tensão, e analisador multicanal (este inserido em PC com software de aquisição de dados)
 
 2. Estudo de espectros de fontes conhecidas e calibração:
    - Estudar o espetro de energia do césio e do cobalto: colocar as fontes em frente ao cintilador e observar o espetro no MCA (tirar o centróide para o césio e par ao cobalto). Para cada uma das fontes, retirar o centróide dos dois picos de emissão, do pico de back scattering no plateau do espetro e do joelho de compton no final do plateau (medir quatro centroides por cada fonte radioativa). Obter os valores durante dois minutos para cada fonte;
@@ -28,7 +28,7 @@
    - Ainda por fazer
 
 7. NOTAS úteis:
-   - Escrever os valores das energias dos diferentes picos de cada espetro indicando qual a sua incerteza. Neste caso, como cada pico corresponde aos centróides medidos em chn que depois têm de ser passadas para valores de energia; incerteza do centroide em chn = FWHM / (2.355 * sqrt(ROI NET))
+   - Escrever os valores das energias dos diferentes picos de cada espetro indicando qual a sua incerteza. Neste caso, como cada pico corresponde aos centróides medidos em chn que depois têm de ser passadas para valores de energia; incerteza do centroide em chn = FWHM / (2.355 * $\sqrt(ROI NET)$)
    - Tabela tipo para a obtenção de espetros:
   
 |           Tabela com o registo de dados relativos ao espetro de emissão de          | Valor | Valor Calibrado |

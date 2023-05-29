@@ -1,0 +1,1 @@
+pandoc Gamma.md -o output.pdf --template /Users/pedrocurvo/Downloads/eisvogel.latex --metadata title="LogBook"  --metadata author="John Doe"
