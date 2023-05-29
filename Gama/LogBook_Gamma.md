@@ -30,6 +30,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         |  Centróide Pico Gamma 1 |    760.24 ± 0.32 Chn   |    1172.57  kEv |   32.42 Chn |   2592 ± 51 Chn  |   1805 ± 112 Chn |
         |  Centróide Pico Gamma 2 |    861.42 ± 0.36 Chn   |  1330.72 kEv |   36.82 Chn |   2228 ± 47 Chn  | 1856 ± 84 Chn |
 
+![Cobalto](/Gama/PNGs/Cobalto.jpeg)
    - Verificámos a existência de 2 picos de alta energia, associados à radiação gama. Nas baixas energias existe também um pico associado a radiação de fundo e possível sobreposição de raios-x;
    - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
    - Note-se que tanto nesta aquisição de dados, como em todas as que se realizaram nesta experiência, calcularam-se as incertezas relativamente ao centróide com a fórmula sigma/sqrt(N) onde sigma é variância e é dada por FWHM/2.355 e N é igual ao ROI INT;
@@ -43,6 +44,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         |  Centróide Raios X            |   28.8 ± 0.01 Chn     |   29.28 KeV  |  3.47 Chn    |   42445 ± 206 Chn |   31578 ± 280   |
         |  Centróide Pico Gamma         |   436.07 ± 0.04 Chn   |   665.87 KeV  |   26.89 Chn |   84454 ± 291 Chn  |   82318 ± 341 Chn |
 
+![Césio](/Gama/PNGs/Cesio.jpeg)
    - Verificámos que nas energias mais baixas existe um pico alto e fino, ao qual correpondem raios-x. Posteriormente temos o patamar de Compton, no centro do qual existe um pequeno pico de backscattering. No fim do patamar confirmámos a existência de um joelho de Compton. Por fim, vimos um pico na zona de altas energias, correspondente à radiação gama. Caso o detetor fosse ideal, o pico seria estreito correspondendo apenas a uma energia. No entanto, existe uma dispersão relacionada com a resolução em energia do detetor, a qual torna os picos mais energéticos mais largos. Quanto mais energética for a radiação incidente, mais energéticos são os fotões que entram no cristal. Quanto mais energéticos são os fotões, maior é o número de choques no cristal do detetor, pelo que as flutuações no valor medido são maiores.
    - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
    - Fizemos a calibração através de uma regressão linear entre os channels do centróide e as energias tabeladas do pico raio-x e os raios gamma do cobalto e do césio, recorrendo a código e utilizando quatro pontos. Com a calibração, obtivémos valores para a energia dos picos obtidos anteriormente e comparamos com os valores tabelados. Apenas realizamos a calibração após ter os valores em Chn para os picos gamma do cobalto e os picos gamma e raio X do césio uma vez que a regressão linear fica mais precisa com uma maior quantidade de pontos (reduzimos os erros aleatórios). A energia calibrada é dada em unidades de KeV. A reta de ajuste obtida do tipo E(Chn) (energia em função de channels) e é dada por:
@@ -67,6 +69,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         | Centróide Pico 9 | 910.53 ± 0.30 Chn | 1407.48 KeV  | 15.68 Chn | 760 ± 20 Chn | 485 ± 65 Chn |
         
 
+![Fonte_Vermelha2](PNGs/Desconhecida.jpeg)
    - 
 3. **Identificação de fontes de radioactividade ambiente**
    - Retiramos as fontes radioativas das proximidades do detetor e iniciamos uma aquisição de dados durante 20 minutos com o objetivo de estudar a radiação proveniente do ambiente (erros sistemáticos);
@@ -77,6 +80,8 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         | Centróide Pico de baixas energias |   69.15 ± 0.11 Chn |  92.35 KeV  | 60.60 Chn  | 96736 ± 311 Chn | 54923 ± 1036 Chn |
         | Centróide Pico de altas energias  |   943.57 ± 0.37 Chn |  1459.12 KeV  | 26.63 Chn  | 1397 ± 37 Chn | 923 ± 87 Chn |
 
+
+![Radiação_de_Fundo](/Gama/PNGs/Fundo.jpeg)
 4. Atenuação da radiação gama na matéria:
    - Para atenuação dos raios gamas usou-se duas placas de chumbo, uma de espessura 0.250 inches e 7200 mg/cm2 de espessura mássica e outra de 0.062 inches de espessura e 1200 mg/cm2 de espessura mássica. Para saber a espessura das placas é necessário o multiplicar valor escrito na caixa pela densidade do chumbo que é 11.34 g/cm3. As unidades de espessura mássica são úteis pois definem a atenuaçãocausada pela placa. Efetivamente, observa-se no osciloscópio que a atenuação é maior (observam-se menos picos de alta energia)quando se usa a placa de chumbo mais espessa.
    - Colocou-se a placa de chumbo mais espessa entre o detetor e a fonte radioativa (Cs 137).
