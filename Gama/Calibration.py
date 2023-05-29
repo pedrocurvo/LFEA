@@ -20,8 +20,8 @@ def linear_fit(x: list, y: list):
     return linear_func
 
 # Example usage
-Energy = [9, 78]
-Channels = [2, 4]
+Energy = [32, 662, 1173, 1333] # Cs and Co energies
+Channels = [28.8, 437.07, 760.24, 861.42] # Cs-137 and Co-60 channels
 
 Channel_to_Energy = linear_fit(Channels, Energy)
 Energy_to_Channel = linear_fit(Energy, Channels)
