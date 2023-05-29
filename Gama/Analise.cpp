@@ -34,9 +34,11 @@ int main(){
     CalibratioGraph.SetTitle("Calibration; Channels; Energy [keV]");
     CalibratioGraph.GetXaxis()->CenterTitle();
     CalibratioGraph.GetYaxis()->CenterTitle();
-    CalibratioGraph.Draw("*");
+    CalibratioGraph.GetXaxis()->SetLimits(0, 1024);
+    CalibratioGraph.GetYaxis()->SetLimits(0, 1400);
+    CalibratioGraph.Draw("AP");
     TF1 *f1 = new TF1("f1", "[0]*x+[1]");
-    CalibratioGraph->Fit("f1");
+    CalibratioGraph.Fit("f1");
     c1.Update();
     c1.SaveAs("PNGs/Calibracao.png");
     c1.WaitPrimitive();
