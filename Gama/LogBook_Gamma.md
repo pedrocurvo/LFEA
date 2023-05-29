@@ -30,6 +30,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         |  Centróide Pico Gamma 1 |    760.24 ± 0.32 Chn   |    -   |   32.42 Chn |   2592 ± 51 Chn  |   1805 ± 112 Chn |
         |  Centróide Pico Gamma 2 |    861.42 ± 0.36 Chn   |  - |   36.82 Chn |   2228 ± 47 Chn  | 1856 ± 84 Chn |
 
+   - Verificámos a existência de 2 picos de alta energia, associados à radiação gama. Nas baixas energias existe também um pico associado a radiação de fundo e possível sobreposição de raios-x;
    - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
    - Note-se que tanto nesta aquisição de dados, como em todas as que se realizaram nesta experiência, calcularam-se as incertezas relativamente ao centróide com a fórmula sigma/sqrt(N) onde sigma é variância e é dada por FWHM/2.355 e N é igual ao ROI INT;
    - Em seguida retiramos a fonte de cobalto e colocamos a fonte de césio;
@@ -37,12 +38,13 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
 
         | Dados relativos ao espetro de emissão do Césio | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
         |:----------------------------------------------------------------:|:-----:|:---------------:|:----:|:-------:|:-------:|
-        |  Centróide BackScattering     |  136.82 ± 0.10 Chn    |      -        |  16.57 Chn | 26558 ± 163 Chn  | 4602 ± 384 Chn  |
-        |   Centróide Joelho de Compton |   294 Chn    |        -         |   -   |     -    |     -    |
-        |  Centróide Raios X            |   28.8 ± 0.01 Chn    |        -         |  3.47 Chn    |   42445 ± 206 Chn |   31578 ± 280   |
-        |  Centróide Pico Gamma         |    436.07 ± 0.04 Chn   |       -      |   26.89 Chn |   84454 ± 291 Chn  |   82318 ± 341 Chn |
+        |  Centróide BackScattering     |  136.82 ± 0.10 Chn    |   198.13 KeV  |  16.57 Chn | 26558 ± 163 Chn  | 4602 ± 384 Chn  |
+        |  Centróide Joelho de Compton  |   294 Chn             |   443.81 KeV  |   -   |     -    |     -    |
+        |  Centróide Raios X            |   28.8 ± 0.01 Chn     |   29.28 KeV  |  3.47 Chn    |   42445 ± 206 Chn |   31578 ± 280   |
+        |  Centróide Pico Gamma         |   436.07 ± 0.04 Chn   |   665.87 KeV  |   26.89 Chn |   84454 ± 291 Chn  |   82318 ± 341 Chn |
 
-   - Em seguida, voltamos a calibrar o sistema com os valores obtidos para o pico
+   - Verificámos que nas energias mais baixas existe um pico alto e fino, ao qual correpondem raios-x. Posteriormente temos o patamar de Compton, no centro do qual existe um pequeno pico de backscattering. No fim do patamar confirmámos a existência de um joelho de Compton. Por fim, vimos um pico na zona de altas energias, correspondente à radiação gama. Caso o detetor fosse ideal, o pico seria estreito correspondendo apenas a uma energia. No entanto, existe uma dispersão relacionada com a resolução em energia do detetor, a qual torna os picos mais energéticos mais largos. Quanto mais energética for a radiação incidente, mais energéticos são os fotões que entram no cristal. Quanto mais energéticos são os fotões, maior é o número de choques no cristal do detetor, pelo que as flutuações no valor medido são maiores.
+   - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
    - Fizemos a calibração através de uma regressão linear entre os channels do centróide e as energias tabeladas do pico raio-x e os raios gamma do cobalto e do césio, recorrendo a código e utilizando quatro pontos. Com a calibração, obtivémos valores para a energia dos picos obtidos anteriormente e comparamos com os valores tabelados. Apenas realizamos a calibração após ter os valores em Chn para os picos gamma do cobalto e os picos gamma e raio X do césio uma vez que a regressão linear fica mais precisa com uma maior quantidade de pontos (reduzimos os erros aleatórios). A energia calibrada é dada em unidades de KeV. A reta de ajuste obtida do tipo E(Chn) (energia em função de channels) e é dada por:
   
        $E(Chn) =  1.563*Chn - 15.732$
@@ -54,28 +56,27 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
 
         | Dados relativos ao espetro de emissão da Fonte Vermelha 2 | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
         |:----------------------------------------------------------------:|:-----:|:---------------:|:----:|:-------:|:-------:|
-        | Centróide Pico 1 |  34.63 ± 0.01 Chn |  -  | 4.03 Chn  | 26082 ± 161 Chn | 22540 ± 188 Chn |
-        | Centróide Pico 2 |  68.27 ± 0.09 Chn |  -  | 8.51 Chn  | 7391 ± 86 Chn | 1736 ± 179 Chn |
-        | Centróide Pico 3 |  90.30 ± 0.03 Chn |  -  | 6.35 Chn  | 12404 ± 111 Chn | 8398 ± 154 Chn |
-        | Centróide Pico 4 | 168.43 ± 0.14 Chn |  -  | 13.0 Chn  | 4167 ± 65 Chn | 1628 ± 127 Chn |
-        | Centróide Pico 5 | 233.11 ± 0.11 Chn |  -  | 17.48 Chn | 6429 ± 80 Chn | 4490 ± 141 Chn |
-        | Centróide Pico 6 | 509.49 ± 0.14 Chn |  -  | 8.06 Chn  | 1742 ± 42 Chn | 629 ± 108 Chn |
-        | Centróide Pico 7 | 625.37 ± 0.54 Chn |  -  | 27.84 Chn | 1147 ± 34 Chn | 472 ± 85 Chn |
-        | Centróide Pico 8 | 711.47 ± 0.35 Chn |  -  | 18.92 Chn | 1322 ± 36 Chn | 523 ± 90 Chn |
-        | Centróide Pico 9 | 910.53 ± 0.30 Chn |  -  | 15.68 Chn | 760 ± 20 Chn | 485 ± 65 Chn |
+        | Centróide Pico 1 |  34.63 ± 0.01 Chn | 38.40 KeV  | 4.03 Chn  | 26082 ± 161 Chn | 22540 ± 188 Chn |
+        | Centróide Pico 2 |  68.27 ± 0.09 Chn | 91.00 KeV  | 8.51 Chn  | 7391 ± 86 Chn | 1736 ± 179 Chn |
+        | Centróide Pico 3 |  90.30 ± 0.03 Chn | 125.41 KeV  | 6.35 Chn  | 12404 ± 111 Chn | 8398 ± 154 Chn |
+        | Centróide Pico 4 | 168.43 ± 0.14 Chn | 247.53 KeV  | 13.0 Chn  | 4167 ± 65 Chn | 1628 ± 127 Chn |
+        | Centróide Pico 5 | 233.11 ± 0.11 Chn | 348.63 KeV  | 17.48 Chn | 6429 ± 80 Chn | 4490 ± 141 Chn |
+        | Centróide Pico 6 | 509.49 ± 0.14 Chn | 780.63 KeV  | 8.06 Chn  | 1742 ± 42 Chn | 629 ± 108 Chn |
+        | Centróide Pico 7 | 625.37 ± 0.54 Chn | 961.76 KeV  | 27.84 Chn | 1147 ± 34 Chn | 472 ± 85 Chn |
+        | Centróide Pico 8 | 711.47 ± 0.35 Chn | 1096.34 KeV  | 18.92 Chn | 1322 ± 36 Chn | 523 ± 90 Chn |
+        | Centróide Pico 9 | 910.53 ± 0.30 Chn | 1407.48 KeV  | 15.68 Chn | 760 ± 20 Chn | 485 ± 65 Chn |
         
 
    - 
 3. **Identificação de fontes de radioactividade ambiente**
    - Retiramos as fontes radioativas das proximidades do detetor e iniciamos uma aquisição de dados durante 20 minutos com o objetivo de estudar a radiação proveniente do ambiente (erros sistemáticos);
-   - Após a aquisição, verificámos que existem 2 picos/estruturas mais relevantes. O primeiro encontra-se nas baixas energias e representa a radiação de fundo, associada a sucessivas perdas de energia. Para o segundo (mais energético) confirmámos, pelo cálculo da energia através da calibração, que corresponde ao pico de emissão gamma do potássio-40. Os dados obtidos foram os seguintes
+   - Após a aquisição, verificámos que existem 2 picos/estruturas mais relevantes. O primeiro encontra-se nas baixas energias e representa a radiação de fundo, associada a sucessivas perdas de energia. Para o segundo (mais energético) confirmámos, pelo cálculo da energia através da calibração, que corresponde ao pico de emissão gamma do potássio-40. Os dados obtidos foram os seguintes:
 
         | Dados relativos ao espetro de emissão da Radiação de Fundo | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
         |:----------------------------------------------------------------:|:-----:|:---------------:|:----:|:-------:|:-------:|
-        | Centróide Pico de baixas energias |   69.15 ±  Chn |  -  | 60.60 Chn  | 96736 ± 311 Chn | 54923 ± 1036 Chn |
-        | Centróide Pico de altas energias  |   943.57 ±  Chn |  -  | 26.63 Chn  | 1397 ± 37 Chn | 923 ± 87 Chn |
+        | Centróide Pico de baixas energias |   69.15 ± 0.11 Chn |  92.35 KeV  | 60.60 Chn  | 96736 ± 311 Chn | 54923 ± 1036 Chn |
+        | Centróide Pico de altas energias  |   943.57 ± 0.37 Chn |  1459.12 KeV  | 26.63 Chn  | 1397 ± 37 Chn | 923 ± 87 Chn |
 
-   - 
 4. 
 5. 
 
