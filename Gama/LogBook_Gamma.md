@@ -26,9 +26,9 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
 
         | Dados relativos ao espetro de emissão do Cobalto | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
         |:----------------------------------------------------------------:|:-----:|:---------------:|:----:|:-------:|:-------:|
-        |  Centróide Pico Inicial   |   64.10 ± 0.26 Chn    |        -         |  32.96 Chn    |   9877 ± 99 Chn | 2909 ± 296   |
-        |  Centróide Pico Gamma 1 |    760.24 ± 0.32 Chn   |    -   |   32.42 Chn |   2592 ± 51 Chn  |   1805 ± 112 Chn |
-        |  Centróide Pico Gamma 2 |    861.42 ± 0.36 Chn   |  - |   36.82 Chn |   2228 ± 47 Chn  | 1856 ± 84 Chn |
+        |  Centróide Pico Inicial   |   64.10 ± 0.26 Chn    |        84.46 kEv      |  32.96 Chn    |   9877 ± 99 Chn | 2909 ± 296   |
+        |  Centróide Pico Gamma 1 |    760.24 ± 0.32 Chn   |    1172.57  kEv |   32.42 Chn |   2592 ± 51 Chn  |   1805 ± 112 Chn |
+        |  Centróide Pico Gamma 2 |    861.42 ± 0.36 Chn   |  1330.72 kEv |   36.82 Chn |   2228 ± 47 Chn  | 1856 ± 84 Chn |
 
    - Verificámos a existência de 2 picos de alta energia, associados à radiação gama. Nas baixas energias existe também um pico associado a radiação de fundo e possível sobreposição de raios-x;
    - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
