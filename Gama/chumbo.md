@@ -11,15 +11,15 @@ quando se usa a placa de chumbo mais espessa.
 3. Repetiu-se o procedimento para a placa de chumbo mais fina.
 
 
-## Chumbo Grosso
-| Dados relativos ao espetro de emissão da Fonte Vermelha 2 | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
+## Placa de Chumbo muito espessa
+| Dados relativos ao espetro de emissão do césio com a Placa de Chumbo muito espessa| Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
 |:--------------:|:-----:|:---------------:|:----:|:-------:|:-------:|
 | Centróide Pico 1 |  59.59 ± Chn |  -  | 5.83 Chn  | 9364 ± 97 Chn | 1552 ± 223 Chn |
 | Centróide Pico 2 |  136.56 ± Chn |  -  | 20.98 Chn  | 15112 ± 123 Chn | 2604 ± 354 Chn |
 | Centróide Pico 3 |  434.90 ± Chn |  -  | 27.87 Chn  | 21091 ± 145 Chn | 19023 ± 215 Chn |
 
-## Chumbo Fino
-| Dados relativos ao espetro de emissão da Fonte Vermelha 2 | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
+## Placa de Chumbo pouco espessa
+| Dados relativos ao espetro de emissão do césio com a Placa de Chumbo pouco espess | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
 |:--------------:|:-----:|:---------------:|:----:|:-------:|:-------:|
 | Centróide Pico 1 |  59.56 ± Chn |  -  | 6.98 Chn  | 11724 ± 108 Chn | 1778 ± 251 Chn |
 | Centróide Pico 2 |  137.09 ± Chn |  -  | 16.24 Chn  | 19906 ± 141 Chn | 3317 ± 400 Chn |

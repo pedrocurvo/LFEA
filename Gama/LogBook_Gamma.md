@@ -77,21 +77,14 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         | Centróide Pico de baixas energias |   69.15 ± 0.11 Chn |  92.35 KeV  | 60.60 Chn  | 96736 ± 311 Chn | 54923 ± 1036 Chn |
         | Centróide Pico de altas energias  |   943.57 ± 0.37 Chn |  1459.12 KeV  | 26.63 Chn  | 1397 ± 37 Chn | 923 ± 87 Chn |
 
-4. 
+4. Atenuação da radiação gama na matéria:
+   - Para atenuação dos raios gamas usou-se duas placas de chumbo, uma de espessura 0.250 inches e 7200 mg/cm2 de espessura mássica e outra de 0.062 inches de espessura e 1200 mg/cm2 de espessura mássica. Para saber a espessura das placas é necessário o multiplicar valor escrito na caixa pela densidade do chumbo que é 11.34 g/cm3. As unidades de espessura mássica são úteis pois definem a atenuaçãocausada pela placa. Efetivamente, observa-se no osciloscópio que a atenuação é maior (observam-se menos picos de alta energia)quando se usa a placa de chumbo mais espessa.
+   - Colocou-se a placa de chumbo mais espessa entre o detetor e a fonte radioativa (Cs 137).
+   - Foram registado no MCA durante 150s o espetro de amissão da fonte com a placa de chumbo colocada.
+   - Repetiu-se o procedimento para a placa de chumbo mais fina.
+   - Para a placa de chumbo muito espessa, obtivemos os seguintes dados:
+   - Para a placa de chumbo pouco espessa, obtivemos os seguintes dados:
 5. 
 
 
 
-
-
-        | Dados relativos ao espetro de emissão da Fonte Vermelha 2 | Valor | Valor Calibrado | FWHM | ROI INT | ROI NET |
-        |:----------------------------------------------------------------:|:-----:|:---------------:|:----:|:-------:|:-------:|
-        | Centróide Pico 1 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 2 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 3 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 4 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 5 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 6 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 7 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 8 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
-        | Centróide Pico 9 |   +- Chn |  -  |  Chn |  +-  Chn |  +-  Chn |
