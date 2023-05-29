@@ -1,6 +1,0 @@
-Pedro:
-pandoc Gamma.md -o output.pdf --template /Users/pedrocurvo/Desktop/LFEA/eisvogel.latex --metadata title="LogBook"
-
-Salvador:
-pandoc LogBook_Gamma.md -o output.pdf --template /home/salvadortorpes/LFEA/eisvogel.latex --metadata tit
-le="LogBookGamma1D"
