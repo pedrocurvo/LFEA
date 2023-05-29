@@ -34,7 +34,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         |  Centróide Pico Gamma 1 |    760.24 ± 0.32     |    1172.57      |   32.42   |   2592 ± 51    |   1805 ± 112   |
         |  Centróide Pico Gamma 2 |    861.42 ± 0.36     |  1330.72    |   36.82   |   2228 ± 47    | 1856 ± 84   |
 
-     ![Cobalto](PNGs/Cobalto.jpeg)
+     ![Cobalto](../PNGs/Cobalto.jpeg)
    - Verificámos a existência de 2 picos de alta energia, associados à radiação gama. Nas baixas energias existe também um pico associado a radiação de fundo e possível sobreposição de raios-x;
    - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
    - Note-se que tanto nesta aquisição de dados, como em todas as que se realizaram nesta experiência, calcularam-se as incertezas relativamente ao centróide com a fórmula sigma/sqrt(N) onde sigma é variância e é dada por FWHM/2.355 e N é igual ao ROI INT;
@@ -50,7 +50,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         |  Centróide Raios X            |   28.8 ± 0.01       |   29.28      |  3.47      |   42445 ± 206   |   31578 ± 280   |
         |  Centróide Pico Gamma         |   436.07 ± 0.04     |   665.87      |   26.89   |   84454 ± 291    |   82318 ± 341   |
 
-     ![Césio](PNGs/Cesio.jpeg)
+     ![Césio](../PNGs/Cesio.jpeg)
    - Verificámos que nas energias mais baixas existe um pico alto e fino, ao qual correpondem raios-x. Posteriormente temos o patamar de Compton, no centro do qual existe um pequeno pico de backscattering. No fim do patamar confirmámos a existência de um joelho de Compton. Por fim, vimos um pico na zona de altas energias, correspondente à radiação gama. Caso o detetor fosse ideal, o pico seria estreito correspondendo apenas a uma energia. No entanto, existe uma dispersão relacionada com a resolução em energia do detetor, a qual torna os picos mais energéticos mais largos. Quanto mais energética for a radiação incidente, mais energéticos são os fotões que entram no cristal. Quanto mais energéticos são os fotões, maior é o número de choques no cristal do detetor, pelo que as flutuações no valor medido são maiores.
    - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
    - Fizemos a calibração através de uma regressão linear entre os channels do centróide e as energias tabeladas do pico raio-x e os raios gamma do cobalto e do césio, recorrendo a código e utilizando quatro pontos. Com a calibração, obtivémos valores para a energia dos picos obtidos anteriormente e comparamos com os valores tabelados. Apenas realizamos a calibração após ter os valores em Chn para os picos gamma do cobalto e os picos gamma e raio X do césio uma vez que a regressão linear fica mais precisa com uma maior quantidade de pontos (reduzimos os erros aleatórios). A energia calibrada é dada em unidades de KeV. A reta de ajuste obtida do tipo E(Chn) (energia em função de channels) e é dada por:
@@ -77,7 +77,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         | Centróide Pico 9 | 910.53 ± 0.30   | 1407.48      | 15.68   | 760 ± 20   | 485 ± 65   |
         
 
-     ![Fonte_Vermelha2](PNGs/Desconhecida.jpeg)
+     ![Fonte_Vermelha2](../PNGs/Desconhecida.jpeg)
 
    - Guardamos os dados obtidos para o espetro do cobalto na disquete, para posteriormente podermos analisá-los;
 1. **Identificação de fontes de radioactividade ambiente**
@@ -90,7 +90,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         | Centróide Pico de baixas energias |   69.15 ± 0.11   |  92.35      | 60.60    | 96736 ± 311   | 54923 ± 1036   |
         | Centróide Pico de altas energias  |   943.57 ± 0.37   |  1459.12      | 26.63    | 1397 ± 37   | 923 ± 87   |
         
-     ![Fundo](PNGs/Fundo.jpeg)
+     ![Fundo](../PNGs/Fundo.jpeg)
      
    - Verificámos que existem 2 picos mais relevantes. O primeiro encontra-se nas baixas energias e representa a radiação de fundo, associada a sucessivas perdas de energia. O segundo, mais energético, confirmámos que pelo cálculo da energia através da calibração que corresponde ao potássio-40.
 
@@ -101,7 +101,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
    - Repetiu-se o procedimento para a placa de chumbo mais fina.
    - Para a placa de chumbo muito espesso, obtivemos os seguintes dados:
      
-     ![Chumbo Muito Espesso](PNGs/Chumbo_Espesso.jpeg)
+     ![Chumbo Muito Espesso](../PNGs/Chumbo_Espesso.jpeg)
 
 
      ### Dados relativos ao espetro de emissão do césio com a Placa de Chumbo muito espesso
@@ -115,7 +115,7 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
 
    - Para a placa de chumbo pouco espessa, obtivemos os seguintes dados:
   
-     ![Chumbo Pouco Espesso](PNGs/Chumbo_Pouco_Espesso.jpeg)
+     ![Chumbo Pouco Espesso](../PNGs/Chumbo_Pouco_Espesso.jpeg)
   
 
      ### Dados relativos ao espetro de emissão do césio com a Placa de Chumbo pouco espesso
