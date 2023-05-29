@@ -90,6 +90,8 @@ A experiência que em seguida se descreve foi realizada no dia 29 de maio de 202
         | Centróide Pico de baixas energias |   69.15 ± 0.11   |  92.35      | 60.60    | 96736 ± 311   | 54923 ± 1036   |
         | Centróide Pico de altas energias  |   943.57 ± 0.37   |  1459.12      | 26.63    | 1397 ± 37   | 923 ± 87   |
         
+     ![Fundo](PNGs/Fundo.jpeg)
+     
    - Verificámos que existem 2 picos mais relevantes. O primeiro encontra-se nas baixas energias e representa a radiação de fundo, associada a sucessivas perdas de energia. O segundo, mais energético, confirmámos que pelo cálculo da energia através da calibração que corresponde ao potássio-40.
 
 2. **Atenuação da radiação gama na matéria**:
