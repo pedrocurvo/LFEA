@@ -5,5 +5,9 @@
 - Por fim, usámos a combinação das fontes 1 e 2, tendo-se obtido x contagens para a 1º medição e x contagens para a 2º medição.
 - Para a medição da radiação ambiente, fizémos duas medições de 30 segundos sem utilizar nenhuma fonte, tendo-se obtido x e x contagens respetivamente.
 
-- Para o estudo da eficiência do detetor na leitura de radiações gama, colocámos de novo a fonte de tálio na 3º prateleira e uma chapa metálica (de alumínio) fechada na 2º prateleira. Utilizamos a chapa metálica com vista a bloquear a radiação beta. - Fizémos duas medições de 30 segundos, tendo obtido x contagens e x contagens.
+
+- Para o estudo da eficiência do detetor na leitura de radiações beta, colocámos de novo a fonte de tálio na 3º prateleira e uma chapa metálica (de alumínio) fechada na 2º prateleira. Utilizamos a chapa metálica com vista a bloquear a radiação beta. - Fizémos duas medições de 30 segundos, tendo obtido x contagens e x contagens.
 - Tiramos a chapa e colocámos uma nova chapa metálica com 10 mm de abertura na prateleira 0, fazendo duas novas medições de 30 segundos.
+
+-Repetimos o processo para a placa de 7,5mm
+
