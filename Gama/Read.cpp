@@ -5,9 +5,9 @@
 #include <utility>
 using namespace std;
 
-vector<pair<double, double>> ReadFile(const std::string& filename)
+void ReadFile(const std::string& filename, vector<pair<double, double>>& data)
 {
-    vector<pair<double, double>> data;
+    //vector<pair<double, double>> data;
 
     ifstream file(filename);
     if (file.is_open())
@@ -31,5 +31,6 @@ vector<pair<double, double>> ReadFile(const std::string& filename)
         cout << "Failed to open the file." << endl;
     }
 
-    return data;
+    
+    //return data;
 }
