@@ -138,10 +138,10 @@ Material da Chapa + Chapa de Alumínio | Espessura $\pm 0,025$ (mm) | Contagens 
    Acrílico | 1,750 | 370 | 354
    Tungsténio | 5,000 | 274 | 249
    Cobre | 1,300 | 338 | 353
-   Aço | 2,000 | 22 | 23
-   Vidro | 1,750 | 21 | 21
-   Chumbo | 1,800 | 25 | 23
-   Alumínio | 1,650 | 17 | 19
+   Aço | 2,000 | 335 | 329
+   Vidro | 1,750 | 370 | 364
+   Chumbo | 1,800 | 352 | 358
+   Alumínio | 1,650 | 552 | 543
 
 5. 
 
