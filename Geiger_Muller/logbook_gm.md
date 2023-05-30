@@ -122,30 +122,36 @@ Prateleira | Distância ao detetor (m)
 
 **1-** Para estudar a atenuação na matéria da radiação detetada, colocámos a fonte de Césio na prateleira 3, com a placa colimadora usada nos passos anteriores na prateleira 0, colocámos chapas de diferentes materiais diretamente por cima da fonte, e fizémos 2 aquisições de 30 segundos para cada chapa. Os resultados obtidos encontram-se na seguinte tabela:
 
+
+## Cs Tapado
 Material da Chapa | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
 :--:|:--:|:--:|:--:
-Ar (sem chapa) | - | 2462 | 2513
-Cartão | 1,000 | 811 | 787
-Acrílico | 1,750 | 453 | 454
-Tungsténio | 5,000 | 258 | 235
-Cobre | 1,300 | 416 | 411
-Aço | 2,000 | 406 | 432
-Vidro | 1,750 | 491 | 439
-Chumbo | 1,800 | 434 | 433
-Alumínio | 1,650 | 411 | 455
+Ar (sem chapa) | - | 343 | 340
+Cartão | 1,000 | 356 | 341
+Acrílico | 1,750 | 368 | 339
+Tungsténio | 5,000 | 297 | 262
+Cobre | 1,300 | 309 | 329
+Aço | 2,000 | 331 | 343
+Vidro | 1,750 | 362 | 330
+Chumbo | 1,800 | 337 | 324
+Alumínio | 1,650 | 323 | 329
+
+
 
 **2-** Tal como no estudo  da atenuação da taxa de contagens com a distância, repetimos o processo anterior, mas colocando a chapa de alumínio entre a fonte e a outra chapa que queríamos estudar, de forma a bloquear a radiação $\beta$, e ficarmos com a atenuação da radiação $\gamma$. Para estudar a atenuação da radiação $\beta$, poderemos subtrair o sinal dos $\gamma$ ao total. Para o ar + alumínio, usámos os valores obtidos anteriormente para a chapa de alumínio e para o alumínio + alumínio usámos duas chapas de alumínio sendo a segunda da caixa das placas usadas na experiência radiação gama, demarcada com o número 7 e 81,2 (mg/cm^2) de espessura mássica, para podermos estudar a atenuação da radiação gama isoladamente no alumínio. Os valores obtidos encontram-se na seguinte tabela:
 
+## Ta destapado
+
 Material da Chapa + Chapa de Alumínio | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
 :--:|:--:|:--:|:--:
-Ar (sem chapa) | - | 411 | 455
-Cartão | 1,000 | 427 | 419
-Acrílico | 1,750 | 425 | 445
-Tungsténio | 5,000 | 219 | 222
-Cobre | 1,300 | 444 | 408
-Aço | 2,000 | 388 | 395
-Vidro | 1,750 | 410 | 394
-Chumbo | 1,800 | 387 | 415
-Alumínio | 1,650 | 436 | 459
+Ar (sem chapa) | - | 127 | 114
+Cartão | 1,000 | 38 | 30
+Acrílico | 1,750 | 17 | 20
+Tungsténio | 5,000 | 14 | 19
+Cobre | 1,300 | 25 | 26
+Aço | 2,000 | 22 | 23
+Vidro | 1,750 | 21 | 21
+Chumbo | 1,800 | 25 | 23
+Alumínio | 1,650 | 17 | 19
 
 **3-** Por fim, medimos os diâmetros das fontes de Tálio e Césio. O dâmetro da fonte de Tálio é $dtálio=(25,500\pm0,025)mm$ e $dcésio=(25,000\pm0,025)mm$
