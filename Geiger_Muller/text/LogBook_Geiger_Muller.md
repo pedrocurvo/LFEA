@@ -92,6 +92,4 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
 
 5. 
 
-// ![this is a image ](../../Gama/Graphs/Espetro_Ambiente_Smoothed.png){ width=150px }
-// usem ../pngs/ para as imagens que estão na pasta pngs os .. voltam atras e entram na pasta 
-// o { width=150px } é para definir o tamanho da imagem nao aparece na preview mas aparece no pdf
+
