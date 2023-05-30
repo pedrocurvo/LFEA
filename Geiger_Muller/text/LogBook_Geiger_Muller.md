@@ -79,13 +79,16 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    | 3 | 5741 ± 76 | 5894 ± 77 | 11635 ± 153 |
    | 4 | 2181 ± 47 | 2299 ± 48 | 4480 ± 95 |
    | 5 | 1794 ± 42 | 1805 ± 42 | 3599 ± 84 |
-   
+
 3. **Estudo da intensidade da radiação com a distância:**
    - Começamos por colocar a fonte de césio virada para cima no suporte
    - Para cada uma das prateleiras 1 a 5, realizamos 30 segundos de aquisição de dados duas vezes para cada prateleira na tensão de 950V. Para cada medição, colocamos na prateleira imediatamente acima à prateleira onde de encontrava o césio uma placa de alumínio totalmente tapada com o objetivo de bloquear a radiação beta;
    - Em seguida, repetimos o procedimento anterior, mas desta vez não colocamos a placa de alumínio;
 4. **Estudo da atenuação de partículas na matéria:**
-   - ...
+    - Começamos por colocar a fonte de césio virada para cima no suporte. Colocamos o césio na terceira prateleira com uma placa de alumínio totalmente fechada imediatamente acima, de modo a apenas deixar passar a radiação gamma proveninente do césio;
+   - Na prateleira zero colocamos uma placa de alumínio com orfício de diâmetro igual a (7,50±0,05) mm, que foi medido recorrendo a uma craveira. Fomos tapando o orifício da placa que se encontrava na prateleira com 9 materiais diferentes e, para cada um deles, realizámos duas vezes 30 segundos de aquisição de dados na tensão de 950V;
+   - Em seguida, encontram-se os dados obtidos para cada um dos materiais utilizados e em cada uma das medições feitas
+
 5. 
 
 // ![this is a image ](../../Gama/Graphs/Espetro_Ambiente_Smoothed.png){ width=150px }
