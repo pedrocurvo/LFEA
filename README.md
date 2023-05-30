@@ -21,7 +21,7 @@ A organização do repositório é a seguinte:
 ## Como usar o repositório
 Para usar o repositório, basta cloná-lo para o seu computador usando o comando:
 ```
-git clone
+git clone https://github.com/pedrocurvo/LFEA.git
 ```
 ou fazer o download do repositório em formato zip.
 
