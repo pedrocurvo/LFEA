@@ -40,8 +40,8 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
 
    |                         | 1º Medição | 2º Medição | Contagens Totais | Taxa de Contagens |
    |-------------------------|------------|------------|------------------|-------------------|
-   | Fonte virada para cima  | 117±11     | 118±11     | 235±22           | 23,5±2,2          |
-   | Fonte virada para baixo | 2±1        | 1±1        | 3±2              | 0,3±0,2           |
+   | Fonte virada para cima  | 117 ± 11   | 118 ± 11   | 235 ± 22         | 23,5 ± 2,2        |
+   | Fonte virada para baixo | 2 ± 1      | 1 ± 1      | 3 ± 2            | 0,3 ± 0,2         |
    | Tempo de contagem       | 10 s       |            |                  |                   |
 
    - De seguida, passámos para a medição do tempo morto do detetor. Para tal utilizámos combinações de três fontes em meia-lua, das quais a 1 e 2 contêm Tálio-204 e a 0 nenhum isótopo radioativo.
