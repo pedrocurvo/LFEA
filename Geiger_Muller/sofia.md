@@ -1,0 +1,5 @@
+- De seguida, passámos para a medição do tempo morto do detetor. Para tal utilizámos combinações de três fontes em meia-lua, das quais a 1 e 2 contêm Tálio-204 e a 0 nenhum isótopo radioativo.
+- Fizémos duas medições de 60 segundos para cada combinação de fontes, de modo a ter uma medição total de 120 segundos.
+- Primeiro usámos uma combinação da fonte 0 e 1, tendo obtido 4680 contagens na 1º medição e x contagens na 2º medição.
+- De seguida medimos as contagens para a combinação de fontes 0 e 2, obtendo-se x contagens para a 1º medição e x contagens para a 2º medição.
+- Por fim, usámos a combinação das fontes 1 e 2, tendo-se obtido x contagens para a 1º medição e x contagens para a 2º medição.
