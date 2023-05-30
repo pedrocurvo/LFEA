@@ -12,4 +12,4 @@
 # ignore all files in the directory .vscode
 **/.vscode
 
-__pycache__/**
+**/.pyc
