@@ -79,14 +79,14 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - Em seguida, repetimos o procedimento anterior, mas desta vez colocamos uma placa de alumínio não totalmente tapada, de modo a controlar o ângulo sólido. A placa de alumínio tinha uma abertura de diâmetro igual a (7,25±0,05) mm, que foi medido recorrendo a uma craveira;
    - Os dados obtidos foram os seguintes:
 
-   | Com Aluminio fechado |            |            |         |
-   |--------------|------------|------------|---------|
-   | Prateleira   | Contagem 1 | Contagem 2 | Total   |
-   | 1            | 1193±35    | 1230±35    | 2423±70 |
-   | 2            | 609±25     | 537±23     | 1146±48 |
-   | 3            | 410±20     | 434±21     | 844±41  |
-   | 4            | 332±18     | 276±17     | 608±35  |
-   | 5            | 250±16     | 256±16     | 506±32  |
+   | Com Aluminio fechado |            |            |           |
+   |--------------|------------|------------|-----------|
+   | Prateleira   | Contagem 1 | Contagem 2 | Total     |
+   | 1            | 1193 ± 35  | 1230 ± 35  | 2423 ± 70 |
+   | 2            | 609 ± 25   | 537 ± 23   | 1146 ± 48 |
+   | 3            | 410 ± 20   | 434 ± 21   | 844 ± 41  |
+   | 4            | 332 ± 18   | 276 ± 17   | 608 ± 35  |
+   | 5            | 250 ± 16   | 256 ± 16   | 506 ± 32  |
 
    | Com Aluminio com orifício |  |  |  |
    |---|---|---|---|
