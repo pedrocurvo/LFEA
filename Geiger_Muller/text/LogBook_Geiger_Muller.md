@@ -83,7 +83,8 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
 3. **Estudo da intensidade da radiação com a distância:**
    - Começamos por colocar a fonte de césio virada para cima no suporte
    - Para cada uma das prateleiras 1 a 5, realizamos 30 segundos de aquisição de dados duas vezes para cada prateleira na tensão de 950V. Para cada medição, colocamos na prateleira imediatamente acima à prateleira onde de encontrava o césio uma placa de alumínio totalmente tapada com o objetivo de bloquear a radiação beta;
-   - Em seguida, repetimos o procedimento anterior, mas desta vez não colocamos a placa de alumínio;
+   - Em seguida, repetimos o procedimento anterior, mas desta vez colocamos uma placa de alumínio não totalmente tapada, de modo a controlar o ângulo sólido. A placa de alumínio tinha uma abertura de diâmetro igual a (7,25±0,05) mm, que foi medido recorrendo a uma craveira;
+   - Os dados obtidos foram os seguintes:
 4. **Estudo da atenuação de partículas na matéria:**
     - Começamos por colocar a fonte de césio virada para cima no suporte. Colocamos o césio na terceira prateleira com uma placa de alumínio totalmente fechada imediatamente acima, de modo a apenas deixar passar a radiação gamma proveninente do césio;
    - Na prateleira zero colocamos uma placa de alumínio com orfício de diâmetro igual a (7,50±0,05) mm, que foi medido recorrendo a uma craveira. Fomos tapando o orifício da placa que se encontrava na prateleira com 9 materiais diferentes e, para cada um deles, realizámos duas vezes 30 segundos de aquisição de dados na tensão de 950V;
