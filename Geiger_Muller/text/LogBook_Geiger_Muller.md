@@ -38,7 +38,11 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - Após uma primeira análise destes dados, concluimos que o plateau deste detetor Geiger-Müller se situava entre 800 V e 1200 V. Selecionamos o início do plateau na voltagem para a qual observamos que os dados começavam a comportar-se linearmente e o fim corresponde apenas à última voltagem aplicada pelo sistema. Em seguida, selecionamos uma tensão de 950 V para utilizar no resto deste trabalho, que corresponde a certa de 3/8 do plateau.
    - Com a tensão que escolhemos no ponto anterior, realizamos duas aquisições de 5 segundos com a fonte de tálio virada para cima e duas aquisições com a fonte virada para baixo, totalizando 10 segundos de aquisição para cada um das faces. Para a fonte virada para cima, registamos e contagens e para a fonte virada para baixo registamos e contagens. Obtivemos os seguintes dados:
 
-
+   |                         | 1º Medição | 2º Medição | Contagens Totais | Taxa de Contagens |
+   |-------------------------|------------|------------|------------------|-------------------|
+   | Fonte virada para cima  | 117±11     | 118±11     | 235±22           | 23,5±2,2          |
+   | Fonte virada para baixo | 2±1        | 1±1        | 3±2              | 0,3±0,2           |
+   | Tempo de contagem       | 10 s       |            |                  |                   |
 
    - De seguida, passámos para a medição do tempo morto do detetor. Para tal utilizámos combinações de três fontes em meia-lua, das quais a 1 e 2 contêm Tálio-204 e a 0 nenhum isótopo radioativo.
    - Fizémos duas medições de 60 segundos para cada combinação de fontes, de modo a ter uma medição total de 120 segundos.
@@ -46,15 +50,17 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - De seguida medimos as contagens para a combinação de fontes 0 e 2, obtendo-se 4561 contagens para a 1º medição e 4618 contagens para a 2º medição.
    - Por fim, usámos a combinação das fontes 1 e 2, tendo-se obtido 8278 contagens para a 1º medição e 8230 contagens para a 2º medição.
    - Para a medição da radiação ambiente, fizémos duas medições de 30 segundos sem utilizar nenhuma fonte, tendo-se obtido 19 contagens em ambas as medições.
-2. **Estudo da eficiência do detector:**
+1. **Estudo da eficiência do detector:**
    - Com objetivo de estudar  eficiência dos betas colocamos uma fonte de tálio que tem betas muito energéticos. Queresmos concluir se as placas de aluminio bloqueiam os betas do tálio. Caso os bloqueiam, também bloquearão os do césio dado que estes são menos energéticos. 
    - Para isso, colocamos na prateleira 3 a fonte de tálio e na prateleira 2 uma placa de aluminio totalmente tapada. Realizámos 30 segundos de aquisição de dados duas vezes na tensão de 950V e obtivemos, repetivamente, 16 e 17 contagens. Verificamos que as contagens obtidas se assemelham às contagens obtidas para a radiação ambiente, pelo que concluimos que a placa de aluminio bloqueia os betas do tálio.
    - 
-3. **Estudo da intensidade da radiação com a distância:**
+2. **Estudo da intensidade da radiação com a distância:**
+   - Começamios por colocar a fonte de césio virada para cima no suporte
+   - Para cada uma daa prateleiras 1 a 5, realizamos 30 segundos de aquisição de dados duas vezes para cada prateleira na tensão de 950V. Para cada medição, colocamos na prateleira imediatamente acima à prateleira onde de encontrava o césio uma placa de alumínio totalmente tapada com o objetivo de bloquear a radiação beta;
+   - Em seguida, repetimos o procedimento anterior, mas desta vez não colocamos a placa de alumínio;
+3. **Estudo da atenuação de partículas na matéria:**
    - ...
-4. **Estudo da atenuação de partículas na matéria:**
-   - ...
-5. 
+4. 
 
 // ![this is a image ](../../Gama/Graphs/Espetro_Ambiente_Smoothed.png){ width=150px }
 // usem ../pngs/ para as imagens que estão na pasta pngs os .. voltam atras e entram na pasta 
