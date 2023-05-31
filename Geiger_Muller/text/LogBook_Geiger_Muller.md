@@ -61,7 +61,6 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
 
    - Para a medição da radiação ambiente, fizémos duas medições de 30 segundos sem utilizar nenhuma fonte, tendo-se obtido 19 contagens em ambas as medições.
    - Obtivemos os seguintes valores:
-   - 
   
    | Radiação ambiente | 1º Medição | 2º Medição | Contagens Totais | Taxa de Contagens |
    |-----|---|---|----|----|
@@ -69,10 +68,12 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    | Tempo de contagem | 60 s |  |  |  |
 
 2. **Estudo da eficiência do detector:**
-   - Com objetivo de estudar  eficiência dos betas colocamos uma fonte de tálio que tem betas muito energéticos. Queremos concluir se as placas de aluminio bloqueiam os betas do tálio. Caso os bloqueiem, também bloquearão os do césio dado que estes são menos energéticos. 
-   - Para isso, colocamos na prateleira 3 a fonte de tálio e na prateleira 2 uma placa de aluminio totalmente tapada. Realizámos 30 segundos de aquisição de dados duas vezes na tensão de 950V e obtivemos, respetivamente, 16 e 17 contagens. Verificamos que as contagens obtidas se assemelham às contagens obtidas para a radiação ambiente, pelo que concluimos que a placa de aluminio bloqueia os betas do tálio.
+   - Com objetivo de estudar eficiência dos betas colocamos uma fonte de tálio que tem betas muito energéticos. Queremos concluir se as placas de aluminio bloqueiam os betas do tálio. Caso os bloqueiem, também bloquearão os do césio dado que estes são menos energéticos. 
+   - Medimos com uma fonte de tálio numa chapa tapada o número de contagens, para verificar que a chapa impedia a passagem da radiação beta, obtendo 16 e 17 contagens em medições de 30 segundos cada. Estas contagens assemelham-se às obtidas na radiação de fundo ambiente, pelo que concluímos que, de facto, tapa a radiação beta.
+   - Em seguida, realizámos medições para a chapa com uma abertura de 10 mm, tendo obtido as contagens de 240 e 234.
+   - Realizámos medições para a chpa de 7,5 mm tendo obtido as contagens de 111 e 94.
+   - Em seguida, para estudar a radiação gama, trocámos a fonte para a fonte de césio e realizámos contagens para a mesma com a palca sem orifício tendo obtido contagens de 410 e 434.
   
-   
 3. **Estudo da intensidade da radiação com a distância:**
    - Começamos por colocar a fonte de césio virada para cima no suporte
    - Para cada uma das prateleiras 1 a 5, realizamos 30 segundos de aquisição de dados duas vezes para cada prateleira na tensão de 950V. Para cada medição, colocamos na prateleira imediatamente acima à prateleira onde de encontrava o césio uma placa de alumínio totalmente tapada com o objetivo de bloquear a radiação beta;
@@ -89,20 +90,31 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    | 5            | 250 ± 16   | 256 ± 16   | 506 ± 32  |
 
    | Com Aluminio com orifício |  |  |  |
-   |---|---|---|---|
+   |--------------|------------|------------|-----------|
    | Prateleira | Contagem 1 | Contagem 2 | Total |
    | 1 | 21840 ± 148 | 21748 ± 147 | 43588 ± 295 |
    | 2 | 12911 ± 114 | 13217 ± 115 | 26128 ± 229 |
    | 3 | 5741 ± 76 | 5894 ± 77 | 11635 ± 153 |
    | 4 | 2181 ± 47 | 2299 ± 48 | 4480 ± 95 |
    | 5 | 1794 ± 42 | 1805 ± 42 | 3599 ± 84 |
-   - 
+   
+   - De seguida, medimos a distância das diferentes prateleiras ao detetor, obtendo os seguintes valores:
+
+   Prateleira | Distância ao detetor (± 0,0005 m) 
+   :--:|:--:
+   0 | 0,00635
+   1 | 0,0127
+   2 | 0,019
+   3 | 0,0254
+   4 | 0,0318
+   5 | 0,0381
+
 4. **Estudo da atenuação de partículas na matéria:**
     - Começamos por colocar a fonte de césio virada para cima no suporte. Colocamos o césio na terceira prateleira com uma placa de alumínio totalmente fechada imediatamente acima, de modo a apenas deixar passar a radiação gamma proveninente do césio;
    - Na prateleira zero colocamos uma placa de alumínio com orfício de diâmetro igual a (7,50±0,05) mm, que foi medido recorrendo a uma craveira. Fomos tapando o orifício da placa que se encontrava na prateleira 0 com 9 materiais diferentes e, para cada um deles, realizámos duas vezes 30 segundos de aquisição de dados na tensão de 950V;
-   - Em seguida, encontram-se os dados obtidos para cada um dos materiais utilizados e em cada uma das medições feitas:
+   - Em seguida, encontram-se os dados obtidos para cada um dos materiais utilizados com a fonte de césio tapada:
 
-   ##Césio com Placa de Alumínio totalmente tapada na prateleira 3 e material na 0:
+   ### Césio com Placa de Alumínio tapada na prateleira 3 e com placa com material na 0:
 
    Material da Chapa | Espessura (± 0,025 mm) | Contagem 1 | Contagem 2 | 
    :--:|:--:|:--:|:--:|
@@ -116,12 +128,28 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    Chumbo | 1,800 | 337 | 324
    Alumínio | 1,650 | 323 | 329
 
-   - De seguida retirámos a placa de alumínio completamente fechada da prateleira 2 e subsituímos a fonte de césio por uma fonte de tálio na prateleira 3 .
+   - De seguida retirámos a placa de alumínio completamente fechada na prateleira 2 e repetimos as medições para o césio:
+
+   ### Césio sem Placa de Alumínio tapada na prateleira 3 e com placa com material na 0:
+
+   Material da Chapa | Espessura (± 0,025 mm) | Contagem 1 | Contagem 2 | 
+   :--:|:--:|:--:|:--:
+   Ar (sem chapa) | - | 2380 | 2276
+   Cartão | 1,000 | 857 | 793
+   Acrílico | 1,750 | 370 | 354
+   Tungsténio | 5,000 | 274 | 249
+   Cobre | 1,300 | 338 | 353
+   Aço | 2,000 | 335 | 329
+   Vidro | 1,750 | 370 | 364
+   Chumbo | 1,800 | 352 | 358
+   Alumínio | 1,650 | 552 | 543
+
+   - De seguida voltamos a colocar a placa de alumínio completamente fechada da prateleira 2 e substituímos a fonte de césio por uma fonte de tálio na prateleira 3 .
    - Voltamos a fazer a mesmas medições dos 9 materiais diferentes, tendo obtido os seguintes resultados:
 
-   ##Tálio com Placa de Alumínio totalmente tapada na prateleira 3 e material na 0:
+   ### Tálio com Placa de Alumínio tapada na prateleira 3 e com placa com material na 0:
 
-   Material da Chapa | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
+   Material da Chapa | Espessura (± 0,025 mm) | Contagem 1 | Contagem 2 | 
    :--:|:--:|:--:|:--:
    Ar (sem chapa) | - | 127 | 114
    Cartão | 1,000 | 38 | 30
@@ -133,9 +161,11 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    Chumbo | 1,800 | 25 | 23
    Alumínio | 1,650 | 17 | 19
 
-- De seguida fizemos as mesmas medições para o césio destapado:
+   - De seguida retirámos a placa de alumínio completamente fechada da prateleira 2 e repetimos as medições para o tálio:
 
-Material da Chapa + Chapa de Alumínio | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
+   ### Tálio sem Placa de Alumínio tapada na prateleira 3 e com placa com material na 0:
+
+   Material da Chapa | Espessura (± 0,025 mm) | Contagem 1 | Contagem 2 | 
    :--:|:--:|:--:|:--:
    Ar (sem chapa) | - | 2380 | 2276
    Cartão | 1,000 | 857 | 793
@@ -146,7 +176,5 @@ Material da Chapa + Chapa de Alumínio | Espessura $\pm 0,025$ (mm) | Contagens 
    Vidro | 1,750 | 21 | 21
    Chumbo | 1,800 | 25 | 23
    Alumínio | 1,650 | 17 | 19
-
-5. 
 
 
