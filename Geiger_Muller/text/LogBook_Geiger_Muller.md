@@ -176,5 +176,3 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    Vidro | 1,750 | 21 | 21
    Chumbo | 1,800 | 25 | 23
    Alumínio | 1,650 | 17 | 19
-
-
