@@ -2,5 +2,5 @@ Pedro:
 pandoc Gamma.md -o output.pdf --template /Users/pedrocurvo/Desktop/LFEA/eisvogel.latex --metadata title="LogBook"
 
 Salvador:
-pandoc LogBook_Gamma.md -o output.pdf --template /home/salvadortorpes/LFEA/eisvogel.latex --metadata tit
-le="LogBookGamma1D"
+pandoc LogBook_Gamma.md -o Gamma.pdf --template=eisvogel.latex
+sudo cp eisvogel.latex /usr/share/pandoc/data/templates
