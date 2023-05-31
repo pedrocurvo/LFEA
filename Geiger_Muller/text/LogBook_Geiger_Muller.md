@@ -99,8 +99,10 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - 
 4. **Estudo da atenuação de partículas na matéria:**
     - Começamos por colocar a fonte de césio virada para cima no suporte. Colocamos o césio na terceira prateleira com uma placa de alumínio totalmente fechada imediatamente acima, de modo a apenas deixar passar a radiação gamma proveninente do césio;
-   - Na prateleira zero colocamos uma placa de alumínio com orfício de diâmetro igual a (7,50±0,05) mm, que foi medido recorrendo a uma craveira. Fomos tapando o orifício da placa que se encontrava na prateleira com 9 materiais diferentes e, para cada um deles, realizámos duas vezes 30 segundos de aquisição de dados na tensão de 950V;
+   - Na prateleira zero colocamos uma placa de alumínio com orfício de diâmetro igual a (7,50±0,05) mm, que foi medido recorrendo a uma craveira. Fomos tapando o orifício da placa que se encontrava na prateleira 0 com 9 materiais diferentes e, para cada um deles, realizámos duas vezes 30 segundos de aquisição de dados na tensão de 950V;
    - Em seguida, encontram-se os dados obtidos para cada um dos materiais utilizados e em cada uma das medições feitas:
+
+   ##Césio com Placa de Alumínio totalmente tapada na prateleira 3 e material na 0:
 
    Material da Chapa | Espessura (± 0,025 mm) | Contagem 1 | Contagem 2 | 
    :--:|:--:|:--:|:--:|
@@ -114,10 +116,12 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    Chumbo | 1,800 | 337 | 324
    Alumínio | 1,650 | 323 | 329
 
-   - De seguida retirámos a placa de alumínio completamente fechada e subsituímos a fonte de césio por uma fonte de tálio na prateleira 3 .
+   - De seguida retirámos a placa de alumínio completamente fechada da prateleira 2 e subsituímos a fonte de césio por uma fonte de tálio na prateleira 3 .
    - Voltamos a fazer a mesmas medições dos 9 materiais diferentes, tendo obtido os seguintes resultados:
 
-   Material da Chapa + Chapa de Alumínio | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
+   ##Tálio com Placa de Alumínio totalmente tapada na prateleira 3 e material na 0:
+
+   Material da Chapa | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
    :--:|:--:|:--:|:--:
    Ar (sem chapa) | - | 127 | 114
    Cartão | 1,000 | 38 | 30
