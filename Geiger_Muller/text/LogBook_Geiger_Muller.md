@@ -133,7 +133,19 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    Chumbo | 1,800 | 25 | 23
    Alumínio | 1,650 | 17 | 19
 
+- De seguida fizemos as mesmas medições para o césio destapado:
 
+Material da Chapa + Chapa de Alumínio | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
+   :--:|:--:|:--:|:--:
+   Ar (sem chapa) | - | 2380 | 2276
+   Cartão | 1,000 | 857 | 793
+   Acrílico | 1,750 | 370 | 354
+   Tungsténio | 5,000 | 274 | 249
+   Cobre | 1,300 | 338 | 353
+   Aço | 2,000 | 22 | 23
+   Vidro | 1,750 | 21 | 21
+   Chumbo | 1,800 | 25 | 23
+   Alumínio | 1,650 | 17 | 19
 
 5. 
 
