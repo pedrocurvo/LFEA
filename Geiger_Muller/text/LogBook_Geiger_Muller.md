@@ -52,19 +52,20 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - De seguida encontram-se os dados relativos à medição do tempo morto:
   
    |  | 1º Medição | 2º Medição | Contagens Totais | Taxa de Contagens |
-   |---|---|---|---|---|
-   | Meia lua 0-1 | 4680 ± 68,41 | 4491 ± 67,01 | 9171 ± 135,43 | 152,85 ± 1,13 |
-   | Meia lua 2-0 | 4561 ± 67,54 | 4618 ± 67,96 | 9179 ± 135,49 | 152,98 ± 1,13 |
-   | Lua cheia 2-1 | 8278 ± 90,98 | 8230 ± 90,72 | 16508 ± 181,7 | 275,13 ± 1,51 |
-   | Tempo Morto (µs) | 656,45 ± 42, 34 |  |  |  |
+   |-----|---|---|---|---|
+   | Meia lua 0-1 | 4680 ± 68 | 4491 ± 67 | 9171 ± 135 | 152,85 ± 1,13 |
+   | Meia lua 2-0 | 4561 ± 68 | 4618 ± 67 | 9179 ± 135 | 152,98 ± 1,13 |
+   | Lua cheia 2-1 | 8278 ± 91 | 8230 ± 90 | 16508 ± 181 | 275,13 ± 1,51 |
+   | Tempo Morto (µs) | 657 ± 42, 34 |  |  |  |
    | Tempo de contagem | 120 s|  |  |  |
 
    - Para a medição da radiação ambiente, fizémos duas medições de 30 segundos sem utilizar nenhuma fonte, tendo-se obtido 19 contagens em ambas as medições.
    - Obtivemos os seguintes valores:
-
+   - 
+  
    | Radiação ambiente | 1º Medição | 2º Medição | Contagens Totais | Taxa de Contagens |
-   |---|---|---|---|---|
-   |  | 19 ± 4,36 | 19 ± 4,36 | 38 ± 8,72 | 0,63 ± 0,15 |
+   |-----|---|---|----|----|
+   | Contagens | 19 ± 4,36 | 19 ± 4,36 | 38 ± 8,72 | 0,63 ± 0,15 |
    | Tempo de contagem | 60 s |  |  |  |
 
 2. **Estudo da eficiência do detector:**
