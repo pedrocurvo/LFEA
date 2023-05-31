@@ -13,14 +13,21 @@
 using namespace std;
 
 int main(){
+    // Create Application
     TApplication A("A", nullptr, nullptr);
     // Create Canvas
     TCanvas c1("c1", "c1", 1200, 800); 
     double acq_time = 150;
     double acq_time_amb = 1200;
 
-    // Calibration
+    //System Command
+    string command = "mkdir test";
+    system(command.c_str());
 
+    // Directory to Save Graphs
+    string directory = "graphs/";
+
+    // Calibration
     TGraph CalibratioGraph;
     vector<pair<double, double>> calibration;
     //Energy = [32, 662, 1173, 1333] # Cs and Co energies
@@ -47,7 +54,7 @@ int main(){
     double intercept = f1->GetParameter(1);
     
     c1.Update();
-    c1.SaveAs("Graphs/Calibracao.png");
+    c1.SaveAs("graphs/Calibracao.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -70,7 +77,7 @@ int main(){
     c1.Clear();
     G_Amb.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Ambiente.png");
+    c1.SaveAs("graphs/Espetro_Ambiente.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -91,7 +98,7 @@ int main(){
     c1.Clear();
     G_Amb_Smoothed.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Ambiente_Smoothed.png");
+    c1.SaveAs("graphs/Espetro_Ambiente_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -112,7 +119,7 @@ int main(){
     c1.Clear();
     G_Cs.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs.png");
+    c1.SaveAs("graphs/Espetro_Cs.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -133,7 +140,7 @@ int main(){
     c1.Clear();
     G_Cs_Smoothed.Draw("AC");   
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs_Smoothed.png");
+    c1.SaveAs("graphs/Espetro_Cs_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -154,7 +161,7 @@ int main(){
     c1.Clear();
     G_Co.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Co.png");
+    c1.SaveAs("graphs/Espetro_Co.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -175,7 +182,7 @@ int main(){
     c1.Clear();
     G_Co_Smoothed.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Co_Smoothed.png");
+    c1.SaveAs("graphs/Espetro_Co_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -197,7 +204,7 @@ int main(){
     //c1.SetLogy();
     G_Am.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida.png");
+    c1.SaveAs("graphs/Espetro_Fonte_Desconhecida.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -219,7 +226,7 @@ int main(){
     G_Am_Smoothed.Draw("AC");
     
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida_Smoothed.png");
+    c1.SaveAs("graphs/Espetro_Fonte_Desconhecida_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -241,7 +248,7 @@ int main(){
     c1.Clear();
     G_Cs_Pb.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs_Pb.png");
+    c1.SaveAs("graphs/Espetro_Cs_Pb.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -262,7 +269,7 @@ int main(){
     c1.Clear();
     G_Cs_Pb_Smoothed.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs_Pb_Smoothed.png");
+    c1.SaveAs("graphs/Espetro_Cs_Pb_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -283,7 +290,7 @@ int main(){
     c1.Clear();
     G_Cs_Pb_Thin.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs_Pb_Thin.png");
+    c1.SaveAs("graphs/Espetro_Cs_Pb_Thin.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -304,7 +311,7 @@ int main(){
     c1.Clear();
     G_Cs_Pb_Thin_Smoothed.Draw("AC");
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs_Pb_Thin_Smoothed.png");
+    c1.SaveAs("graphs/Espetro_Cs_Pb_Thin_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
