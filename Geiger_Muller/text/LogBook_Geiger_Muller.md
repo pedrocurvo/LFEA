@@ -71,7 +71,23 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - Com objetivo de estudar  eficiência dos betas colocamos uma fonte de tálio que tem betas muito energéticos. Queremos concluir se as placas de aluminio bloqueiam os betas do tálio. Caso os bloqueiem, também bloquearão os do césio dado que estes são menos energéticos. 
    - Para isso, colocamos na prateleira 3 a fonte de tálio e na prateleira 2 uma placa de aluminio totalmente tapada. Realizámos 30 segundos de aquisição de dados duas vezes na tensão de 950V e obtivemos, respetivamente, 16 e 17 contagens. Verificamos que as contagens obtidas se assemelham às contagens obtidas para a radiação ambiente, pelo que concluimos que a placa de aluminio bloqueia os betas do tálio.
   
-   | Sem Aluminio |  |  |  |
+   
+3. **Estudo da intensidade da radiação com a distância:**
+   - Começamos por colocar a fonte de césio virada para cima no suporte
+   - Para cada uma das prateleiras 1 a 5, realizamos 30 segundos de aquisição de dados duas vezes para cada prateleira na tensão de 950V. Para cada medição, colocamos na prateleira imediatamente acima à prateleira onde de encontrava o césio uma placa de alumínio totalmente tapada com o objetivo de bloquear a radiação beta;
+   - Em seguida, repetimos o procedimento anterior, mas desta vez colocamos uma placa de alumínio não totalmente tapada, de modo a controlar o ângulo sólido. A placa de alumínio tinha uma abertura de diâmetro igual a (7,25±0,05) mm, que foi medido recorrendo a uma craveira;
+   - Os dados obtidos foram os seguintes:
+
+   | Com Aluminio fechado |            |            |         |
+   |--------------|------------|------------|---------|
+   | Prateleira   | Contagem 1 | Contagem 2 | Total   |
+   | 1            | 1193±35    | 1230±35    | 2423±70 |
+   | 2            | 609±25     | 537±23     | 1146±48 |
+   | 3            | 410±20     | 434±21     | 844±41  |
+   | 4            | 332±18     | 276±17     | 608±35  |
+   | 5            | 250±16     | 256±16     | 506±32  |
+
+   | Com Aluminio com orifício |  |  |  |
    |---|---|---|---|
    | Prateleira | Contagem 1 | Contagem 2 | Total |
    | 1 | 21840 ± 148 | 21748 ± 147 | 43588 ± 295 |
@@ -79,12 +95,7 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    | 3 | 5741 ± 76 | 5894 ± 77 | 11635 ± 153 |
    | 4 | 2181 ± 47 | 2299 ± 48 | 4480 ± 95 |
    | 5 | 1794 ± 42 | 1805 ± 42 | 3599 ± 84 |
-
-3. **Estudo da intensidade da radiação com a distância:**
-   - Começamos por colocar a fonte de césio virada para cima no suporte
-   - Para cada uma das prateleiras 1 a 5, realizamos 30 segundos de aquisição de dados duas vezes para cada prateleira na tensão de 950V. Para cada medição, colocamos na prateleira imediatamente acima à prateleira onde de encontrava o césio uma placa de alumínio totalmente tapada com o objetivo de bloquear a radiação beta;
-   - Em seguida, repetimos o procedimento anterior, mas desta vez colocamos uma placa de alumínio não totalmente tapada, de modo a controlar o ângulo sólido. A placa de alumínio tinha uma abertura de diâmetro igual a (7,25±0,05) mm, que foi medido recorrendo a uma craveira;
-   - Os dados obtidos foram os seguintes:
+   - 
 4. **Estudo da atenuação de partículas na matéria:**
     - Começamos por colocar a fonte de césio virada para cima no suporte. Colocamos o césio na terceira prateleira com uma placa de alumínio totalmente fechada imediatamente acima, de modo a apenas deixar passar a radiação gamma proveninente do césio;
    - Na prateleira zero colocamos uma placa de alumínio com orfício de diâmetro igual a (7,50±0,05) mm, que foi medido recorrendo a uma craveira. Fomos tapando o orifício da placa que se encontrava na prateleira com 9 materiais diferentes e, para cada um deles, realizámos duas vezes 30 segundos de aquisição de dados na tensão de 950V;
