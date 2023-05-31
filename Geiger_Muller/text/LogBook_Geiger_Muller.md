@@ -103,11 +103,11 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    Prateleira | Distância ao detetor (± 0,0005 m) 
    :--:|:--:
    0 | 0,00635
-   1 | 0,0127
-   2 | 0,019
-   3 | 0,0254
-   4 | 0,0318
-   5 | 0,0381
+   1 | 0,01270
+   2 | 0,01900
+   3 | 0,02540
+   4 | 0,03180
+   5 | 0,03810
 
 4. **Estudo da atenuação de partículas na matéria:**
     - Começamos por colocar a fonte de césio virada para cima no suporte. Colocamos o césio na terceira prateleira com uma placa de alumínio totalmente fechada imediatamente acima, de modo a apenas deixar passar a radiação gamma proveninente do césio;
