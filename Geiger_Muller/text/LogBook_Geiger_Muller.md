@@ -34,7 +34,6 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    | 1175 | 757 | 27,51 | 810 | 28,46 | 1567,00 | 55,97 | 26,12 | 0,93 | 25,94 | 0,96 |
    | 1200 | 775 | 27,84 | 770 | 27,75 | 1545,00 | 55,59 | 25,75 | 0,93 | 25,56 | 0,95 |
    | Tempo de contagem |  | 60 s |  |  |  |  |  |  |  |  |
-   |  |  |  |  |  |  |  |  |  |  |  |
 
    - Após uma primeira análise destes dados, concluimos que o plateau deste detetor Geiger-Müller se situava entre 800 V e 1200 V. Selecionamos o início do plateau na voltagem para a qual observamos que os dados começavam a comportar-se linearmente e o fim corresponde apenas à última voltagem aplicada pelo sistema. Em seguida, selecionamos uma tensão de 950 V para utilizar no resto deste trabalho, que corresponde a certa de 3/8 do plateau.
    - Com a tensão que escolhemos no ponto anterior, realizamos duas aquisições de 5 segundos com a fonte de tálio virada para cima e duas aquisições com a fonte virada para baixo, totalizando 10 segundos de aquisição para cada um das faces. Para a fonte virada para cima, registamos e contagens e para a fonte virada para baixo registamos e contagens. Obtivemos os seguintes dados:
@@ -47,13 +46,13 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - De seguida medimos as contagens para a combinação de fontes 0 e 2, obtendo-se 4561 contagens para a 1º medição e 4618 contagens para a 2º medição.
    - Por fim, usámos a combinação das fontes 1 e 2, tendo-se obtido 8278 contagens para a 1º medição e 8230 contagens para a 2º medição.
    - Para a medição da radiação ambiente, fizémos duas medições de 30 segundos sem utilizar nenhuma fonte, tendo-se obtido 19 contagens em ambas as medições.
-1. **Estudo da eficiência do detector:**
+2. **Estudo da eficiência do detector:**
    - ...
-2. **Estudo da intensidade da radiação com a distância:**
+3. **Estudo da intensidade da radiação com a distância:**
    - ...
-3. **Estudo da atenuação de partículas na matéria:**
+4. **Estudo da atenuação de partículas na matéria:**
    - ...
-4. 
+5. 
 
 ![this is a image ](../../Gama/Graphs/Espetro_Ambiente_Smoothed.png){ width=150px }
 // usem ../pngs/ para as imagens que estão na pasta pngs os .. voltam atras e entram na pasta 
