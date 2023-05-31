@@ -75,7 +75,7 @@ Com a fonte virada para baixo, registámos 3 e 5 contagens.
 
 **13-** Para medir a radiação ambiente, fizémos duas aquisições de 30 segundos do detetor sem fonte nenhuma, e registámos 14 e 23 contagens, respetivamente.
 
-## Estudo da eficiência do detector ##
+## Estudo da eficiência do detector ##  
 
 **1-** Para estudar a eficiência do detetor na leitura de radiações $\gamma$, colocámos a fonte de Césio, Cs-137, demarcado com L04, na prateleira 3, virada para cima, e uma chapa metálica de espessura $\phi = (1,250 \pm 0,025) mm$ na prateleira 0, de forma a bloquear a radiação $\beta$, que tem dificuldade em penetrar metal, ao contrário da radiação  $\gamma$. Fizémos 3 aquisições de 30 segundos, tendo registado 1316, 1085 e 1125 contagens, resptivamente.
 
