@@ -8,3 +8,9 @@
 **/Makefile
 # ignore all files in the directory .vscode
 **/c_cpp_properties.json
+
+# ignore all files in the directory .vscode
+**/.vscode
+
+**/.pyc
+**/__pycache__
