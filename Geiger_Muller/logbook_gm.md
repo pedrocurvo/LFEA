@@ -154,4 +154,4 @@ Vidro | 1,750 | 21 | 21
 Chumbo | 1,800 | 25 | 23
 Alumínio | 1,650 | 17 | 19
 
-**3-** Por fim, medimos os diâmetros das fontes de Tálio e Césio. O dâmetro da fonte de Tálio é $dtálio=(25,500\pm0,025)mm$ e $dcésio=(25,000\pm0,025)mm$
+Medimos os diâmetros das fontes de Tálio e Césio. O dâmetro da fonte de Tálio é $dtálio=(25,500\pm0,025)mm$ e $dcésio=(25,000\pm0,025)mm$

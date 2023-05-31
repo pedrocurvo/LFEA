@@ -102,8 +102,8 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    - Na prateleira zero colocamos uma placa de alumínio com orfício de diâmetro igual a (7,50±0,05) mm, que foi medido recorrendo a uma craveira. Fomos tapando o orifício da placa que se encontrava na prateleira com 9 materiais diferentes e, para cada um deles, realizámos duas vezes 30 segundos de aquisição de dados na tensão de 950V;
    - Em seguida, encontram-se os dados obtidos para cada um dos materiais utilizados e em cada uma das medições feitas:
 
-   Material da Chapa | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
-   :--:|:--:|:--:|:--:
+   Material da Chapa | Espessura (± 0,025 mm) | Contagem 1 | Contagem 2 | 
+   :--:|:--:|:--:|:--:|
    Ar (sem chapa) | - | 343 | 340
    Cartão | 1,000 | 356 | 341
    Acrílico | 1,750 | 368 | 339
@@ -114,7 +114,7 @@ A experiência que em seguida se descreve foi realizada no dia 31 de maio de 202
    Chumbo | 1,800 | 337 | 324
    Alumínio | 1,650 | 323 | 329
 
-   - De seguida retirámos a placa de alumínio completamente fechada e subsituímos a fonte de césio por uma fonte de tálio na outra chapa.
+   - De seguida retirámos a placa de alumínio completamente fechada e subsituímos a fonte de césio por uma fonte de tálio na prateleira 3 .
    - Voltamos a fazer a mesmas medições dos 9 materiais diferentes, tendo obtido os seguintes resultados:
 
    Material da Chapa + Chapa de Alumínio | Espessura $\pm 0,025$ (mm) | Contagens 1ª Aquisição | Contagens 2ª Aquisição 
