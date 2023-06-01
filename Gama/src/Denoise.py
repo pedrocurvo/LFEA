@@ -1,9 +1,6 @@
 import numpy as np
 import sys
-import os
-import pandas as pd
 import matplotlib.pyplot as plt
-from skimage.restoration import denoise_wavelet
 import pywt
 
 def madev(d, axis=None):
@@ -20,9 +17,9 @@ def moving_average(noisy_signal, window_size):
 def wavelet_denoising(noisy_signal: np.ndarray):
     '''Apply wavelet denoising'''
     threshold = np.sqrt(2 * np.log(len(noisy_signal[:, 1])))  # Threshold calculation
-    coefficients = pywt.wavedec(noisy_signal[:, 1], 'db4', level=5)  # Wavelet decomposition
+    coefficients = pywt.wavedec(noisy_signal[:, 1], 'coif4', 'smooth', level=5)  # Wavelet decomposition
     coefficients[1:] = (pywt.threshold(c, threshold) for c in coefficients[1:])  # Thresholding
-    denoised_signal = pywt.waverec(coefficients, 'db4')  # Wavelet reconstruction
+    denoised_signal = pywt.waverec(coefficients, 'coif4', 'smooth')  # Wavelet reconstruction
     new_signal = np.copy(noisy_signal)
     new_signal[:, 1] = denoised_signal
     return new_signal
