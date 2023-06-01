@@ -9,7 +9,9 @@
 #include "TH1F.h"
 #include "TGraph.h"
 #include "TF1.h"
-#include "Read.cpp"
+#include "Read.h"
+#include "TStyle.h"
+
 using namespace std;
 
 int main(){
@@ -23,6 +25,7 @@ int main(){
     //System Command
     string command = "mkdir test";
     system(command.c_str());
+    gStyle->SetOptFit(kTRUE);
 
     // Directory to Save Graphs
     string directory = "graphs/";
@@ -41,7 +44,7 @@ int main(){
     }
     CalibratioGraph.SetLineColor(kRed);
     CalibratioGraph.SetMarkerStyle(20);
-    CalibratioGraph.SetMarkerSize(0.5);
+    CalibratioGraph.SetMarkerSize(1.5);
     CalibratioGraph.SetTitle("Calibration; Channels; Energy [keV]");
     CalibratioGraph.GetXaxis()->CenterTitle();
     CalibratioGraph.GetYaxis()->CenterTitle();
@@ -54,11 +57,11 @@ int main(){
     double intercept = f1->GetParameter(1);
     
     c1.Update();
-    c1.SaveAs("graphs/Calibracao.png");
+    c1.SaveAs("Graphs/Calibracao.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-
+    /*
     // Espetro de Radiação do Ambiente
     TGraph G_Amb; 
     vector<pair<double, double>> rad_ambiente;
@@ -76,12 +79,14 @@ int main(){
 
     c1.Clear();
     G_Amb.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Ambiente.png");
+    c1.SaveAs("Graphs/Espetro_Ambiente.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
     // Espetro de Radiacao Ambiente Smoothed
+        
     TGraph G_Amb_Smoothed;
     vector<pair<double, double>> rad_ambiente_smoothed;
     ReadFile("Data_Files/Ruido_Energy_Smoothed.dat", rad_ambiente_smoothed);
@@ -97,11 +102,13 @@ int main(){
 
     c1.Clear();
     G_Amb_Smoothed.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Ambiente_Smoothed.png");
+    c1.SaveAs("Graphs/Espetro_Ambiente_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-
+        
+    
     // Espetro de Radiação do Cs-137 
     TGraph G_Cs;
     vector<pair<double, double>> rad_cs;
@@ -117,13 +124,34 @@ int main(){
     G_Cs.GetYaxis()->CenterTitle();
 
     c1.Clear();
-    G_Cs.Draw("AC");
+    G_Cs.Draw("AP");
+
+    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 35);
+    F_Cs1->SetParameters(100, 27, 10);
+    F_Cs1->SetLineColor(kRed);
+    G_Cs.Fit("F_Cs1","","",23,35);
+    F_Cs1->Draw("same C");
+
+    TF1 *F_Cs2 = new TF1("F_Cs2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 170, 240);
+    F_Cs2->SetParameters(200, 210, 50);
+    F_Cs2->SetLineColor(kRed);
+    G_Cs.Fit("F_Cs2","","",170,240);
+    F_Cs2->Draw("same C");
+
+    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 720);
+    F_Cs3->SetParameters(1000, 650, 50);
+    F_Cs3->SetLineColor(kRed);
+    G_Cs.Fit("F_Cs3","","",610,720);
+    F_Cs3->Draw("same C");
+
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Cs.png");
+    c1.SaveAs("Graphs/Espetro_Cs.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
     // Espetro de Radiaçao do Cs-137 Smoothed
+        
     TGraph G_Cs_Smoothed;
     vector<pair<double, double>> rad_cs_smoothed;
     ReadFile("Data_Files/Cesio_Energy_Smoothed.dat", rad_cs_smoothed);
@@ -139,10 +167,12 @@ int main(){
 
     c1.Clear();
     G_Cs_Smoothed.Draw("AC");   
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Cs_Smoothed.png");
+    c1.SaveAs("Graphs/Espetro_Cs_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+        
 
     // Espetro de Radiação do Co-60
     TGraph G_Co;
@@ -160,12 +190,14 @@ int main(){
 
     c1.Clear();
     G_Co.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Co.png");
+    c1.SaveAs("Graphs/Espetro_Co.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
     // Espetro de Radiação do Co-60 Smoothed
+    
     TGraph G_Co_Smoothed;
     vector<pair<double, double>> rad_co_smoothed;
     ReadFile("Data_Files/Cobalto_Energy_Smoothed.dat", rad_co_smoothed);
@@ -181,10 +213,12 @@ int main(){
 
     c1.Clear();
     G_Co_Smoothed.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Co_Smoothed.png");
+    c1.SaveAs("Graphs/Espetro_Co_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    */
 
     // Espetro de Radiação da Fonte Desconhecida
     TGraph G_Am;
@@ -201,14 +235,35 @@ int main(){
     G_Am.GetYaxis()->CenterTitle();
 
     c1.Clear();
-    //c1.SetLogy();
-    G_Am.Draw("AC");
+    c1.SetLogy();
+    G_Am.Draw("AP");
+
+    TF1 *F_Des1 = new TF1("F_Des1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 35);
+    F_Des1->SetParameters(100, 27, 10);
+    F_Des1->SetLineColor(kRed);
+    G_Cs.Fit("F_Des1","","",23,35);
+    F_Des1->Draw("same C");
+
+    TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 170, 240);
+    F_Des2->SetParameters(200, 210, 50);
+    F_Des2->SetLineColor(kRed);
+    G_Cs.Fit("F_Des2","","",170,240);
+    F_Des2->Draw("same C");
+
+    TF1 *F_Des3 = new TF1("F_Des3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 720);
+    F_Des3->SetParameters(1000, 650, 50);
+    F_Des3->SetLineColor(kRed);
+    G_Cs.Fit("F_Des3","","",610,720);
+    F_Des3->Draw("same C");
+
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Fonte_Desconhecida.png");
+    c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
     // Espetro de Radiação da Fonte Desconhecida Smoothed
+    
     TGraph G_Am_Smoothed;
     vector<pair<double, double>> rad_am_smoothed;
     ReadFile("Data_Files/Fonte_Desconhecida_Energy_Smoothed.dat", rad_am_smoothed);
@@ -225,11 +280,13 @@ int main(){
     c1.Clear();
     G_Am_Smoothed.Draw("AC");
     
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Fonte_Desconhecida_Smoothed.png");
+    c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-
+    
+    /*
     // Espetro de Radiação do Césio com placa de Chumbo Espesso
     TGraph G_Cs_Pb;
     vector<pair<double, double>> rad_cs_pb;
@@ -247,12 +304,14 @@ int main(){
 
     c1.Clear();
     G_Cs_Pb.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Cs_Pb.png");
+    c1.SaveAs("Graphs/Espetro_Cs_Pb.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
     // Espetro de Radiação do Césio com placa de Chumbo Espesso Smoothed
+    
     TGraph G_Cs_Pb_Smoothed;
     vector<pair<double, double>> rad_cs_pb_smoothed;
     ReadFile("Data_Files/Chumbo_Grosso_Energy_Smoothed.dat", rad_cs_pb_smoothed);
@@ -268,10 +327,12 @@ int main(){
 
     c1.Clear();
     G_Cs_Pb_Smoothed.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Cs_Pb_Smoothed.png");
+    c1.SaveAs("Graphs/Espetro_Cs_Pb_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    
 
     // Espetro de Radiação do Césio com placa de Chumbo Fino
     TGraph G_Cs_Pb_Thin;
@@ -289,12 +350,14 @@ int main(){
 
     c1.Clear();
     G_Cs_Pb_Thin.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Cs_Pb_Thin.png");
+    c1.SaveAs("Graphs/Espetro_Cs_Pb_Thin.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
     // Espetro de Radiação do Césio com placa de Chumbo Fino Smoothed
+    
     TGraph G_Cs_Pb_Thin_Smoothed;
     vector<pair<double, double>> rad_cs_pb_thin_smoothed;
     ReadFile("Data_Files/Chumbo_Fino_Energy_Smoothed.dat", rad_cs_pb_thin_smoothed);
@@ -310,20 +373,11 @@ int main(){
 
     c1.Clear();
     G_Cs_Pb_Thin_Smoothed.Draw("AC");
+    c1.SetLogy();
     c1.Update();
-    c1.SaveAs("graphs/Espetro_Cs_Pb_Thin_Smoothed.png");
+    c1.SaveAs("Graphs/Espetro_Cs_Pb_Thin_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-
-
-
-
-
-
-
-
-
-
-
+    */
 
 }
