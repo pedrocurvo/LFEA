@@ -2,6 +2,7 @@
 # include <cmath>
 # include <vector>
 # include <string>
+#include <cmath>
 #include "TCanvas.h"
 #include "TApplication.h"
 #include "TSystem.h"
@@ -10,11 +11,14 @@
 #include "TGraph.h"
 #include "TF1.h"
 #include "Read.h"
+#include "TGraphErrors.h"
 #include "TStyle.h"
+#include "TLatex.h"
 
 using namespace std;
 
 int main(){
+    int n;
     // Create Application
     TApplication A("A", nullptr, nullptr);
     // Create Canvas
@@ -35,12 +39,19 @@ int main(){
     vector<pair<double, double>> calibration;
     //Energy = [32, 662, 1173, 1333] # Cs and Co energies
     // Channels = [28.8, 437.07, 760.24, 861.42] # Cs-137 and Co-60 channels
-    calibration.push_back(pair<double, double> (28.8, 32));
-    calibration.push_back(pair<double, double> (437.07, 662));
-    calibration.push_back(pair<double, double> (760.24, 1173));
-    calibration.push_back(pair<double, double> (861.42, 1333));
-    for (int i = 0; i < calibration.size(); i++){
+    calibration.push_back(pair<double, double> (28.8, 32.2));
+    calibration.push_back(pair<double, double> (436.07, 661.7));
+    calibration.push_back(pair<double, double> (760.24, 1173.2));
+    calibration.push_back(pair<double, double> (861.42, 1332.5));
+    calibration.push_back(pair<double, double> (0.01, 0.1));
+    calibration.push_back(pair<double, double> (0.04, 0.1));
+    calibration.push_back(pair<double, double> (0.32, 0.1));
+    calibration.push_back(pair<double, double> (0.36, 0.1));
+    int m = 0;
+    for (int i = 0; i < calibration.size()/2; i++){
+        //m = CalibratioGraph.GetN();
         CalibratioGraph.AddPoint(calibration[i].first, calibration[i].second);
+        //CalibratioGraph.SetPointError(m, calibration[i+4].first, calibration[i+4].second);
     }
     CalibratioGraph.SetLineColor(kRed);
     CalibratioGraph.SetMarkerStyle(20);
@@ -52,16 +63,18 @@ int main(){
     CalibratioGraph.GetYaxis()->SetLimits(0, 1400);
     CalibratioGraph.Draw("AP");
     TF1 *f1 = new TF1("f1", "[0]*x+[1]");
+    f1->SetParNames("declive","y_{0}");
     CalibratioGraph.Fit("f1");
     double slope = f1->GetParameter(0);
     double intercept = f1->GetParameter(1);
     
     c1.Update();
     c1.SaveAs("Graphs/Calibracao.png");
+    //A.Run("True");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    /*
+    
     // Espetro de Radiação do Ambiente
     TGraph G_Amb; 
     vector<pair<double, double>> rad_ambiente;
@@ -110,13 +123,16 @@ int main(){
         
     
     // Espetro de Radiação do Cs-137 
-    TGraph G_Cs;
+    TGraphErrors G_Cs;
+    n=0;
     vector<pair<double, double>> rad_cs;
     ReadFile("Data_Files/Cesio_Energy.dat", rad_cs);
     for (int i = 0; i < rad_cs.size(); i++){
-        G_Cs.AddPoint(rad_cs[i].first, rad_cs[i].second);
+        n = G_Cs.GetN();
+        G_Cs.SetPoint(n, rad_cs[i].first, rad_cs[i].second);
+        G_Cs.SetPointError(n,0.007*rad_cs[i].first+4.35,sqrt(rad_cs[i].second));
     }
-    G_Cs.SetLineColor(kRed);
+    G_Cs.SetLineColor(kBlack);
     G_Cs.SetMarkerStyle(20);
     G_Cs.SetMarkerSize(0.5);
     G_Cs.SetTitle("Espetro de Radiacao do Cs-137; E [keV]; Counts");
@@ -126,23 +142,28 @@ int main(){
     c1.Clear();
     G_Cs.Draw("AP");
 
-    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 35);
-    F_Cs1->SetParameters(100, 27, 10);
+    /*
+    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 21, 37);
+    F_Cs1->SetParameters(2000, 27, 2);
     F_Cs1->SetLineColor(kRed);
-    G_Cs.Fit("F_Cs1","","",23,35);
+    G_Cs.Fit("F_Cs1","","",21,37);
     F_Cs1->Draw("same C");
-
-    TF1 *F_Cs2 = new TF1("F_Cs2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 170, 240);
-    F_Cs2->SetParameters(200, 210, 50);
+    */
+    
+    TF1 *F_Cs2 = new TF1("F_Cs2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 175, 220);
+    F_Cs2->SetParNames("C","#mu", "#sigma");
+    F_Cs2->SetParameters(200, 184, 20);
     F_Cs2->SetLineColor(kRed);
-    G_Cs.Fit("F_Cs2","","",170,240);
+    G_Cs.Fit("F_Cs2","","",175,220);
     F_Cs2->Draw("same C");
-
-    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 720);
+    
+    /*
+    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 725);
     F_Cs3->SetParameters(1000, 650, 50);
     F_Cs3->SetLineColor(kRed);
-    G_Cs.Fit("F_Cs3","","",610,720);
+    G_Cs.Fit("F_Cs3","","",610,725);
     F_Cs3->Draw("same C");
+    */
 
     c1.SetLogy();
     c1.Update();
@@ -175,13 +196,16 @@ int main(){
         
 
     // Espetro de Radiação do Co-60
-    TGraph G_Co;
+    TGraphErrors G_Co;
     vector<pair<double, double>> rad_co;
+    n=0;
     ReadFile("Data_Files/Cobalto_Energy.dat", rad_co);
     for (int i = 0; i < rad_co.size(); i++){
-        G_Co.AddPoint(rad_co[i].first, rad_co[i].second);
+        n = G_Co.GetN();
+        G_Co.SetPoint(n, rad_co[i].first, rad_co[i].second);
+        G_Co.SetPointError(n,0.007*rad_co[i].first+4.35,sqrt(rad_co[i].second));
     }
-    G_Co.SetLineColor(kGreen+2);
+    G_Co.SetLineColor(kBlack);
     G_Co.SetMarkerStyle(20);
     G_Co.SetMarkerSize(0.5);
     G_Co.SetTitle("Espetro de Radiacao do Co-60; E [keV]; Counts");
@@ -189,7 +213,21 @@ int main(){
     G_Co.GetYaxis()->CenterTitle();
 
     c1.Clear();
-    G_Co.Draw("AC");
+    G_Co.Draw("AP");
+
+    TF1 *F_Co1 = new TF1("F_Co1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1110, 1230);
+    F_Co1->SetParameters(100, 1160, 50);
+    F_Co1->SetLineColor(kRed);
+    G_Co.Fit("F_Co1","","",1110,1230);
+    F_Co1->Draw("same C");
+
+    TF1 *F_Co2 = new TF1("F_Co2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1270, 1390);
+    F_Co2->SetParameters(100, 1320, 50);
+    F_Co2->SetLineColor(kRed);
+    G_Co.Fit("F_Co2","","",1270, 1390);
+    F_Co2->Draw("same C");
+    
+
     c1.SetLogy();
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Co.png");
@@ -218,16 +256,19 @@ int main(){
     c1.SaveAs("Graphs/Espetro_Co_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-    */
+    
 
     // Espetro de Radiação da Fonte Desconhecida
-    TGraph G_Am;
+    TGraphErrors G_Am;
     vector<pair<double, double>> rad_am;
     ReadFile("Data_Files/Fonte_Desconhecida_Energy.dat", rad_am);
+    n = 0;
     for (int i = 0; i < rad_am.size(); i++){
-        G_Am.AddPoint(rad_am[i].first, rad_am[i].second);
+        n = G_Am.GetN();
+        G_Am.SetPoint(n, rad_am[i].first, rad_am[i].second);
+        G_Am.SetPointError(n,0.007*rad_am[i].first+4.35,sqrt(rad_am[i].second));
     }
-    G_Am.SetLineColor(kMagenta+2);
+    G_Am.SetLineColor(kBlack);
     G_Am.SetMarkerStyle(20);
     G_Am.SetMarkerSize(0.5);
     G_Am.SetTitle("Espetro de Radiacao da Fonte Desconhecida; E [keV]; Counts");
@@ -238,22 +279,40 @@ int main(){
     c1.SetLogy();
     G_Am.Draw("AP");
 
-    TF1 *F_Des1 = new TF1("F_Des1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 35);
-    F_Des1->SetParameters(100, 27, 10);
+    TF1 *F_Des1 = new TF1("F_Des1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 4, 7.7);
+    F_Des1->SetParameters(100, 15, 1);
     F_Des1->SetLineColor(kRed);
-    G_Cs.Fit("F_Des1","","",23,35);
+    G_Am.Fit("F_Des1","","",4,7.7);
     F_Des1->Draw("same C");
 
-    TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 170, 240);
-    F_Des2->SetParameters(200, 210, 50);
+    TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 27, 49);
+    F_Des4->SetParameters(1000, 38, 1);
+    F_Des4->SetLineColor(kRed);
+    G_Am.Fit("F_Des4","","",27, 49);
+    F_Des4->Draw("same C");
+
+    TF1 *F_Des5 = new TF1("F_Des5", "[0]*exp(-0.5*((x-[1])/[2])**2)", 72, 106);
+    F_Des5->SetParameters(500, 90, 3);
+    F_Des5->SetLineColor(kRed);
+    G_Am.Fit("F_Des5","","",72, 106);
+    F_Des5->Draw("same C");
+
+    TF1 *F_Des6 = new TF1("F_Des6", "[0]*exp(-0.5*((x-[1])/[2])**2)", 114, 136);
+    F_Des6->SetParameters(100, 125, 1);
+    F_Des6->SetLineColor(kRed);
+    G_Am.Fit("F_Des6","","",114, 136);
+    F_Des6->Draw("same C");
+
+    TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 228, 268);
+    F_Des2->SetParameters(1000, 235, 10);
     F_Des2->SetLineColor(kRed);
-    G_Cs.Fit("F_Des2","","",170,240);
+    G_Am.Fit("F_Des2","","",228,268);
     F_Des2->Draw("same C");
 
-    TF1 *F_Des3 = new TF1("F_Des3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 720);
-    F_Des3->SetParameters(1000, 650, 50);
+    TF1 *F_Des3 = new TF1("F_Des3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 320, 375);
+    F_Des3->SetParameters(1000, 340, 10);
     F_Des3->SetLineColor(kRed);
-    G_Cs.Fit("F_Des3","","",610,720);
+    G_Am.Fit("F_Des3","","",320,375);
     F_Des3->Draw("same C");
 
     c1.SetLogy();
