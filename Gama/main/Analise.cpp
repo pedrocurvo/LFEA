@@ -29,7 +29,7 @@ int main(){
     //System Command
     string command = "mkdir test";
     system(command.c_str());
-    gStyle->SetOptFit(kTRUE);
+    //gStyle->SetOptFit(kTRUE);
 
     // Directory to Save Graphs
     string directory = "graphs/";
@@ -130,7 +130,7 @@ int main(){
     for (int i = 0; i < rad_cs.size(); i++){
         n = G_Cs.GetN();
         G_Cs.SetPoint(n, rad_cs[i].first, rad_cs[i].second);
-        G_Cs.SetPointError(n,0.007*rad_cs[i].first+4.35,sqrt(rad_cs[i].second));
+        G_Cs.SetPointError(n,0.006*rad_cs[i].first+3.6,sqrt(rad_cs[i].second));
     }
     G_Cs.SetLineColor(kBlack);
     G_Cs.SetMarkerStyle(20);
@@ -149,21 +149,21 @@ int main(){
     G_Cs.Fit("F_Cs1","","",21,37);
     F_Cs1->Draw("same C");
     */
-    
+    /*
     TF1 *F_Cs2 = new TF1("F_Cs2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 175, 220);
     F_Cs2->SetParNames("C","#mu", "#sigma");
     F_Cs2->SetParameters(200, 184, 20);
     F_Cs2->SetLineColor(kRed);
     G_Cs.Fit("F_Cs2","","",175,220);
     F_Cs2->Draw("same C");
+    */
     
-    /*
     TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 725);
     F_Cs3->SetParameters(1000, 650, 50);
     F_Cs3->SetLineColor(kRed);
     G_Cs.Fit("F_Cs3","","",610,725);
     F_Cs3->Draw("same C");
-    */
+    
 
     c1.SetLogy();
     c1.Update();
@@ -203,7 +203,7 @@ int main(){
     for (int i = 0; i < rad_co.size(); i++){
         n = G_Co.GetN();
         G_Co.SetPoint(n, rad_co[i].first, rad_co[i].second);
-        G_Co.SetPointError(n,0.007*rad_co[i].first+4.35,sqrt(rad_co[i].second));
+        G_Co.SetPointError(n,0.006*rad_co[i].first+3.6,sqrt(rad_co[i].second));
     }
     G_Co.SetLineColor(kBlack);
     G_Co.SetMarkerStyle(20);
@@ -214,7 +214,7 @@ int main(){
 
     c1.Clear();
     G_Co.Draw("AP");
-
+    /*
     TF1 *F_Co1 = new TF1("F_Co1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1110, 1230);
     F_Co1->SetParameters(100, 1160, 50);
     F_Co1->SetLineColor(kRed);
@@ -226,12 +226,21 @@ int main(){
     F_Co2->SetLineColor(kRed);
     G_Co.Fit("F_Co2","","",1270, 1390);
     F_Co2->Draw("same C");
+    */
+
+    TF1 *F_Co3 = new TF1("F_Co3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 223, 256);
+    F_Co3->SetParameters(100, 234, 50);
+    F_Co3->SetParNames("C","#mu", "#sigma");
+    F_Co3->SetLineColor(kRed);
+    G_Co.Fit("F_Co3","","", 223, 256);
+    F_Co3->Draw("same C");
     
 
     c1.SetLogy();
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Co.png");
     c1.WaitPrimitive();
+    //A.Run("True");
     gSystem->ProcessEvents();
 
     // Espetro de Radiação do Co-60 Smoothed
@@ -266,7 +275,7 @@ int main(){
     for (int i = 0; i < rad_am.size(); i++){
         n = G_Am.GetN();
         G_Am.SetPoint(n, rad_am[i].first, rad_am[i].second);
-        G_Am.SetPointError(n,0.007*rad_am[i].first+4.35,sqrt(rad_am[i].second));
+        G_Am.SetPointError(n,0.006*rad_am[i].first+3.6,sqrt(rad_am[i].second));
     }
     G_Am.SetLineColor(kBlack);
     G_Am.SetMarkerStyle(20);
@@ -278,42 +287,77 @@ int main(){
     c1.Clear();
     c1.SetLogy();
     G_Am.Draw("AP");
-
-    TF1 *F_Des1 = new TF1("F_Des1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 4, 7.7);
-    F_Des1->SetParameters(100, 15, 1);
+    
+    TF1 *F_Des1 = new TF1("F_Des1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 3.4, 9.2);
+    F_Des1->SetParameters(300, 6, 1);
+    F_Des1->SetParNames("C","#mu", "#sigma");
     F_Des1->SetLineColor(kRed);
-    G_Am.Fit("F_Des1","","",4,7.7);
+    G_Am.Fit("F_Des1","","",3.4,9.2);
     F_Des1->Draw("same C");
-
-    TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 27, 49);
-    F_Des4->SetParameters(1000, 38, 1);
+    
+    TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 27, 50);
+    F_Des4->SetParameters(800, 39, 3);
+    F_Des4->SetParNames("C","#mu", "#sigma");
     F_Des4->SetLineColor(kRed);
-    G_Am.Fit("F_Des4","","",27, 49);
+    G_Am.Fit("F_Des4","","",27, 50);
     F_Des4->Draw("same C");
-
-    TF1 *F_Des5 = new TF1("F_Des5", "[0]*exp(-0.5*((x-[1])/[2])**2)", 72, 106);
+    
+    TF1 *F_Des5 = new TF1("F_Des5", "[0]*exp(-0.5*((x-[1])/[2])**2)", 74, 106);
     F_Des5->SetParameters(500, 90, 3);
+    F_Des5->SetParNames("C","#mu", "#sigma");
     F_Des5->SetLineColor(kRed);
-    G_Am.Fit("F_Des5","","",72, 106);
+    G_Am.Fit("F_Des5","","",74, 106);
     F_Des5->Draw("same C");
-
+    
     TF1 *F_Des6 = new TF1("F_Des6", "[0]*exp(-0.5*((x-[1])/[2])**2)", 114, 136);
     F_Des6->SetParameters(100, 125, 1);
+    F_Des6->SetParNames("C","#mu", "#sigma");
     F_Des6->SetLineColor(kRed);
     G_Am.Fit("F_Des6","","",114, 136);
     F_Des6->Draw("same C");
-
+    
     TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 228, 268);
     F_Des2->SetParameters(1000, 235, 10);
+    F_Des2->SetParNames("C","#mu", "#sigma");
     F_Des2->SetLineColor(kRed);
     G_Am.Fit("F_Des2","","",228,268);
     F_Des2->Draw("same C");
-
+    
     TF1 *F_Des3 = new TF1("F_Des3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 320, 375);
     F_Des3->SetParameters(1000, 340, 10);
+    F_Des3->SetParNames("C","#mu", "#sigma");
     F_Des3->SetLineColor(kRed);
     G_Am.Fit("F_Des3","","",320,375);
     F_Des3->Draw("same C");
+    
+    TF1 *F_Des7 = new TF1("F_Des7", "[0]*exp(-0.5*((x-[1])/[2])**2)", 922, 1014);
+    F_Des7->SetParameters(10, 1000, 5);
+    F_Des7->SetParNames("C","#mu", "#sigma");
+    F_Des7->SetLineColor(kRed);
+    G_Am.Fit("F_Des7","","",922, 1014);
+    F_Des7->Draw("same C");
+    
+    TF1 *F_Des8 = new TF1("F_Des8", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1035, 1145);
+    F_Des8->SetParameters(10, 1100, 10);
+    F_Des8->SetParNames("C","#mu", "#sigma");
+    F_Des8->SetLineColor(kRed);
+    G_Am.Fit("F_Des8","","",1035, 1145);
+    F_Des8->Draw("same C");
+    
+    TF1 *F_Des9 = new TF1("F_Des9", "[0]*exp(-0.5*((x-[1])/[2])**2)", 745, 826);
+    F_Des9->SetParameters(10, 800, 10);
+    F_Des9->SetParNames("C","#mu", "#sigma");
+    F_Des9->SetLineColor(kRed);
+    G_Am.Fit("F_Des9","","",745, 826);
+    F_Des9->Draw("same C");
+    
+    TF1 *F_Des10 = new TF1("F_Des10", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1370, 1440);
+    F_Des10->SetParameters(10, 1400, 10);
+    F_Des10->SetParNames("C","#mu", "#sigma");
+    F_Des10->SetLineColor(kRed);
+    G_Am.Fit("F_Des10","","",1370, 1440);
+    F_Des10->Draw("same C");
+    
 
     c1.SetLogy();
     c1.Update();
