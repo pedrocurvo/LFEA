@@ -560,6 +560,7 @@ int main(){
     G_Coeficiente_Atenuacao.Fit("co", "");
 
     c1.Clear();
+    gStyle->SetOptFit(1111);
     G_Coeficiente_Atenuacao.Draw("AP");
     c1.Update();
     c1.SaveAs("Graphs/Coeficiente_Atenuacao.png");
