@@ -15,12 +15,13 @@ def linear_fit(x: list, y: list):
     
     # Define the linear function
     def linear_func(x):
-        return slope * x + intercept
+        #return slope * x + intercept
+        return 1.562 * x - 15.04
     
     return linear_func
 
 # Example usage
-Energy = [32, 662, 1173, 1333] # Cs and Co energies
+Energy = [32.2, 661.7, 1173.2, 1332.5] # Cs and Co energies
 Channels = [28.8, 437.07, 760.24, 861.42] # Cs-137 and Co-60 channels
 
 Channel_to_Energy = linear_fit(Channels, Energy)
