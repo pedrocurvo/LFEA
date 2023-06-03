@@ -556,59 +556,21 @@ int main(){
     c1.SaveAs("Graphs/Espetro_Cs_Pb_Thin_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-
-    // Calculo do Coeficiente na Atenuação do Chumbo
-    double espessura_fino = 947.7;
-    double espessura_grosso = 7042.00;
-    TGraph G_Coeficiente_Atenuacao;
-    TF1 *co = new TF1("co", "[0]*x+[1]", 0, 1024);
-    G_Coeficiente_Atenuacao.AddPoint(espessura_fino, log(counts_fino));
-    G_Coeficiente_Atenuacao.AddPoint(espessura_grosso, log(counts_grosso));
-    G_Coeficiente_Atenuacao.SetLineColor(kRed);
-    G_Coeficiente_Atenuacao.SetMarkerStyle(20);
-    G_Coeficiente_Atenuacao.SetMarkerSize(0.5);
-    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuacao do Chumbo; Espessura [mg/cm^2]; ln(Counts)");
-    G_Coeficiente_Atenuacao.GetXaxis()->CenterTitle();
-    G_Coeficiente_Atenuacao.GetYaxis()->CenterTitle();
-    G_Coeficiente_Atenuacao.Fit("co", "");
-
-    c1.Clear();
-    G_Coeficiente_Atenuacao.Draw("AP");
-    c1.Update();
-    c1.SaveAs("Graphs/Coeficiente_Atenuacao.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
-
-    // Resolução da Energia
-    //TGraphErrors G_Resolucao_Energia;
-    double x[5] = {29.28, 665.87, 1772.57, 1330.72};
-    double y[5] = {0.19, 0.06, 0.04, 0.04};
-    double ex[5] = {0.006 * x[0] + 3.6, 0.006 * x[1] + 3.6, 0.006 * x[2] + 3.6, 0.006 * x[3] + 3.6};
-    double ey[5] = {0.001, 0.01, 0.01, 0.01};
-    TGraphErrors* G_Resolucao_Energia = new TGraphErrors(5, x, y, ex, ey);
-    TF1 *res = new TF1("res", "[0]/sqrt(x)+[1]", 0, 1024);
     
-    G_Resolucao_Energia->SetLineColor(kRed);
-    G_Resolucao_Energia->SetMarkerStyle(20);
-    G_Resolucao_Energia->SetMarkerSize(0.5);
-    G_Resolucao_Energia->SetTitle("Dependencia de R com E; E [keV]; FWHM [keV]");
-    G_Resolucao_Energia->GetXaxis()->CenterTitle();
-    G_Resolucao_Energia->GetYaxis()->CenterTitle();
-    G_Resolucao_Energia->Fit("res", "");
 
 
 
 
-    c1.Clear();
-    c1.SetLogy(0);
-    G_Resolucao_Energia->Draw("AP");
-    c1.Update();
-    c1.SaveAs("Graphs/Resolucao_Energia.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
 
-    //29.28, 0.19
 
-    
+
+
+
+
+
+
+=======
+    */
+>>>>>>> 51f85a7cd9bf18a68f7433af114bf319dbd69c8b:Gama/main/Analise.cpp
 
 }
