@@ -543,12 +543,14 @@ int main(){
 
 
     // Calculo do Coeficiente na Atenuação do Chumbo
-    double espessura_fino = 947.7;
-    double espessura_grosso = 7042.00;
+    double espessura_fino = 1800;
+    double espessura_grosso = 7200;
     TGraph G_Coeficiente_Atenuacao;
     TF1 *co = new TF1("co", "[0]*x+[1]", 0, 1024);
-    G_Coeficiente_Atenuacao.AddPoint(espessura_fino, log(counts_fino));
-    G_Coeficiente_Atenuacao.AddPoint(espessura_grosso, log(counts_grosso));
+
+
+    G_Coeficiente_Atenuacao.AddPoint(espessura_fino, log(rad_cs_pb_thin_smoothed[434].second));
+    G_Coeficiente_Atenuacao.AddPoint(espessura_grosso, log(rad_cs_pb_smoothed[434].second));
     G_Coeficiente_Atenuacao.SetLineColor(kRed);
     G_Coeficiente_Atenuacao.SetMarkerStyle(20);
     G_Coeficiente_Atenuacao.SetMarkerSize(0.5);
@@ -584,7 +586,7 @@ int main(){
 
 
 
-
+    gStyle->SetOptFit(1111);
     c1.Clear();
     c1.SetLogy(0);
     G_Resolucao_Energia->Draw("AP");
