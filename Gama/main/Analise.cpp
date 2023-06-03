@@ -28,9 +28,6 @@ int main(){
     double acq_time_amb = 1200;
 
 
-    // Directory to Save Graphs
-    string directory = "graphs/";
-
     // Calibration
     TGraph CalibratioGraph;
     vector<pair<double, double>> calibration;
@@ -116,7 +113,7 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
         
-    
+//////////////////////////////////// Cs-137  ////////////////////////////////////
     // Espetro de Radiação do Cs-137 
     TGraphErrors G_Cs;
     n=0;
@@ -135,11 +132,6 @@ int main(){
     G_Cs.SetTitle("Espetro de Radiacao do Cs-137; E [keV]; Counts");
     G_Cs.GetXaxis()->CenterTitle();
     G_Cs.GetYaxis()->CenterTitle();
-
-
-    
-    
-
 
     // Espetro de Radiaçao do Cs-137 Smoothed
     TGraph G_Cs_Smoothed;
@@ -237,7 +229,7 @@ int main(){
     gSystem->ProcessEvents();
 
         
-
+//////////////////////////////////// Co-60  ////////////////////////////////////
     // Espetro de Radiação do Co-60
     TGraphErrors G_Co;
     vector<pair<double, double>> rad_co;
@@ -345,7 +337,7 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
     
-
+//////////////////////////////////// Fonte-Desconhecida  ////////////////////////////////////
     // Espetro de Radiação da Fonte Desconhecida
     TGraphErrors G_Am;
     vector<pair<double, double>> rad_am;
@@ -467,7 +459,7 @@ int main(){
     gSystem->ProcessEvents();
 
     
-    
+//////////////////////////////////// Atenuação na Matéria  ////////////////////////////////////
     // Calculo do Coeficiente na Atenuação do Chumbo
     double counts_grosso = 0;
     double counts_fino = 0;
@@ -486,9 +478,6 @@ int main(){
     G_Cs_Pb.SetLineColor(kGray+1);
     G_Cs_Pb.SetMarkerStyle(20);
     G_Cs_Pb.SetMarkerSize(0.5);
-    G_Cs_Pb.SetTitle("Espetro de Radiacao do Cs-137 com Placa de Chumbo Espesso; E [keV]; Counts");
-    G_Cs_Pb.GetXaxis()->CenterTitle();
-    G_Cs_Pb.GetYaxis()->CenterTitle();
 
     // Espetro de Radiação do Césio com placa de Chumbo Espesso Smoothed
     TGraph G_Cs_Pb_Smoothed;
@@ -501,18 +490,6 @@ int main(){
     G_Cs_Pb_Smoothed.SetLineWidth(3);
     G_Cs_Pb_Smoothed.SetMarkerStyle(20);
     G_Cs_Pb_Smoothed.SetMarkerSize(0.5);
-    G_Cs_Pb_Smoothed.SetTitle("Espetro de Radiacao do Cs-137 com Placa de Chumbo Espesso Smoothed; E [keV]; Counts");
-    G_Cs_Pb_Smoothed.GetXaxis()->CenterTitle();
-    G_Cs_Pb_Smoothed.GetYaxis()->CenterTitle();
-
-    c1.Clear();
-    G_Cs_Pb.Draw("AC");
-    G_Cs_Pb_Smoothed.Draw("same C");
-    c1.SetLogy();
-    c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs_Pb_Smoothed.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
     
 
     // Espetro de Radiação do Césio com placa de Chumbo Fino
@@ -528,9 +505,6 @@ int main(){
     G_Cs_Pb_Thin.SetLineColor(kGray+1);
     G_Cs_Pb_Thin.SetMarkerStyle(20);
     G_Cs_Pb_Thin.SetMarkerSize(0.5);
-    G_Cs_Pb_Thin.SetTitle("Espetro de Radiacao do Cs-137 com Placa de Chumbo Fino; E [keV]; Counts");
-    G_Cs_Pb_Thin.GetXaxis()->CenterTitle();
-    G_Cs_Pb_Thin.GetYaxis()->CenterTitle();
 
 
     // Espetro de Radiação do Césio com placa de Chumbo Fino Smoothed
@@ -540,37 +514,77 @@ int main(){
     for (int i = 0; i < rad_cs_pb_thin_smoothed.size(); i++){
         G_Cs_Pb_Thin_Smoothed.AddPoint(rad_cs_pb_thin_smoothed[i].first, rad_cs_pb_thin_smoothed[i].second);
     }
-    G_Cs_Pb_Thin_Smoothed.SetLineColor(kRed);
+    G_Cs_Pb_Thin_Smoothed.SetLineColor(kBlue);
     G_Cs_Pb_Thin_Smoothed.SetLineWidth(3);
     G_Cs_Pb_Thin_Smoothed.SetMarkerStyle(20);
     G_Cs_Pb_Thin_Smoothed.SetMarkerSize(0.5);
-    G_Cs_Pb_Thin_Smoothed.SetTitle("Espetro de Radiacao do Cs-137 com Placa de Chumbo Fino Smoothed; E [keV]; Counts");
     G_Cs_Pb_Thin_Smoothed.GetXaxis()->CenterTitle();
     G_Cs_Pb_Thin_Smoothed.GetYaxis()->CenterTitle();
 
     c1.Clear();
+    G_Cs_Pb_Thin.SetTitle("Espetro de Radiacao do Cs-137 com Placas de Chumbo; E [keV]; Counts");
+    G_Cs_Pb_Thin.GetXaxis()->CenterTitle();
+    G_Cs_Pb_Thin.GetYaxis()->CenterTitle();
     G_Cs_Pb_Thin.Draw("AC");
+    G_Cs_Pb.Draw("same C");
+    G_Cs_Pb_Smoothed.Draw("same C");
     G_Cs_Pb_Thin_Smoothed.Draw("same C");
     c1.SetLogy();
     c1.Update();
-    c1.SaveAs("Graphs/Espetro_Cs_Pb_Thin_Smoothed.png");
+    c1.SaveAs("Graphs/Atenuacao_Materia.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+
+    // Calculo do Coeficiente na Atenuação do Chumbo
+    double espessura_fino = 947.7;
+    double espessura_grosso = 7042.00;
+    TGraph G_Coeficiente_Atenuacao;
+    TF1 *co = new TF1("co", "[0]*x+[1]", 0, 1024);
+    G_Coeficiente_Atenuacao.AddPoint(espessura_fino, log(counts_fino));
+    G_Coeficiente_Atenuacao.AddPoint(espessura_grosso, log(counts_grosso));
+    G_Coeficiente_Atenuacao.SetLineColor(kRed);
+    G_Coeficiente_Atenuacao.SetMarkerStyle(20);
+    G_Coeficiente_Atenuacao.SetMarkerSize(0.5);
+    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuacao do Chumbo; Espessura [mg/cm^2]; ln(Counts)");
+    G_Coeficiente_Atenuacao.GetXaxis()->CenterTitle();
+    G_Coeficiente_Atenuacao.GetYaxis()->CenterTitle();
+    G_Coeficiente_Atenuacao.Fit("co", "");
+
+    c1.Clear();
+    G_Coeficiente_Atenuacao.Draw("AP");
+    c1.Update();
+    c1.SaveAs("Graphs/Coeficiente_Atenuacao.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+//////////////////////////////////// Resolução da Energia  ////////////////////////////////////
+    // Resolução da Energia
+    //TGraphErrors G_Resolucao_Energia;
+    double x[5] = {29.28, 665.87, 1772.57, 1330.72};
+    double y[5] = {0.19, 0.06, 0.04, 0.04};
+    double ex[5] = {0.006 * x[0] + 3.6, 0.006 * x[1] + 3.6, 0.006 * x[2] + 3.6, 0.006 * x[3] + 3.6};
+    double ey[5] = {0.001, 0.01, 0.01, 0.01};
+    TGraphErrors* G_Resolucao_Energia = new TGraphErrors(5, x, y, ex, ey);
+    TF1 *res = new TF1("res", "[0]/sqrt(x)+[1]", 0, 1024);
     
+    G_Resolucao_Energia->SetLineColor(kRed);
+    G_Resolucao_Energia->SetMarkerStyle(20);
+    G_Resolucao_Energia->SetMarkerSize(0.5);
+    G_Resolucao_Energia->SetTitle("Dependencia de R com E; E [keV]; FWHM [keV]");
+    G_Resolucao_Energia->GetXaxis()->CenterTitle();
+    G_Resolucao_Energia->GetYaxis()->CenterTitle();
+    G_Resolucao_Energia->Fit("res", "");
 
 
 
 
-
-
-
-
-
-
-
-
-=======
-    */
->>>>>>> 51f85a7cd9bf18a68f7433af114bf319dbd69c8b:Gama/main/Analise.cpp
+    c1.Clear();
+    c1.SetLogy(0);
+    G_Resolucao_Energia->Draw("AP");
+    c1.Update();
+    c1.SaveAs("Graphs/Resolucao_Energia.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
 
 }
