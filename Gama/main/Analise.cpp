@@ -182,7 +182,7 @@ int main(){
     }
     Cs_Backscatter.AddPoint(rad_cs_smoothed[inte1].first, rad_cs_smoothed[inte1].second);
     Cs_Backscatter.AddPoint(184, 0);
-    Cs_Backscatter.SetMarkerSize(1);
+    Cs_Backscatter.SetMarkerSize(1.5);
     Cs_Backscatter.SetMarkerStyle(22);
     Cs_Backscatter.SetMarkerColor(kBlue);
 
@@ -200,16 +200,16 @@ int main(){
     }
     TGraph Cs_Compton;
     Cs_Compton.AddPoint(rad_cs_smoothed[inte].first, rad_cs_smoothed[inte].second);
-    Cs_Compton.SetMarkerSize(1);
+    Cs_Compton.SetMarkerSize(1.5);
     Cs_Compton.SetMarkerStyle(22);
     Cs_Compton.SetMarkerColor(kYellow+0);
 
 
     // Create a legend
-    TLegend* cesio = new TLegend(0.65, 0.75, 0.85, 0.85); // Specify the position of the legend
+    TLegend* cesio = new TLegend(0.65, 0.79, 0.85, 0.89); // Specify the position of the legend
     cesio->AddEntry(&G_Cs, "Signal", "l"); 
     cesio->AddEntry(&G_Cs_Smoothed, "Clear Signal", "l"); // "l" for a solid line
-    cesio->AddEntry(F_Cs3, "Fit", "l"); // "l" for a solid line
+    cesio->AddEntry(F_Cs3, "Calibration Peaks Fit", "l"); // "l" for a solid line
     cesio->AddEntry(&Cs_Backscatter, "Backscatter Peak", "p"); // "p" for a point
     cesio->AddEntry(&Cs_Compton, "Compton Edge", "p"); // "p" for a point
 
@@ -317,12 +317,13 @@ int main(){
     }
 
     // Create a legend
-    TLegend* legend = new TLegend(0.65, 0.75, 0.85, 0.85); // Specify the position of the legend
+    TLegend* legend = new TLegend(0.65, 0.79, 0.85, 0.89); // Specify the position of the legend
     
     // Add an entry to the legend
     legend->AddEntry(&G_Co_Smoothed, "Clear Signal", "l"); // "l" for a solid line
     legend->AddEntry(F_Co3, "Back Scattering", "l"); // "l" for a solid line
     legend->AddEntry(&Point, "Compton Edge", "p"); // "p" for a point
+    legend->AddEntry(F_Co1, "Calibration Peak", "l"); // "l" for a solid line
     // Draw
     legend->Draw();
     G_Co_Smoothed.Draw("same C");
@@ -397,7 +398,7 @@ int main(){
     G_Am_Smoothed.Fit("F_Des6","","",114, 136);
     F_Des6->Draw("same C");
     
-    TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 236, 258);
+    TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 230, 258);
     F_Des2->SetParameters(1000, 235, 10);
     F_Des2->SetParNames("C","#mu", "#sigma");
     F_Des2->SetLineColor(kBlue);
@@ -518,8 +519,12 @@ int main(){
     G_Cs_Pb_Thin_Smoothed.SetLineWidth(3);
     G_Cs_Pb_Thin_Smoothed.SetMarkerStyle(20);
     G_Cs_Pb_Thin_Smoothed.SetMarkerSize(0.5);
-    G_Cs_Pb_Thin_Smoothed.GetXaxis()->CenterTitle();
-    G_Cs_Pb_Thin_Smoothed.GetYaxis()->CenterTitle();
+
+    TLegend *leg2 = new TLegend(0.55, 0.75, 0.75, 0.85);
+    leg2->AddEntry(&G_Cs_Pb, "Thick Plate Signal", "l");
+    leg2->AddEntry(&G_Cs_Pb_Smoothed, "Thick Plate Clear Signal", "l");
+    leg2->AddEntry(&G_Cs_Pb_Thin, "Thin Plate Signal", "l");
+    leg2->AddEntry(&G_Cs_Pb_Thin_Smoothed, "Thin Plate Clear Signal", "l");
 
     c1.Clear();
     G_Cs_Pb_Thin.SetTitle("Espetro de Radiacao do Cs-137 com Placas de Chumbo; E [keV]; Counts");
@@ -529,6 +534,7 @@ int main(){
     G_Cs_Pb.Draw("same C");
     G_Cs_Pb_Smoothed.Draw("same C");
     G_Cs_Pb_Thin_Smoothed.Draw("same C");
+    leg2->Draw();
     c1.SetLogy();
     c1.Update();
     c1.SaveAs("Graphs/Atenuacao_Materia.png");
@@ -546,7 +552,7 @@ int main(){
     G_Coeficiente_Atenuacao.SetLineColor(kRed);
     G_Coeficiente_Atenuacao.SetMarkerStyle(20);
     G_Coeficiente_Atenuacao.SetMarkerSize(0.5);
-    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuacao do Chumbo; Espessura [mg/cm^2]; ln(Counts)");
+    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuacao do Chumbo; Espessura [mg/cm^2]; Ln(Counts)");
     G_Coeficiente_Atenuacao.GetXaxis()->CenterTitle();
     G_Coeficiente_Atenuacao.GetYaxis()->CenterTitle();
     G_Coeficiente_Atenuacao.Fit("co", "");
