@@ -26,10 +26,6 @@ int main(){
     double acq_time = 150;
     double acq_time_amb = 1200;
 
-    //System Command
-    string command = "mkdir test";
-    system(command.c_str());
-    //gStyle->SetOptFit(kTRUE);
 
     // Directory to Save Graphs
     string directory = "graphs/";
@@ -193,6 +189,16 @@ int main(){
     c1.SaveAs("Graphs/Espetro_Cs_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+    // Find the Compton Edge for Cs-137
+    double x_1 = 434, x_2 = 490;
+    double medium_x = (x_1 + x_2) / 2;
+    for (int i = 0; i < rad_cs.size(); i++){
+        if (rad_cs[i].first > medium_x){
+            cout << "Compton Edge: " << rad_cs[i].first << endl;
+            break;
+        }
+    }
         
 
     // Espetro de Radiação do Co-60
@@ -231,38 +237,76 @@ int main(){
     TF1 *F_Co3 = new TF1("F_Co3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 223, 256);
     F_Co3->SetParameters(100, 234, 50);
     F_Co3->SetParNames("C","#mu", "#sigma");
-    F_Co3->SetLineColor(kRed);
+    F_Co3->SetLineColor(kGreen);
     G_Co.Fit("F_Co3","","", 223, 256);
-    F_Co3->Draw("same C");
     
-
-    c1.SetLogy();
-    c1.Update();
-    c1.SaveAs("Graphs/Espetro_Co.png");
-    c1.WaitPrimitive();
-    //A.Run("True");
-    gSystem->ProcessEvents();
 
     // Espetro de Radiação do Co-60 Smoothed
-    
     TGraph G_Co_Smoothed;
     vector<pair<double, double>> rad_co_smoothed;
     ReadFile("Data_Files/Cobalto_Energy_Smoothed.dat", rad_co_smoothed);
     for (int i = 0; i < rad_co_smoothed.size(); i++){
+        if(rad_co_smoothed[i].first < 225 || rad_co_smoothed[i].first > 256)
+        {
         G_Co_Smoothed.AddPoint(rad_co_smoothed[i].first, rad_co_smoothed[i].second);
+        }
+        else{
+            G_Co_Smoothed.AddPoint(rad_co_smoothed[i].first, F_Co3->Eval(rad_co_smoothed[i].first));
+        }
     }
-    G_Co_Smoothed.SetLineColor(kGreen+2);
+    G_Co_Smoothed.SetLineColor(kOrange+7);
     G_Co_Smoothed.SetMarkerStyle(20);
     G_Co_Smoothed.SetMarkerSize(0.5);
-    G_Co_Smoothed.SetTitle("Espetro de Radiacao do Co-60 Smoothed; E [keV]; Counts");
-    G_Co_Smoothed.GetXaxis()->CenterTitle();
-    G_Co_Smoothed.GetYaxis()->CenterTitle();
+    G_Co_Smoothed.SetLineWidth(3);
 
-    c1.Clear();
-    G_Co_Smoothed.Draw("AC");
+    // Find the Compton Edge for Co-60
+    TGraph Point;
+    Point.SetMarkerSize(1);
+    Point.SetMarkerStyle(22);
+    Point.SetMarkerColor(kYellow+0);
+    // First One
+    x_1 = 900, x_2 = 1000;
+    medium_x = (x_1 + x_2) / 2;
+    for (int i = 0; i < rad_co.size(); i++){
+        if (rad_co[i].first > medium_x){
+            cout << "Compton Edge One: " << rad_co_smoothed[i].first << endl;
+            Point.SetPoint(1, rad_co_smoothed[i].first, rad_co_smoothed[i].second);
+            break;
+        }
+    }
+    // Second One
+    x_1 = 1000, x_2 = 1150;
+    medium_x = (x_1 + x_2) / 2;
+    for (int i = 0; i < rad_co.size(); i++){
+        if (rad_co[i].first > medium_x){
+            cout << "Compton Edge One: " << rad_co_smoothed[i].first << endl;
+            Point.SetPoint(0, rad_co_smoothed[i].first, rad_co_smoothed[i].second);
+            break;
+        }
+    }
+
+    // Create a legend
+    TLegend* legend = new TLegend(0.65, 0.75, 0.85, 0.85); // Specify the position of the legend
+    
+    // Add an entry to the legend
+    legend->AddEntry(&G_Co_Smoothed, "Clear Signal", "l"); // "l" for a solid line
+    legend->AddEntry(F_Co3, "Back Scattering", "l"); // "l" for a solid line
+    legend->AddEntry(&Point, "Compton Edge", "p"); // "p" for a point
+    // Draw
+    legend->Draw();
+    G_Co_Smoothed.Draw("same C");
+    F_Co3->Draw("same C");
+    Point.Draw("same P");
+
     c1.SetLogy();
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Co_Smoothed.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    c1.SetLogy();
+    c1.Update();
+    c1.SaveAs("Graphs/Espetro_Co.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
     
@@ -274,7 +318,7 @@ int main(){
     n = 0;
     for (int i = 0; i < rad_am.size(); i++){
         n = G_Am.GetN();
-        G_Am.SetPoint(n, rad_am[i].first, rad_am[i].second);
+        G_Am.SetPoint(n, rad_am[i].first, rad_am[i].second - rad_ambiente_smoothed[i].second/4);
         G_Am.SetPointError(n,0.006*rad_am[i].first+3.6,sqrt(rad_am[i].second));
     }
     G_Am.SetLineColor(kBlack);
@@ -373,23 +417,30 @@ int main(){
     for (int i = 0; i < rad_am_smoothed.size(); i++){
         G_Am_Smoothed.AddPoint(rad_am_smoothed[i].first, rad_am_smoothed[i].second);
     }
-    G_Am_Smoothed.SetLineColor(kMagenta+2);
+    G_Am_Smoothed.SetLineColor(kOrange+0);
     G_Am_Smoothed.SetMarkerStyle(20);
     G_Am_Smoothed.SetMarkerSize(0.5);
-    G_Am_Smoothed.SetTitle("Espetro de Radiacao da Fonte Desconhecida Smoothed; E [keV]; Counts");
-    G_Am_Smoothed.GetXaxis()->CenterTitle();
-    G_Am_Smoothed.GetYaxis()->CenterTitle();
-
+    G_Am_Smoothed.SetLineWidth(3);
     c1.Clear();
     G_Am_Smoothed.Draw("AC");
+    //G_Am_Smoothed.SetTitle("Espetro de Radiacao da Fonte Desconhecida Smoothed; E [keV]; Counts");
+    //G_Am_Smoothed.GetXaxis()->CenterTitle();
+    //G_Am_Smoothed.GetYaxis()->CenterTitle();
+
+    //c1.Clear();
     
-    c1.SetLogy();
-    c1.Update();
-    c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida_Smoothed.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    //c1.SetLogy();
+    //c1.Update();
+    //c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida_Smoothed.png");
+    //c1.WaitPrimitive();
+    //gSystem->ProcessEvents();
     
-    /*
+    
+    // Calculo do Coeficiente na Atenuação do Chumbo
+    double counts_grosso = 0;
+    double counts_fino = 0;
+
+
     // Espetro de Radiação do Césio com placa de Chumbo Espesso
     TGraph G_Cs_Pb;
     vector<pair<double, double>> rad_cs_pb;
@@ -481,6 +532,6 @@ int main(){
     c1.SaveAs("Graphs/Espetro_Cs_Pb_Thin_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-    */
+    
 
 }
