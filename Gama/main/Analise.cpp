@@ -116,6 +116,7 @@ int main(){
         
 //////////////////////////////////// Cs-137  ////////////////////////////////////
     // Espetro de Radiação do Cs-137 
+    //gStyle->SetOptFit(kTRUE);
     TGraphErrors G_Cs;
     n=0;
     vector<pair<double, double>> rad_cs;
@@ -151,24 +152,22 @@ int main(){
     G_Cs_Smoothed.GetXaxis()->CenterTitle();
     G_Cs_Smoothed.GetYaxis()->CenterTitle();
 
-    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 21, 37);
+    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 36.5);
     F_Cs1->SetParameters(2000, 27, 2);
-    F_Cs1->SetLineColor(kGreen);
-    G_Cs_Smoothed.Fit("F_Cs1","","",21,37);
-    
+    F_Cs1->SetLineColor(kBlue);
+    G_Cs.Fit("F_Cs1","","",23,36.5);
     
     TF1 *F_Cs2 = new TF1("F_Cs2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 175, 220);
     F_Cs2->SetParNames("C","#mu", "#sigma");
     F_Cs2->SetParameters(200, 184, 20);
     F_Cs2->SetLineColor(kGreen);
-    G_Cs_Smoothed.Fit("F_Cs2","","",175,220);
+    G_Cs.Fit("F_Cs2","","",175,220);
     
-    
-    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 725);
+    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 720);
     F_Cs3->SetParameters(1000, 650, 50);
-    F_Cs3->SetLineColor(kGreen);
-    G_Cs_Smoothed.Fit("F_Cs3","","",610,725);
-
+    F_Cs3->SetLineColor(kBlue);
+    G_Cs.Fit("F_Cs3","","",610,720);
+    
     // Backscatter Peak
     TGraph Cs_Backscatter;
     double x_p1 = 130, x_p2 = 255;
@@ -185,7 +184,7 @@ int main(){
     Cs_Backscatter.AddPoint(184, 0);
     Cs_Backscatter.SetMarkerSize(1.5);
     Cs_Backscatter.SetMarkerStyle(22);
-    Cs_Backscatter.SetMarkerColor(kBlue);
+    Cs_Backscatter.SetMarkerColor(kGreen+2);
 
     // Compton Edge
     // Find the Compton Edge for Cs-137
@@ -207,10 +206,11 @@ int main(){
 
 
     // Create a legend
-    TLegend* cesio = new TLegend(0.65, 0.79, 0.85, 0.89); // Specify the position of the legend
+    TLegend* cesio = new TLegend(0.65, 0.79, 0.90, 0.94); // Specify the position of the legend
     cesio->AddEntry(&G_Cs, "Signal", "l"); 
     cesio->AddEntry(&G_Cs_Smoothed, "Clear Signal", "l"); // "l" for a solid line
     cesio->AddEntry(F_Cs3, "Calibration Peaks Fit", "l"); // "l" for a solid line
+    cesio->AddEntry(F_Cs2, "Back Scattering", "l"); // "l" for a solid line
     cesio->AddEntry(&Cs_Backscatter, "Backscatter Peak", "p"); // "p" for a point
     cesio->AddEntry(&Cs_Compton, "Compton Edge", "p"); // "p" for a point
 
@@ -227,11 +227,13 @@ int main(){
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Cs_Smoothed.png");
     c1.WaitPrimitive();
+    //A.Run("TRUE");
     gSystem->ProcessEvents();
-
+    //gStyle->SetOptFit(kFALSE);
         
 //////////////////////////////////// Co-60  ////////////////////////////////////
     // Espetro de Radiação do Co-60
+    //gStyle->SetOptFit(kTRUE);
     TGraphErrors G_Co;
     vector<pair<double, double>> rad_co;
     n=0;
@@ -277,19 +279,17 @@ int main(){
     G_Co_Smoothed.SetMarkerStyle(20);
     G_Co_Smoothed.SetMarkerSize(0.5);
     G_Co_Smoothed.SetLineWidth(3);
-
+    
     TF1 *F_Co1 = new TF1("F_Co1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1110, 1230);
     F_Co1->SetParameters(100, 1160, 50);
     F_Co1->SetLineColor(kBlue);
-    G_Co_Smoothed.Fit("F_Co1","","",1110,1230);
+    G_Co.Fit("F_Co1","","",1110,1230);
 
     TF1 *F_Co2 = new TF1("F_Co2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1270, 1390);
     F_Co2->SetParameters(100, 1320, 50);
     F_Co2->SetLineColor(kBlue);
-    G_Co_Smoothed.Fit("F_Co2","","",1270, 1390);
+    G_Co.Fit("F_Co2","","",1270, 1390);
     
-
-
 
     // Find the Compton Edge for Co-60
     TGraph Point;
@@ -321,6 +321,7 @@ int main(){
     TLegend* legend = new TLegend(0.65, 0.79, 0.85, 0.89); // Specify the position of the legend
     
     // Add an entry to the legend
+    legend->AddEntry(&G_Co, "Signal", "l"); 
     legend->AddEntry(&G_Co_Smoothed, "Clear Signal", "l"); // "l" for a solid line
     legend->AddEntry(F_Co3, "Back Scattering", "l"); // "l" for a solid line
     legend->AddEntry(&Point, "Compton Edge", "p"); // "p" for a point
@@ -337,6 +338,7 @@ int main(){
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Co.png");
     c1.WaitPrimitive();
+    //A.Run("TRUE");
     gSystem->ProcessEvents();
     
 //////////////////////////////////// Fonte-Desconhecida  ////////////////////////////////////
@@ -379,7 +381,7 @@ int main(){
     F_Des1->SetParNames("C","#mu", "#sigma");
     F_Des1->SetLineColor(kBlue);
     F_Des1->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des1","","",3.4,9.2);
+    G_Am.Fit("F_Des1","","",3.4,9.2);
     F_Des1->Draw("same C");
     
     TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 27, 50);
@@ -387,7 +389,7 @@ int main(){
     F_Des4->SetParNames("C","#mu", "#sigma");
     F_Des4->SetLineColor(kBlue);
     F_Des4->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des4","","",27, 50);
+    G_Am.Fit("F_Des4","","",27, 50);
     F_Des4->Draw("same C");
     
     
@@ -396,7 +398,7 @@ int main(){
     F_Des6->SetParNames("C","#mu", "#sigma");
     F_Des6->SetLineColor(kBlue);
     F_Des6->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des6","","",114, 136);
+    G_Am.Fit("F_Des6","","",114, 136);
     F_Des6->Draw("same C");
     
     TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 230, 258);
@@ -404,7 +406,7 @@ int main(){
     F_Des2->SetParNames("C","#mu", "#sigma");
     F_Des2->SetLineColor(kBlue);
     F_Des2->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des2","","",228,268);
+    G_Am.Fit("F_Des2","","",228,268);
     F_Des2->Draw("same C");
     
     TF1 *F_Des3 = new TF1("F_Des3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 320, 375);
@@ -412,7 +414,7 @@ int main(){
     F_Des3->SetParNames("C","#mu", "#sigma");
     F_Des3->SetLineColor(kBlue);
     F_Des3->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des3","","",320,375);
+    G_Am.Fit("F_Des3","","",320,375);
     F_Des3->Draw("same C");
     
     TF1 *F_Des7 = new TF1("F_Des7", "[0]*exp(-0.5*((x-[1])/[2])**2)", 922, 1014);
@@ -420,7 +422,7 @@ int main(){
     F_Des7->SetParNames("C","#mu", "#sigma");
     F_Des7->SetLineColor(kBlue);
     F_Des7->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des7","","",922, 1014);
+    G_Am.Fit("F_Des7","","",922, 1014);
     F_Des7->Draw("same C");
     
     TF1 *F_Des8 = new TF1("F_Des8", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1035, 1145);
@@ -428,15 +430,15 @@ int main(){
     F_Des8->SetParNames("C","#mu", "#sigma");
     F_Des8->SetLineColor(kBlue);
     F_Des8->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des8","","",1035, 1145);
+    G_Am.Fit("F_Des8","","",1035, 1145);
     F_Des8->Draw("same C");
     
-    TF1 *F_Des9 = new TF1("F_Des9", "[0]*exp(-0.5*((x-[1])/[2])**2)", 745, 826);
+    TF1 *F_Des9 = new TF1("F_Des9", "[0]*exp(-0.5*((x-[1])/[2])**2)", 745, 820);
     F_Des9->SetParameters(10, 800, 10);
     F_Des9->SetParNames("C","#mu", "#sigma");
     F_Des9->SetLineColor(kBlue);
     F_Des9->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des9","","",745, 826);
+    G_Am.Fit("F_Des9","","",745, 820);
     F_Des9->Draw("same C");
     
     TF1 *F_Des10 = new TF1("F_Des10", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1370, 1440);
@@ -444,7 +446,7 @@ int main(){
     F_Des10->SetParNames("C","#mu", "#sigma");
     F_Des10->SetLineColor(kBlue);
     F_Des10->SetLineWidth(3);
-    G_Am_Smoothed.Fit("F_Des10","","",1370, 1440);
+    G_Am.Fit("F_Des10","","",1370, 1440);
     F_Des10->Draw("same C");
 
     // Create Legend
@@ -555,12 +557,13 @@ int main(){
     G_Coeficiente_Atenuacao.SetLineColor(kRed);
     G_Coeficiente_Atenuacao.SetMarkerStyle(20);
     G_Coeficiente_Atenuacao.SetMarkerSize(0.5);
-    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuacao do Chumbo; Espessura [mg/cm^2]; Ln(Counts)");
+    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuacao do Chumbo; Espessura [mg/cm^2]; Counts");
     G_Coeficiente_Atenuacao.GetXaxis()->CenterTitle();
     G_Coeficiente_Atenuacao.GetYaxis()->CenterTitle();
     G_Coeficiente_Atenuacao.Fit("co", "");
 
     c1.Clear();
+    c1.SetLogy(0);
     gStyle->SetOptFit(1111);
     G_Coeficiente_Atenuacao.Draw("AP");
     c1.Update();
