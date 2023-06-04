@@ -1,22 +1,26 @@
-    Espetro do Amerício-241 (vácuo)  | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição |
-   |:------:|:---:|:---:|:---:|:--:|:----:|
-   || 51268 ± 226 | 47394 ± 262 | 709,78 ± 0,01 | 4,21 |240s|
+Tabela que pode ser útil para registar valores
+  
+Espetro do Amerício-241 (vácuo)  | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição |
+|:------:|:---:|:---:|:---:|:--:|:----:|
+|| 51268 ± 226 | 47394 ± 262 | 709,78 ± 0,01 | 4,21 |240s|
 
-In beta decay, a beta particle refers to an electron (β-) or a positron (β+). It is not a photon. Beta decay involves the transformation of a neutron or a proton into an electron or a positron, respectively, accompanied by the emission of a neutrino or an antineutrino. This process occurs in atomic nuclei and is governed by the weak nuclear force. The emitted beta particle carries away energy and momentum from the nucleus undergoing decay.
+**Teoria sobre a atividade Experimental**
 
-Certainly! Beta decay is a radioactive decay process that involves the transformation of a nucleus, typically in an unstable or radioactive state. There are two types of beta decay: beta-minus decay (β- decay) and beta-plus decay (β+ decay). Let's explore each type:
+In beta decay, a beta particle refers to an electron ($\beta$-) or a positron ($\beta$+). It is not a photon. Beta decay involves the transformation of a neutron or a proton into an electron or a positron, respectively, accompanied by the emission of a neutrino or an antineutrino. This process occurs in atomic nuclei and is governed by the weak nuclear force. The emitted beta particle carries away energy and momentum from the nucleus undergoing decay.
 
-1. Beta-Minus Decay (β- Decay):
+Certainly! Beta decay is a radioactive decay process that involves the transformation of a nucleus, typically in an unstable or radioactive state. There are two types of beta decay: beta-minus decay ($\beta$- decay) and beta-plus decay ($\beta$+ decay). Let's explore each type:
+
+1. Beta-Minus Decay ($\beta$- Decay):
 In beta-minus decay, a neutron within the nucleus undergoes a transformation, converting into a proton. Simultaneously, an electron (beta particle) and an electron antineutrino are emitted. The process can be represented as follows:
 
-n → p + e- + ν̅e
+n → p + e- + $\overline{\nu}$e
 
 The neutron becomes a proton, increasing the atomic number of the nucleus by one, while the mass number remains the same. This process is often observed in isotopes with an excess of neutrons, as they seek to reach a more stable configuration.
 
-2. Beta-Plus Decay (β+ Decay):
+2. Beta-Plus Decay ($\beta$+ Decay):
 In beta-plus decay, a proton within the nucleus transforms into a neutron. This decay process involves the emission of a positron (a positively charged electron) and an electron neutrino:
 
-p → n + e+ + νe
+p → n + e+ + $\nu$e
 
 During beta-plus decay, the proton decreases in number, reducing the atomic number of the nucleus by one while keeping the mass number constant. Beta-plus decay typically occurs in isotopes with excess protons, as they attempt to achieve a more stable configuration.
 
@@ -26,30 +30,30 @@ These decay processes play a crucial role in nuclear physics and have implicatio
 
 
 
-In beta-plus decay (β+ decay), the beta-plus particle refers to the positron (e+). The positron is an antiparticle of the electron, carrying a positive charge (+1 elementary charge) and having the same mass as an electron. During beta-plus decay, a proton within the nucleus of an atom transforms into a neutron, emitting a positron and an electron neutrino:
+In beta-plus decay ($\beta$+ decay), the beta-plus particle refers to the positron (e+). The positron is an antiparticle of the electron, carrying a positive charge (+1 elementary charge) and having the same mass as an electron. During beta-plus decay, a proton within the nucleus of an atom transforms into a neutron, emitting a positron and an electron neutrino:
 
-p → n + e+ + νe
+p → n + e+ + $\nu$e
 
-In this process, the atomic number of the nucleus decreases by one as a proton is converted into a neutron. The positron is the emitted particle, while the electron neutrino (νe) is also produced. The positron quickly interacts with an electron, resulting in their annihilation and the release of two gamma-ray photons.
+In this process, the atomic number of the nucleus decreases by one as a proton is converted into a neutron. The positron is the emitted particle, while the electron neutrino ($\nu$e) is also produced. The positron quickly interacts with an electron, resulting in their annihilation and the release of two gamma-ray photons.
 
 It's important to note that the positron is not the same as the neutrino. The positron carries positive electric charge and is a particle, while the neutrino (in this case, the electron neutrino) is electrically neutral and is a distinct particle. Both the positron and the electron neutrino are produced during beta-plus decay.
 
 
-In beta-minus decay (β- decay), the beta-minus particle refers to the electron (e-). It is not the neutrino. During beta-minus decay, a neutron within the nucleus of an atom transforms into a proton, emitting an electron and an electron antineutrino:
+In beta-minus decay ($\beta$- decay), the beta-minus particle refers to the electron (e-). It is not the neutrino. During beta-minus decay, a neutron within the nucleus of an atom transforms into a proton, emitting an electron and an electron antineutrino:
 
-n → p + e- + ν̅e
+n → p + e- + $\overline{\nu}$e
 
-In this process, the atomic number of the nucleus increases by one as a neutron is converted into a proton. The emitted particle is the electron (beta-minus particle), while the electron antineutrino (ν̅e) is also produced. The electron carries a negative charge (-1 elementary charge) and has a mass equal to that of an electron.
+In this process, the atomic number of the nucleus increases by one as a neutron is converted into a proton. The emitted particle is the electron (beta-minus particle), while the electron antineutrino ($\overline{\nu}$e) is also produced. The electron carries a negative charge (-1 elementary charge) and has a mass equal to that of an electron.
 
-So, in beta-minus decay, the emitted particle is the electron (e-) while the neutrino counterpart is the electron antineutrino (ν̅e).
+So, in beta-minus decay, the emitted particle is the electron (e-) while the neutrino counterpart is the electron antineutrino ($\overline{\nu}$e).
 
 
 
 The endpoint in beta decay refers to the maximum energy or momentum that the emitted beta particle (electron or positron) can have. It represents the upper limit of the energy spectrum for the beta particles in a particular decay process.
 
-In beta-minus decay (β- decay), the endpoint energy corresponds to the energy difference between the initial and final nuclear states. The electron (beta-minus particle) can have a range of energies up to the endpoint energy, but no electron will be emitted with an energy greater than the endpoint energy. The endpoint energy is determined by the specific nuclear transition involved in the decay.
+In beta-minus decay ($\beta$- decay), the endpoint energy corresponds to the energy difference between the initial and final nuclear states. The electron (beta-minus particle) can have a range of energies up to the endpoint energy, but no electron will be emitted with an energy greater than the endpoint energy. The endpoint energy is determined by the specific nuclear transition involved in the decay.
 
-Similarly, in beta-plus decay (β+ decay), the endpoint energy is also determined by the energy difference between the initial and final nuclear states. The positron (beta-plus particle) emitted during beta-plus decay can have energies up to the endpoint energy.
+Similarly, in beta-plus decay ($\beta$+ decay), the endpoint energy is also determined by the energy difference between the initial and final nuclear states. The positron (beta-plus particle) emitted during beta-plus decay can have energies up to the endpoint energy.
 
 The determination of the endpoint energy is important for understanding the energy distribution of the emitted beta particles and for various applications, such as in the calibration of detectors and the study of fundamental properties of particles and nuclear structure.
 
@@ -69,21 +73,21 @@ However, in more precise and detailed studies, researchers may consider the ener
 
 The endpoint energy in beta decay can be determined using the Q-value (Q) of the decay process. The Q-value represents the energy released in the decay and is given by the mass difference between the initial and final nuclear states.
 
-In beta-minus decay (β- decay), the endpoint energy (E_max) for the emitted electron is given by:
+In beta-minus decay ($\beta$- decay), the endpoint energy ($E_{max}$) for the emitted electron is given by:
 
-E_max = Q - m_e
-
-where Q is the Q-value of the decay and m_e is the rest mass of the electron.
-
-Similarly, in beta-plus decay (β+ decay), the endpoint energy (E_max) for the emitted positron is given by:
-
-E_max = Q - m_e
+$E_{max} = Q - m_e$
 
 where Q is the Q-value of the decay and m_e is the rest mass of the electron.
 
-The Q-value can be calculated by subtracting the mass of the parent nucleus (m_parent) from the mass of the daughter nucleus (m_daughter):
+Similarly, in beta-plus decay ($\beta$+ decay), the endpoint energy ($E_{max}$) for the emitted positron is given by:
 
-Q = m_parent - m_daughter
+$E_{max} = Q - m_e$
+
+where Q is the Q-value of the decay and m_e is the rest mass of the electron.
+
+The Q-value can be calculated by subtracting the mass of the parent nucleus ($m_{parent}$) from the mass of the daughter nucleus ($m_{daughter}$):
+
+$Q = m_{parent} - m_{daughter}$
 
 The Q-value can be experimentally measured or obtained from nuclear mass tables.
 
@@ -93,9 +97,9 @@ It's important to note that the endpoint energy represents the maximum energy th
 
 The Q-value in beta decay is the total energy released in the decay process. It represents the difference in mass-energy between the initial state (parent nucleus) and the final state (daughter nucleus) involved in the decay. The Q-value can be calculated using the equation:
 
-Q = (M_initial - M_final) c^2
+$Q = (M_{initial} - M_{final}) c^2$
 
-where M_initial is the mass of the parent nucleus, M_final is the mass of the daughter nucleus, and c is the speed of light.
+where $M_{initial}$ is the mass of the parent nucleus, $M_{final}$ is the mass of the daughter nucleus, and c is the speed of light.
 
 The Q-value can be positive or negative, depending on whether the mass of the parent nucleus is greater or smaller than the mass of the daughter nucleus. If the Q-value is positive, it means that energy is released in the decay process. If it is negative, it implies that energy must be supplied for the decay to occur.
 
@@ -104,17 +108,17 @@ The Q-value represents the maximum energy available for distribution among the d
 The Q-value is an important parameter in understanding and characterizing beta decay processes and is often used in experimental studies and theoretical calculations related to nuclear physics.
 
 
-I apologize for the incorrect formula mentioned earlier. It was inaccurate. The correct formula for the endpoint energy (E_max) of the beta particle (electron or positron) in beta decay is:
+I apologize for the incorrect formula mentioned earlier. It was inaccurate. The correct formula for the endpoint energy ($E_{max}$) of the beta particle (electron or positron) in beta decay is:
 
-E_max = Q - m_e - m_ν
+$E_max = Q - m_e -m_\nu$
 
-Here, Q represents the Q-value of the decay, m_e is the rest mass of the electron, and m_ν is the rest mass of the neutrino.
+Here, Q represents the Q-value of the decay, m_e is the rest mass of the electron, and $m_{\nu}$ is the rest mass of the neutrino.
 
 In beta decay processes, the Q-value is the total energy released in the decay, which is shared between the beta particle and the accompanying neutrino (or antineutrino). The endpoint energy (E_max) represents the maximum energy that the beta particle can have, considering the available energy in the decay process.
 
-However, it's important to note that the exact masses of neutrinos are still not precisely determined, although experiments have provided evidence for nonzero neutrino masses. Therefore, the mass of the neutrino (m_ν) is typically assumed to be very small or negligible compared to other particles involved in the decay. As a result, in practical calculations and experimental analyses, the mass of the neutrino is often neglected, and the formula can be simplified to:
+However, it's important to note that the exact masses of neutrinos are still not precisely determined, although experiments have provided evidence for nonzero neutrino masses. Therefore, the mass of the neutrino (m_$\nu$) is typically assumed to be very small or negligible compared to other particles involved in the decay. As a result, in practical calculations and experimental analyses, the mass of the neutrino is often neglected, and the formula can be simplified to:
 
-E_max ≈ Q - m_e
+$E_{max} = Q - m_e$
 
 This simplified formula is commonly used when considering the endpoint energy of the beta particle in beta decay.
 
