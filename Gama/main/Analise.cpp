@@ -112,6 +112,7 @@ int main(){
     c1.SaveAs("Graphs/Espetro_Ambiente_Smoothed.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
         
 //////////////////////////////////// Cs-137  ////////////////////////////////////
     // Espetro de Radiação do Cs-137 
@@ -596,4 +597,35 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
+
+    vector <double> dist = {0.00635, 0.0127, 0.019, 0.0254, 0.0318, 0.0381};   // em m
+    vector <double> inc_dist = {0,0,0,0,0,0};
+    vector <double> counts_semdisco = {42280, 26555, 11002, 5650, 3525, 2537};
+    vector <double> inc_cnt_semdisco = {291, 230, 148, 106, 84, 42};
+    vector <double> counts_comdisco = {4004, 2482, 1339, 831, 668, 487};
+    vector <double> inc_cnt_comdisco = {89, 70, 52, 41, 37, 31};
+
+    TCanvas b("b", "b", 1200, 900);
+    TGraphErrors Ab;                             // grafico sem disco
+    TF1 f("f", "[0]*( 1 - [1]/sqrt( 1 + ([2]/(x + [3]) )**2) )", 0.006, 0.04);
+
+    f.SetParameter(0, 42280); // parameter 0
+    f.SetParameter(1, 1); // parameter 1
+    f.SetParameter(2, 1); // parameter 2
+    f.SetParameter(3, 1); // parameter 3
+
+    //f.SetParLimits(3, 0.00001, 1000000); // parameter 0 lower and upper limits
+
+    for(int i = 0; i < dist.size(); i++){
+        Ab.SetPoint(i, dist[i], counts_semdisco[i]);
+        Ab.SetPointError(i, inc_dist[i], inc_cnt_semdisco[i]);
+    }
+    Ab.SetTitle("; d [m]; Counts");
+    Ab.SetMarkerSize(0.5);
+    Ab.Fit("f", "");
+   
+    Ab.Draw("AP");
+    b.Update();
+    b.WaitPrimitive();
+    gSystem->ProcessEvents();
 }
