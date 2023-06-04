@@ -11,3 +11,7 @@
 
 -Repetimos o processo para a placa de 7,5mm
 
+- Medimos com uma fonte de tálio numa chapa tapada o número de contagens, para verificar que a chapa impedia a passagem da radiação beta, obtendo 16 e 17 contagens em medições de 30 segundos cada. Estas contagens assemelham-se às obtidas na radiação de fundo ambiente, pelo que concluímos que, de facto, tapa a radiação beta.
+- Em seguida, realizámos medições para a chapa com uma abertura de 10 mm, tendo obtido as contagens de 240 e 234.
+- Realizámos medições para a chpa de 7,5 mm tendo obtido as contagens de 111 e 94.
+- Em seguida, para estudar a radiação gama, trocámos a fonte para a fonte de césio e realizámos contagens para a mesma com a palca sem orifício tendo obtido contagens de 410 e 434.
