@@ -69,6 +69,7 @@ int main(){
 
     
     // Espetro de Radiação do Ambiente
+    gStyle->SetOptFit(kTRUE);
     TGraph G_Amb; 
     vector<pair<double, double>> rad_ambiente;
     ReadFile("Data_Files/Ruido_Energy.dat", rad_ambiente);
@@ -95,22 +96,30 @@ int main(){
     G_Amb_Smoothed.SetMarkerSize(0.5);
     G_Amb_Smoothed.SetLineWidth(3);
 
+    TF1 *F_Amb = new TF1("F_Amb", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1400, 1510);
+    F_Amb->SetParNames("C","#mu", "#sigma");
+    F_Amb->SetParameters(50, 1460, 30);
+    F_Amb->SetLineColor(kBlue);
+    G_Amb.Fit("F_Amb","","",1400,1510);
+
     // Create a legend
     TLegend* ambient = new TLegend(0.65, 0.75, 0.85, 0.85); // Specify the position of the legend
     
     // Add an entry to the legend
     ambient->AddEntry(&G_Amb, "Signal", "l"); // "p" for a point
     ambient->AddEntry(&G_Amb_Smoothed, "Clear Signal", "l"); // "l" for a solid line
-
+    ambient->AddEntry(F_Amb, "Fit", "l");
 
     c1.Clear();
-    G_Amb.Draw("AC");
+    G_Amb.Draw("APC");
     G_Amb_Smoothed.Draw("same C");
+    F_Amb->Draw("same C");
     ambient->Draw();
     c1.SetLogy();
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Ambiente_Smoothed.png");
     c1.WaitPrimitive();
+    A.Run("TRUE");
     gSystem->ProcessEvents();
 
         
