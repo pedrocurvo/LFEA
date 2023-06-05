@@ -69,6 +69,7 @@ int main(){
 
     
     // Espetro de Radiação do Ambiente
+    gStyle->SetOptFit(kTRUE);
     TGraph G_Amb; 
     vector<pair<double, double>> rad_ambiente;
     ReadFile("Data_Files/Ruido_Energy.dat", rad_ambiente);
@@ -95,22 +96,30 @@ int main(){
     G_Amb_Smoothed.SetMarkerSize(0.5);
     G_Amb_Smoothed.SetLineWidth(3);
 
+    TF1 *F_Amb = new TF1("F_Amb", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1400, 1510);
+    F_Amb->SetParNames("C","#mu", "#sigma");
+    F_Amb->SetParameters(50, 1460, 30);
+    F_Amb->SetLineColor(kBlue);
+    G_Amb.Fit("F_Amb","","",1400,1510);
+
     // Create a legend
     TLegend* ambient = new TLegend(0.65, 0.75, 0.85, 0.85); // Specify the position of the legend
     
     // Add an entry to the legend
     ambient->AddEntry(&G_Amb, "Signal", "l"); // "p" for a point
     ambient->AddEntry(&G_Amb_Smoothed, "Clear Signal", "l"); // "l" for a solid line
-
+    ambient->AddEntry(F_Amb, "Fit", "l");
 
     c1.Clear();
-    G_Amb.Draw("AC");
+    G_Amb.Draw("APC");
     G_Amb_Smoothed.Draw("same C");
+    F_Amb->Draw("same C");
     ambient->Draw();
     c1.SetLogy();
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Ambiente_Smoothed.png");
     c1.WaitPrimitive();
+    A.Run("TRUE");
     gSystem->ProcessEvents();
 
         
@@ -551,20 +560,21 @@ int main(){
     TGraph G_Coeficiente_Atenuacao;
     TF1 *co = new TF1("co", "[0]*x+[1]", 0, 1024);
 
-
-    G_Coeficiente_Atenuacao.AddPoint(espessura_fino, log(rad_cs_pb_thin_smoothed[434].second));
-    G_Coeficiente_Atenuacao.AddPoint(espessura_grosso, log(rad_cs_pb_smoothed[434].second));
+    //G_Coeficiente_Atenuacao.AddPoint(espessura_fino, log(rad_cs_pb_thin_smoothed[434].second));
+    //G_Coeficiente_Atenuacao.AddPoint(espessura_grosso, log(rad_cs_pb_smoothed[434].second));
+    G_Coeficiente_Atenuacao.AddPoint(espessura_fino, log(33958));
+    G_Coeficiente_Atenuacao.AddPoint(espessura_grosso, log(19023));
     G_Coeficiente_Atenuacao.SetLineColor(kRed);
     G_Coeficiente_Atenuacao.SetMarkerStyle(20);
     G_Coeficiente_Atenuacao.SetMarkerSize(0.5);
-    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuacao do Chumbo; Espessura [mg/cm^2]; Counts");
+    G_Coeficiente_Atenuacao.SetTitle("Coeficiente de Atenuac#tilde{a}o do Chumbo; Espessura [mg/cm^{2}]; log(Counts)");
     G_Coeficiente_Atenuacao.GetXaxis()->CenterTitle();
     G_Coeficiente_Atenuacao.GetYaxis()->CenterTitle();
+    co->SetParNames("declive","y_{0}");
     G_Coeficiente_Atenuacao.Fit("co", "");
-
     c1.Clear();
     c1.SetLogy(0);
-    gStyle->SetOptFit(1111);
+    gStyle->SetOptFit(kTRUE);
     G_Coeficiente_Atenuacao.Draw("AP");
     c1.Update();
     c1.SaveAs("Graphs/Coeficiente_Atenuacao.png");
@@ -580,7 +590,7 @@ int main(){
     double ey[5] = {0.001, 0.01, 0.01, 0.01};
     TGraphErrors* G_Resolucao_Energia = new TGraphErrors(5, x, y, ex, ey);
     TF1 *res = new TF1("res", "[0]/sqrt(x)+[1]", 0, 1024);
-    
+    res->SetParNames("a","b");
     G_Resolucao_Energia->SetLineColor(kRed);
     G_Resolucao_Energia->SetMarkerStyle(20);
     G_Resolucao_Energia->SetMarkerSize(0.5);
@@ -591,7 +601,7 @@ int main(){
 
 
 
-    gStyle->SetOptFit(1111);
+    gStyle->SetOptFit(kTRUE);
     c1.Clear();
     c1.SetLogy(0);
     G_Resolucao_Energia->Draw("AP");
@@ -600,7 +610,7 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-
+    /*
     vector <double> dist = {0.00635, 0.0127, 0.019, 0.0254, 0.0318, 0.0381};   // em m
     vector <double> inc_dist = {0,0,0,0,0,0};
     vector <double> counts_semdisco = {42280, 26555, 11002, 5650, 3525, 2537};
@@ -631,4 +641,5 @@ int main(){
     b.Update();
     b.WaitPrimitive();
     gSystem->ProcessEvents();
+    */
 }
