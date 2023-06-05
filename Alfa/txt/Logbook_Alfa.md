@@ -1,6 +1,6 @@
-# LogBook Relativo à Realização do Estudo da Radiação Alfa
+# LogBook Relativo à Realização do Estudo da Radiação Alfa 
 
-A experiência que em seguida se descreve foi realizada no dia 5 de junho de 2023, com início às 8:00 da manhã e fim às 11:30. O nosso grupo é o 1D e é formado pelo Estêvão Gomes (ist1102650), o Pedro Curvo (ist1102716), a Sofia Tété (ist1102633) e o Salvador Torpes (ist1102474). LogBook realizado por Estêvão Gomes.
+A experiência que em seguida se descreve foi realizada no dia 5 de junho de 2023, com início às 8:00 da manhã e fim às 11:00. O nosso grupo é o 1D e é formado pelo Estêvão Gomes (ist1102650), o Pedro Curvo (ist1102716), a Sofia Tété (ist1102633) e o Salvador Torpes (ist1102474). LogBook realizado por Estêvão Gomes.
 
 1. **Espectroscopia de precisão de fonte emissora $\alpha$:**
    - Começamos por ligar o computador para ligar o MCA;
@@ -13,7 +13,7 @@ A experiência que em seguida se descreve foi realizada no dia 5 de junho de 202
    - Depois de escolhermos este range de energia, realizamos uma aquisição de dados no MCA durante 120 segundos com o pulser desligado. Guardamos os dados obtidos para posterior análise. Verificamos que se observam nitiditamente três picos de energia sobrepostos no espetro deste elemento na zona dos 400 Chn;
    - Desligamos o bias e ligamos o pulser do detetor;
    - Em seguida, com o objetivo de calibrar o sistema recorrendo a um pulser, realizamos uma aquisição de dados no MCA. A cada 30 segundos, alteramos a energia do pulser e repetimos o processo para três valores diferentes da energia. Nestes espetros, observamos os diferentes picos do pulser bem como, com maior intensidade, o pico de emissão do amerício. No fim, retiramos dados para cada um deles, obtendo os seguintes resultados:
-
+  
     Energia no Pulser (MeV) | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição |
    |:------:|:---:|:---:|:---:|:--:|:----:|
    |5,00 ± 0,01| 2668 ± 52 | 2533 ± 58 | 289,45 ± 0,07 | 8,26 |30s|
@@ -21,7 +21,7 @@ A experiência que em seguida se descreve foi realizada no dia 5 de junho de 202
    |6,00 ± 0,01| 2547 ± 50 | 2480 ± 56 | 872,04 ± 0,13 | 15,18  |30s|
 
    - Repetimos o procedimento do ponto anterior, mas desta vez realizmaos a aquisição de dados durante 120 segundos para cada valor da energia do pulser. Por sugestão do professor, realizamos uma nova medição para um uma energia do pulser de 5,75 MeV. Obtivemos os seguintes valores:
-
+  
     Energia no Pulser (MeV) | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição |
    |:------:|:---:|:---:|:---:|:--:|:----:|
    |5,00 ± 0,01| 10499 ± 102 | 9676 ± 125 | 290,46 ± 0,04 | 10,07 |120s|
@@ -33,7 +33,7 @@ A experiência que em seguida se descreve foi realizada no dia 5 de junho de 202
    - Começamos por desligar o output do detetor no amplificador de janela e ligá-lo ao amplificador linear;
    - Em seguida, realizamos uma aquisição de dados no MCA durante 240 segundos com o pulser desligado e mantendo o vácuo. Dividimos a aquisição em duas partes, cada uma de 120 segundos uma vez que, ao longo do tempo, o detetor aquece e pode alterar a largura dos picos (sugestão do professor). Guardamos os dados obtidos;
    - Em seguida, com o objetivo de calibrar o sistema, realizamos uma aquisição de dados no MCA com o pulser ligado e com a câmara ainda em vácuo. A cada 120 segundos, alteramos a energia do pulser e repetimos o processo para quatro valores diferentes da energia. No fim, retiramos dados para cada um deles, obtendo os seguintes resultados:
-
+  
     Energia no Pulser (MeV) | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição |
    |:------:|:---:|:---:|:---:|:--:|:----:|
    |5,00 ± 0,01| 10547 ± 103 | 10344 ± 106 | 667,90 ± 0,01 | 3,53 |120s|
@@ -45,5 +45,5 @@ A experiência que em seguida se descreve foi realizada no dia 5 de junho de 202
    - Realizamos uma aquisição de dados no MCA durante 240 segundos com o pulser desligado e com ar na câmara. Dividimos, mais uma vez, a aquisição em duas partes, cada uma de 120 segundos. Guardamos os dados obtidos;
    - Abrimos a câmara do detetor e mudamos a fonte para a prateleira 8. 
    - Realizamos uma aquisição de dados no MCA durante 240 segundos com o pulser desligado, a fonte na prateleira 8 e sem vácuo na câmara. Guardamos os dados obtidos;
-   - Voltamos a colocar vácuo na câmara com recurso à bomba de vácuo;  
+   - Voltamos a colocar vácuo na câmara com recurso à bomba de vácuo;
    - Realizamos uma aquisição de dados no MCA durante 240 segundos com o pulser desligado, a fonte na prateleira 8 e com vácuo na câmara. Guardamos os dados obtidos;
