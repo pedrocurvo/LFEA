@@ -44,7 +44,7 @@ for (int i = 0; i < numPoints; i++) {
 }
 
 TGraphErrors graph_plateau(numPoints, &xValues[0], &yValues[0], &exValues[0], &eyValues[0]);
-gStyle->SetOptFit(1111);
+gStyle->SetOptFit(111);
 // Set Graph Style
 graph_plateau.SetMarkerStyle(20);
 graph_plateau.SetMarkerColor(kRed);
@@ -89,10 +89,17 @@ gSystem->ProcessEvents();
     vector<double> counts_without_al = {83388, 36599, 13334, 4711, 3747};
     vector<double> counts_without_al_uncertain = {289, 191, 115, 69, 61};
     vector<double> uncertainty_distance = {0.0005, 0.0005, 0.0005, 0.0005, 0.0005};
+    vector<double> counts_subtracted(counts_al.size());
+    vector<double> counts_subtracted_uncertain(counts_al.size());
+    for(int i = 0; i < counts_subtracted.size(); i++){
+        counts_subtracted[i] = counts_without_al[i] - counts_al[i];
+        counts_subtracted_uncertain[i] = sqrt(counts_without_al_uncertain[i]*counts_without_al_uncertain[i] + counts_al_uncertain[i]*counts_al_uncertain[i]);
+    }
 
     // Create Graph
     TGraphErrors graph_al(distances.size(), &distances[0], &counts_al[0], &uncertainty_distance[0], &counts_al_uncertain[0]);
     TGraphErrors graph_without_al(distances.size(), &distances[0], &counts_without_al[0], &uncertainty_distance[0], &counts_without_al_uncertain[0]);
+    TGraphErrors graph_subtracted(distances.size(), &distances[0], &counts_subtracted[0], &uncertainty_distance[0], &counts_subtracted_uncertain[0]);
 
     // Set Graph Style
     graph_al.SetMarkerStyle(20);
@@ -112,6 +119,15 @@ gSystem->ProcessEvents();
     graph_without_al.GetYaxis()->SetTitle("Contagem de Particulas");
     graph_without_al.GetXaxis()->CenterTitle();
     graph_without_al.GetYaxis()->CenterTitle();
+
+    graph_subtracted.SetMarkerStyle(20);
+    graph_subtracted.SetMarkerColor(kGreen);
+    graph_subtracted.SetLineColor(kGreen);
+    graph_subtracted.SetTitle("Contagem de Particulas em funcao da distancia s/Al - c/Al");
+    graph_subtracted.GetXaxis()->SetTitle("Distancia [m]");
+    graph_subtracted.GetYaxis()->SetTitle("Contagem de Particulas");
+    graph_subtracted.GetXaxis()->CenterTitle();
+    graph_subtracted.GetYaxis()->CenterTitle();
 
     // Create Legend
     TLegend legend(0.65, 0.55, 0.85, 0.65);
@@ -191,6 +207,33 @@ gSystem->ProcessEvents();
     c1.Update();
     c1.SaveAs("graphs/contagem_without_al_c.png");
     c1.WaitPrimitive();
+
+    // Draw Graph
+    c1.Clear();
+    legend.Clear();
+    graph_subtracted.Fit(&fit, "R");
+    legend.AddEntry(&graph_subtracted, "Subtraido", "lep");
+    legend.AddEntry(&fit, "A/x^{2} + B", "l");
+    graph_subtracted.Draw("AP");
+    legend.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/contagem_subtracted.png");
+    c1.WaitPrimitive();
+
+    // Draw Graph
+    c1.Clear();
+    legend.Clear();
+    graph_subtracted.Fit(&fit2, "R");
+    legend.AddEntry(&graph_subtracted, "Subtraido", "lep");
+    legend.AddEntry(&fit2, "A/(x+C)^{2} + B", "l");
+    graph_subtracted.Draw("AP");
+    legend.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/contagem_subtracted_c.png");
+    c1.WaitPrimitive();
+    
+
+
 
 
 
