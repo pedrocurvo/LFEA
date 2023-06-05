@@ -3,4 +3,5 @@ pandoc Gamma.md -o output.pdf --template eisvogel.latex --metadata title="LogBoo
 
 Salvador:
 pandoc LogBook_Gamma.md -o Gamma.pdf --template=eisvogel.latex
+pandoc Logbook_Alfa.md -o Gamma.pdf --template=eisvogel.latex
 sudo cp eisvogel.latex /usr/share/pandoc/data/templates
