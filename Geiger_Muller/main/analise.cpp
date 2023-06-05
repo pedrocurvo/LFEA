@@ -44,7 +44,7 @@ for (int i = 0; i < numPoints; i++) {
 }
 
 TGraphErrors graph_plateau(numPoints, &xValues[0], &yValues[0], &exValues[0], &eyValues[0]);
-
+gStyle->SetOptFit(1111);
 // Set Graph Style
 graph_plateau.SetMarkerStyle(20);
 graph_plateau.SetMarkerColor(kRed);
@@ -88,10 +88,11 @@ gSystem->ProcessEvents();
     vector<double> counts_al_uncertain = { 50, 34, 29, 25, 23};
     vector<double> counts_without_al = {83388, 36599, 13334, 4711, 3747};
     vector<double> counts_without_al_uncertain = {289, 191, 115, 69, 61};
+    vector<double> uncertainty_distance = {0.0005, 0.0005, 0.0005, 0.0005, 0.0005};
 
     // Create Graph
-    TGraphErrors graph_al(distances.size(), &distances[0], &counts_al[0], nullptr, &counts_al_uncertain[0]);
-    TGraphErrors graph_without_al(distances.size(), &distances[0], &counts_without_al[0], nullptr, &counts_without_al_uncertain[0]);
+    TGraphErrors graph_al(distances.size(), &distances[0], &counts_al[0], &uncertainty_distance[0], &counts_al_uncertain[0]);
+    TGraphErrors graph_without_al(distances.size(), &distances[0], &counts_without_al[0], &uncertainty_distance[0], &counts_without_al_uncertain[0]);
 
     // Set Graph Style
     graph_al.SetMarkerStyle(20);
@@ -113,7 +114,7 @@ gSystem->ProcessEvents();
     graph_without_al.GetYaxis()->CenterTitle();
 
     // Create Legend
-    TLegend legend(0.65, 0.65, 0.85, 0.75);
+    TLegend legend(0.65, 0.55, 0.85, 0.65);
     legend.SetTextSize(0.03);
 
     // Fit
@@ -130,7 +131,8 @@ gSystem->ProcessEvents();
     TF1 fit2("fit2", "[0]/((x+[2])**2) + [1]", 0, 0.04);
     fit2.SetParameter(0, 1);
     fit2.SetParameter(1, 1);
-    fit2.SetParameter(2, 0.0238);
+    fit2.SetParameter(2, 0);
+    fit2.SetParLimits(2, -0.005, 0.005);
     fit2.SetParName(0, "A");
     fit2.SetParName(1, "B");
     fit2.SetParName(2, "C");
