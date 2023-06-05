@@ -352,6 +352,7 @@ int main(){
     
 //////////////////////////////////// Fonte-Desconhecida  ////////////////////////////////////
     // Espetro de Radiação da Fonte Desconhecida
+    gStyle->SetOptFit(kFALSE);
     TGraphErrors G_Am;
     vector<pair<double, double>> rad_am;
     ReadFile("Data_Files/Fonte_Desconhecida_Energy.dat", rad_am);
@@ -393,12 +394,12 @@ int main(){
     G_Am.Fit("F_Des1","","",3.4,9.2);
     F_Des1->Draw("same C");
     
-    TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 27, 50);
-    F_Des4->SetParameters(800, 39, 3);
+    TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 26, 50);
+    F_Des4->SetParameters(2000, 39, 6);
     F_Des4->SetParNames("C","#mu", "#sigma");
     F_Des4->SetLineColor(kBlue);
     F_Des4->SetLineWidth(3);
-    G_Am.Fit("F_Des4","","",27, 50);
+    G_Am.Fit("F_Des4","","",26, 50);
     F_Des4->Draw("same C");
     
     
@@ -411,7 +412,7 @@ int main(){
     F_Des6->Draw("same C");
     
     TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 230, 258);
-    F_Des2->SetParameters(1000, 235, 10);
+    F_Des2->SetParameters(600, 235, 10);
     F_Des2->SetParNames("C","#mu", "#sigma");
     F_Des2->SetLineColor(kBlue);
     F_Des2->SetLineWidth(3);
@@ -470,7 +471,7 @@ int main(){
     c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-
+    gStyle->SetOptFit(kTRUE);
     
 //////////////////////////////////// Atenuação na Matéria  ////////////////////////////////////
     // Calculo do Coeficiente na Atenuação do Chumbo
