@@ -119,7 +119,7 @@ int main(){
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Ambiente_Smoothed.png");
     c1.WaitPrimitive();
-    A.Run("TRUE");
+    //A.Run("TRUE");
     gSystem->ProcessEvents();
 
         
@@ -134,7 +134,7 @@ int main(){
         if(rad_cs[i].first < 720){
             n = G_Cs.GetN();
             G_Cs.SetPoint(n, rad_cs[i].first, rad_cs[i].second);
-            G_Cs.SetPointError(n,0.006*rad_cs[i].first+3.6,sqrt(rad_cs[i].second));
+            G_Cs.SetPointError(n,0/*0.006*rad_cs[i].first+3.6*/,sqrt(rad_cs[i].second));
         }
     }
     G_Cs.SetLineColor(kGray+1);
@@ -251,7 +251,7 @@ int main(){
         if(rad_co[i].first > 1400){continue;}
         n = G_Co.GetN();
         G_Co.SetPoint(n, rad_co[i].first, rad_co[i].second);
-        G_Co.SetPointError(n,0.006*rad_co[i].first+3.6,sqrt(rad_co[i].second));
+        G_Co.SetPointError(n,0/*0.006*rad_co[i].first+3.6*/,sqrt(rad_co[i].second));
     }
     G_Co.SetLineColor(kGray+1);
     G_Co.SetMarkerStyle(20);
@@ -359,7 +359,7 @@ int main(){
     for (int i = 0; i < rad_am.size(); i++){
         n = G_Am.GetN();
         G_Am.SetPoint(n, rad_am[i].first, rad_am[i].second - rad_ambiente_smoothed[i].second/4);
-        G_Am.SetPointError(n,0.006*rad_am[i].first+3.6,sqrt(rad_am[i].second));
+        G_Am.SetPointError(n,0/*0.006*rad_am[i].first+3.6*/,sqrt(rad_am[i].second));
     }
     G_Am.SetLineColor(kGray+1);
     G_Am.SetMarkerStyle(20);
