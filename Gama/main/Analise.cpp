@@ -70,11 +70,13 @@ int main(){
     
     // Espetro de Radiação do Ambiente
     gStyle->SetOptFit(kTRUE);
-    TGraph G_Amb; 
+    TGraphErrors G_Amb; 
     vector<pair<double, double>> rad_ambiente;
     ReadFile("Data_Files/Ruido_Energy.dat", rad_ambiente);
     for (int i = 0; i < rad_ambiente.size(); i++){
-        G_Amb.AddPoint(rad_ambiente[i].first, rad_ambiente[i].second);
+        n = G_Amb.GetN();
+        G_Amb.SetPoint(n, rad_ambiente[i].first, rad_ambiente[i].second);
+        G_Amb.SetPointError(n,0/*0.006*rad_ambiente[i].first+3.6*/,sqrt(rad_ambiente[i].second));
     }
     G_Amb.SetLineColor(kGray+1);
     G_Amb.SetMarkerStyle(20);
@@ -111,7 +113,7 @@ int main(){
     ambient->AddEntry(F_Amb, "Fit", "l");
 
     c1.Clear();
-    G_Amb.Draw("APC");
+    G_Amb.Draw("AP");
     G_Amb_Smoothed.Draw("same C");
     F_Amb->Draw("same C");
     ambient->Draw();
@@ -125,7 +127,7 @@ int main(){
         
 //////////////////////////////////// Cs-137  ////////////////////////////////////
     // Espetro de Radiação do Cs-137 
-    //gStyle->SetOptFit(kTRUE);
+    gStyle->SetOptFit(kFALSE);
     TGraphErrors G_Cs;
     n=0;
     vector<pair<double, double>> rad_cs;
@@ -160,11 +162,6 @@ int main(){
     G_Cs_Smoothed.SetTitle("Espetro de Radiacao do Cs-137 Smoothed; E [keV]; Counts");
     G_Cs_Smoothed.GetXaxis()->CenterTitle();
     G_Cs_Smoothed.GetYaxis()->CenterTitle();
-
-    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 36.5);
-    F_Cs1->SetParameters(2000, 27, 2);
-    F_Cs1->SetLineColor(kBlue);
-    G_Cs.Fit("F_Cs1","","",23,36.5);
     
     TF1 *F_Cs2 = new TF1("F_Cs2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 175, 220);
     F_Cs2->SetParNames("C","#mu", "#sigma");
@@ -172,10 +169,15 @@ int main(){
     F_Cs2->SetLineColor(kGreen);
     G_Cs.Fit("F_Cs2","","",175,220);
     
-    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 720);
+    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 36.5);
+    F_Cs1->SetParameters(2000, 27, 2);
+    F_Cs1->SetLineColor(kBlue);
+    G_Cs.Fit("F_Cs1","","",23,36.5);
+    
+    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 615, 720);
     F_Cs3->SetParameters(1000, 650, 50);
     F_Cs3->SetLineColor(kBlue);
-    G_Cs.Fit("F_Cs3","","",610,720);
+    G_Cs.Fit("F_Cs3","","",615,720);
     
     // Backscatter Peak
     TGraph Cs_Backscatter;
@@ -242,7 +244,7 @@ int main(){
         
 //////////////////////////////////// Co-60  ////////////////////////////////////
     // Espetro de Radiação do Co-60
-    //gStyle->SetOptFit(kTRUE);
+    gStyle->SetOptFit(kTRUE);
     TGraphErrors G_Co;
     vector<pair<double, double>> rad_co;
     n=0;
@@ -288,17 +290,17 @@ int main(){
     G_Co_Smoothed.SetMarkerStyle(20);
     G_Co_Smoothed.SetMarkerSize(0.5);
     G_Co_Smoothed.SetLineWidth(3);
-    
-    TF1 *F_Co1 = new TF1("F_Co1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1110, 1230);
+    /*
+    TF1 *F_Co1 = new TF1("F_Co1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1115, 1230);
     F_Co1->SetParameters(100, 1160, 50);
     F_Co1->SetLineColor(kBlue);
-    G_Co.Fit("F_Co1","","",1110,1230);
+    G_Co.Fit("F_Co1","","",1115,1230);
 
     TF1 *F_Co2 = new TF1("F_Co2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1270, 1390);
     F_Co2->SetParameters(100, 1320, 50);
     F_Co2->SetLineColor(kBlue);
     G_Co.Fit("F_Co2","","",1270, 1390);
-    
+    */
 
     // Find the Compton Edge for Co-60
     TGraph Point;
@@ -334,12 +336,12 @@ int main(){
     legend->AddEntry(&G_Co_Smoothed, "Clear Signal", "l"); // "l" for a solid line
     legend->AddEntry(F_Co3, "Back Scattering", "l"); // "l" for a solid line
     legend->AddEntry(&Point, "Compton Edge", "p"); // "p" for a point
-    legend->AddEntry(F_Co1, "Calibration Peak", "l"); // "l" for a solid line
+    //legend->AddEntry(F_Co1, "Calibration Peak", "l"); // "l" for a solid line
     // Draw
     legend->Draw();
     G_Co_Smoothed.Draw("same C");
-    F_Co1->Draw("same C");
-    F_Co2->Draw("same C");
+    //F_Co1->Draw("same C");
+    //F_Co2->Draw("same C");
     F_Co3->Draw("same C");
     Point.Draw("same P");
 
