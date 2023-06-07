@@ -15,7 +15,7 @@ A experiência que em seguida se descreve foi realizada no dia 7 de junho de 202
    - Durante a aquisição, aproveitamos também para fazer uma análise qualitativa do sinal: conseguimos, no espetro do Cs-137, observar .... !!!
    - No fim da aquisição, utilizamos o MCA para retirar dados de ajuste do pico de energia do Cs-137 correspondente à energia libertada na transição nuclear e à de conversão interna (acho que o de conversao interna nao se ve por isso deve ser o outro), obtendo os seguintes valores:
 
-    Picos Energético no espetro do Cs-137  | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição (s) |
+    Picos Energéticos no espetro do Cs-137  | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição (s) |
     |:---------:|:---:|:---:|:---:|:--:|:----:|
     ||  ±  |  ±  |  ±  |  |600|
     ||  ±  |  ±  |  ±  |  |600|
@@ -28,10 +28,31 @@ A experiência que em seguida se descreve foi realizada no dia 7 de junho de 202
     Energia do Pulser | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição (s) |
     |:---------:|:---:|:---:|:---:|:--:|:----:|
     |   |  ±  |  ±  |  ±  |  ||
-   
+
    - Desligamos o vácuo;
 2. **Limite Cinemático:**  
-   - Objetivo: 
+   - Objetivo: determinar a energia máxima que um eletrão resultante do decaimento $\beta$- do Tl-204 pode ter;
+   - Colocamos a fonte de tálio dentro do detetor e fechamos a câmara;
+   - Repetimos o processo de colocar vácuo na câmara;
+   - Ligamos o BIAS e iniciamos a aquisição de dados no MCA durante 600 segundos com o objetivo de obter o espetro de energia do Tl-204;
+   - Guardamos os dados do espetro obtido no MCA para posterior análise;
+   - Retirámos o vácuo e retiramos a fonte de tálio do detetor;
 3. **Estudo da fonte de Bismuto:**  
+   - Objetivo: estudar o espetro de energia do Bi-207;
+   - Colocamos a fonte de bismuto dentro do detetor e fechamos a câmara;
+   - Repetimos o processo de colocar vácuo na câmara;
+   - Ligamos o BIAS e iniciamos a aquisição de dados no MCA durante 600 segundos com o objetivo de obter o espetro de energia do Bi-207;
+   - Após a aquisição, fizemos uma análise qualitativa do espetro obtido para o Bi-207: !!!
+   - Para os picos do espetro para os quais foi possível, retiramos os dados de ajuste do MCA, obtendo os seguintes valores:
+
+   Picos Energéticos no espetro do Bi-207  | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição (s) |
+   |:---------:|:---:|:---:|:---:|:--:|:----:|
+   ||  ±  |  ±  |  ±  |  |600|
+   ||  ±  |  ±  |  ±  |  |600|
+
+   - Guardamos os dados do espetro obtido no MCA para posterior análise;
+   - Repetimos a aquisição de dados do espetro do Bi-207 durante 600 segundos e voltamos a guardar os dados para posterior análise;
+   - Retirámos o vácuo e retiramos a fonte de bismuto do detetor;
 4. **Estudo do Detetor:**  
-   - x  
+   - Objetivo: estudar o efeito do ambiente, as resoluções de energia e a eficiência do detetor para partículas $\gamma$;
+   - Começamos por criar vácuo com a câmara vazia (estudo do ambiente) e realizamos uma aquisição durante...
