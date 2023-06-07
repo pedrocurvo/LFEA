@@ -7,7 +7,7 @@ A experiência que em seguida se descreve foi realizada no dia 7 de junho de 202
    - Começamos por ligar o computador bem como abrir o programa de aquisição de dados MCA;
    - De seguida, pedimos ao professor as fontes radioativas necessárias para a realização da experiência, sendo elas: o Césio Cs-137 (marcado com L07), o Tálio Tl-204 (marcado com L06) e o Bismuto Bi-207 (marcado com L14);
    - Ligamos o detetor ao osciloscópio (saída lamp out) e ao MCA;
-   - Colocamos a fonte de Cs-137 dentro do detetor e fechamos a câmara. Ligamos a bomba de vácuo e selecionamos o modo Vent durante um minuto no espectómetro. Mudamos o espectómetro para o modo pump e esperámos que o vácuo se establecesse durante 2 minutos;
+   - Colocamos a fonte de Cs-137 dentro do detetor e fechamos a câmara. Ligamos a bomba de vácuo e selecionamos o modo Vent durante um minuto. Mudamos o dial para o modo pump e esperámos que o vácuo se establecesse durante 2 minutos;
    - Por fim, selecionamos o modo Hold e desligamos a bomba de vácuo;
    - Ligamos o BIAS (de modo a ativar o campo elétrico do detetor de silício) e iniciamos a aquisição de dados no MCA durante 10 minutos com o objetivo de obter o espetro de energia do Cs-137;
    - Enquantos os dados eram adquiridos, observamos o sinal no osciloscópio e medimos a sua amplitude, obtendo o seguinte valor:
@@ -23,14 +23,15 @@ A experiência que em seguida se descreve foi realizada no dia 7 de junho de 202
    - Guardamos os dados do espetro obtido no MCA para posterior análise;
    - Retiramos o vácuo da câmara e retiramos a fonte de Cs-137 do detetor;
    - Voltamos a colocar a câmara em vácuo com o BIAS desligado mas desta vez sem nenhuma fonte radioativa dentro;
-   - Ligamos o Pulser e realizamos aquisições de dados para diferentes valores de energia dos pulsos emitidos pelo Pulser. Realizamos cada aquisição durante 1 minuto
+   - Ligamos o Pulser e realizamos aquisições de dados para diferentes valores de energia dos pulsos emitidos pelo Pulser de modo a mais tarde podemos construir uma reta de ajuste para a calibação. Realizamos cada aquisição durante 1 minuto e obtivemos os seguintes resultados:
 
     Energia do Pulser | ROI Int  | ROI Net | Centroid (Chn) | FWHM (Chn) | Tempo de Aquisição (s) |
     |:---------:|:---:|:---:|:---:|:--:|:----:|
-    ||  ±  |  ±  |  ±  |  ||
-   - 
+    |   |  ±  |  ±  |  ±  |  ||
+   
+   - Desligamos o vácuo;
 2. **Limite Cinemático:**  
-   - 
+   - Objetivo: 
 3. **Estudo da fonte de Bismuto:**  
 4. **Estudo do Detetor:**  
    - x  
