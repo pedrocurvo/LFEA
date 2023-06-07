@@ -1,0 +1,8 @@
+# Teoria do decaimento beta
+
+- Equação de decaimento $\beta$- do césio-137:
+  $$ ^{137}_{55}Cs \rightarrow_{\text{neutrão passa a protão}} \text{ } ^{137}_{56}Ba + \beta_- + \nu e = \text{ } ^{137}_{56}Ba + \text{eletrão} + \text{antineutrino}  $$
+  Pico de 660 keV - Após a emissão do elétrão ($\beta$-) e do antineutrino eletrónico, o núcleo de bário-137 fica num estado excitado. Para alcançar seu estado fundamental de menor energia, o núcleo passa por uma transição nuclear, emitindo um fotão gama. A energia desse fotão gama é de aproximadamente 660 keV no caso específico do decaimento do césio-137. Este pico é facilmente observável no espetro de energia do césio-137 e deve-se à **transição nuclear** do bário.
+  Pico de 620 keV - Para além disso, durante o decaimento beta, existe a possibilidade de o eletrão emitido ($\beta$-) interagir com os eletrões orbitais próximos do núcleo do átomo. Essa interação pode resultar na excitação ou ionização dos eletrões orbitais. Quando esses eletrões excitados ou ionizados retornam ao seu estado fundamental, eles podem emitir fotões gamma - ao fenómeno da emissão de fotões gamma devido à desexcitação da nuvem eletrónica do césio aquando da sua excitação por parte do eletrão emitido na transição nuclear chamamos **conversão interna** - é como se o eletrão proveniente no núcleo fosse convertido num fotão que é emitido. A energia desses fotões gamma é típicamente próxima de 620 keV. Este pico existe mas não é facilmente observável devido à sua proximidade com o pico de 660 keV e a sua intensidade ser muito menor.
+  Radiação X - resulta de transições eletrónicas menos energéticas no Cs e do Ba.
+- 
