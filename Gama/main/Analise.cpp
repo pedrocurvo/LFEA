@@ -70,11 +70,13 @@ int main(){
     
     // Espetro de Radiação do Ambiente
     gStyle->SetOptFit(kTRUE);
-    TGraph G_Amb; 
+    TGraphErrors G_Amb; 
     vector<pair<double, double>> rad_ambiente;
     ReadFile("Data_Files/Ruido_Energy.dat", rad_ambiente);
     for (int i = 0; i < rad_ambiente.size(); i++){
-        G_Amb.AddPoint(rad_ambiente[i].first, rad_ambiente[i].second);
+        n = G_Amb.GetN();
+        G_Amb.SetPoint(n, rad_ambiente[i].first, rad_ambiente[i].second);
+        G_Amb.SetPointError(n,0/*0.006*rad_ambiente[i].first+3.6*/,sqrt(rad_ambiente[i].second));
     }
     G_Amb.SetLineColor(kGray+1);
     G_Amb.SetMarkerStyle(20);
@@ -111,7 +113,7 @@ int main(){
     ambient->AddEntry(F_Amb, "Fit", "l");
 
     c1.Clear();
-    G_Amb.Draw("APC");
+    G_Amb.Draw("AP");
     G_Amb_Smoothed.Draw("same C");
     F_Amb->Draw("same C");
     ambient->Draw();
@@ -119,13 +121,13 @@ int main(){
     c1.Update();
     c1.SaveAs("Graphs/Espetro_Ambiente_Smoothed.png");
     c1.WaitPrimitive();
-    A.Run("TRUE");
+    //A.Run("TRUE");
     gSystem->ProcessEvents();
 
         
 //////////////////////////////////// Cs-137  ////////////////////////////////////
     // Espetro de Radiação do Cs-137 
-    //gStyle->SetOptFit(kTRUE);
+    gStyle->SetOptFit(kFALSE);
     TGraphErrors G_Cs;
     n=0;
     vector<pair<double, double>> rad_cs;
@@ -134,7 +136,7 @@ int main(){
         if(rad_cs[i].first < 720){
             n = G_Cs.GetN();
             G_Cs.SetPoint(n, rad_cs[i].first, rad_cs[i].second);
-            G_Cs.SetPointError(n,0.006*rad_cs[i].first+3.6,sqrt(rad_cs[i].second));
+            G_Cs.SetPointError(n,0/*0.006*rad_cs[i].first+3.6*/,sqrt(rad_cs[i].second));
         }
     }
     G_Cs.SetLineColor(kGray+1);
@@ -160,11 +162,6 @@ int main(){
     G_Cs_Smoothed.SetTitle("Espetro de Radiacao do Cs-137 Smoothed; E [keV]; Counts");
     G_Cs_Smoothed.GetXaxis()->CenterTitle();
     G_Cs_Smoothed.GetYaxis()->CenterTitle();
-
-    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 36.5);
-    F_Cs1->SetParameters(2000, 27, 2);
-    F_Cs1->SetLineColor(kBlue);
-    G_Cs.Fit("F_Cs1","","",23,36.5);
     
     TF1 *F_Cs2 = new TF1("F_Cs2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 175, 220);
     F_Cs2->SetParNames("C","#mu", "#sigma");
@@ -172,10 +169,15 @@ int main(){
     F_Cs2->SetLineColor(kGreen);
     G_Cs.Fit("F_Cs2","","",175,220);
     
-    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 620, 720);
+    TF1 *F_Cs1 = new TF1("F_Cs1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 23, 36.5);
+    F_Cs1->SetParameters(2000, 27, 2);
+    F_Cs1->SetLineColor(kBlue);
+    G_Cs.Fit("F_Cs1","","",23,36.5);
+    
+    TF1 *F_Cs3 = new TF1("F_Cs3", "[0]*exp(-0.5*((x-[1])/[2])**2)", 615, 720);
     F_Cs3->SetParameters(1000, 650, 50);
     F_Cs3->SetLineColor(kBlue);
-    G_Cs.Fit("F_Cs3","","",610,720);
+    G_Cs.Fit("F_Cs3","","",615,720);
     
     // Backscatter Peak
     TGraph Cs_Backscatter;
@@ -242,7 +244,7 @@ int main(){
         
 //////////////////////////////////// Co-60  ////////////////////////////////////
     // Espetro de Radiação do Co-60
-    //gStyle->SetOptFit(kTRUE);
+    gStyle->SetOptFit(kTRUE);
     TGraphErrors G_Co;
     vector<pair<double, double>> rad_co;
     n=0;
@@ -251,7 +253,7 @@ int main(){
         if(rad_co[i].first > 1400){continue;}
         n = G_Co.GetN();
         G_Co.SetPoint(n, rad_co[i].first, rad_co[i].second);
-        G_Co.SetPointError(n,0.006*rad_co[i].first+3.6,sqrt(rad_co[i].second));
+        G_Co.SetPointError(n,0/*0.006*rad_co[i].first+3.6*/,sqrt(rad_co[i].second));
     }
     G_Co.SetLineColor(kGray+1);
     G_Co.SetMarkerStyle(20);
@@ -288,17 +290,17 @@ int main(){
     G_Co_Smoothed.SetMarkerStyle(20);
     G_Co_Smoothed.SetMarkerSize(0.5);
     G_Co_Smoothed.SetLineWidth(3);
-    
-    TF1 *F_Co1 = new TF1("F_Co1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1110, 1230);
+    /*
+    TF1 *F_Co1 = new TF1("F_Co1", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1115, 1230);
     F_Co1->SetParameters(100, 1160, 50);
     F_Co1->SetLineColor(kBlue);
-    G_Co.Fit("F_Co1","","",1110,1230);
+    G_Co.Fit("F_Co1","","",1115,1230);
 
     TF1 *F_Co2 = new TF1("F_Co2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 1270, 1390);
     F_Co2->SetParameters(100, 1320, 50);
     F_Co2->SetLineColor(kBlue);
     G_Co.Fit("F_Co2","","",1270, 1390);
-    
+    */
 
     // Find the Compton Edge for Co-60
     TGraph Point;
@@ -334,12 +336,12 @@ int main(){
     legend->AddEntry(&G_Co_Smoothed, "Clear Signal", "l"); // "l" for a solid line
     legend->AddEntry(F_Co3, "Back Scattering", "l"); // "l" for a solid line
     legend->AddEntry(&Point, "Compton Edge", "p"); // "p" for a point
-    legend->AddEntry(F_Co1, "Calibration Peak", "l"); // "l" for a solid line
+    //legend->AddEntry(F_Co1, "Calibration Peak", "l"); // "l" for a solid line
     // Draw
     legend->Draw();
     G_Co_Smoothed.Draw("same C");
-    F_Co1->Draw("same C");
-    F_Co2->Draw("same C");
+    //F_Co1->Draw("same C");
+    //F_Co2->Draw("same C");
     F_Co3->Draw("same C");
     Point.Draw("same P");
 
@@ -352,6 +354,7 @@ int main(){
     
 //////////////////////////////////// Fonte-Desconhecida  ////////////////////////////////////
     // Espetro de Radiação da Fonte Desconhecida
+    gStyle->SetOptFit(kFALSE);
     TGraphErrors G_Am;
     vector<pair<double, double>> rad_am;
     ReadFile("Data_Files/Fonte_Desconhecida_Energy.dat", rad_am);
@@ -359,7 +362,7 @@ int main(){
     for (int i = 0; i < rad_am.size(); i++){
         n = G_Am.GetN();
         G_Am.SetPoint(n, rad_am[i].first, rad_am[i].second - rad_ambiente_smoothed[i].second/4);
-        G_Am.SetPointError(n,0.006*rad_am[i].first+3.6,sqrt(rad_am[i].second));
+        G_Am.SetPointError(n,0/*0.006*rad_am[i].first+3.6*/,sqrt(rad_am[i].second));
     }
     G_Am.SetLineColor(kGray+1);
     G_Am.SetMarkerStyle(20);
@@ -393,12 +396,12 @@ int main(){
     G_Am.Fit("F_Des1","","",3.4,9.2);
     F_Des1->Draw("same C");
     
-    TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 27, 50);
-    F_Des4->SetParameters(800, 39, 3);
+    TF1 *F_Des4 = new TF1("F_Des4", "[0]*exp(-0.5*((x-[1])/[2])**2)", 26, 50);
+    F_Des4->SetParameters(2000, 39, 6);
     F_Des4->SetParNames("C","#mu", "#sigma");
     F_Des4->SetLineColor(kBlue);
     F_Des4->SetLineWidth(3);
-    G_Am.Fit("F_Des4","","",27, 50);
+    G_Am.Fit("F_Des4","","",26, 50);
     F_Des4->Draw("same C");
     
     
@@ -411,7 +414,7 @@ int main(){
     F_Des6->Draw("same C");
     
     TF1 *F_Des2 = new TF1("F_Des2", "[0]*exp(-0.5*((x-[1])/[2])**2)", 230, 258);
-    F_Des2->SetParameters(1000, 235, 10);
+    F_Des2->SetParameters(600, 235, 10);
     F_Des2->SetParNames("C","#mu", "#sigma");
     F_Des2->SetLineColor(kBlue);
     F_Des2->SetLineWidth(3);
@@ -470,7 +473,7 @@ int main(){
     c1.SaveAs("Graphs/Espetro_Fonte_Desconhecida.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-
+    gStyle->SetOptFit(kTRUE);
     
 //////////////////////////////////// Atenuação na Matéria  ////////////////////////////////////
     // Calculo do Coeficiente na Atenuação do Chumbo
