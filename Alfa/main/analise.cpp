@@ -68,6 +68,7 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
+    gStyle->SetOptFit(kTRUE);
     vector<pair<double, double>> cal3;
     ReadFile("Data_Files/3Cal.dat",  cal3);
 
@@ -80,12 +81,23 @@ int main(){
     G_Cal3.SetMarkerStyle(20);
     G_Cal3.SetMarkerSize(0.5);
     G_Cal3.SetLineColor(kGray+1);
-    G_Cal3.SetTitle("Cenas; Counts");
+    G_Cal3.SetTitle("Espetro; Channels; Counts");
     G_Cal3.GetXaxis()->CenterTitle();
     G_Cal3.GetYaxis()->CenterTitle();
 
+    TF1 *F_Cal3 = new TF1("F_Cal3", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2])) + [3]*exp(-0.5*((x-[4])/[5])*((x-[4])/[5])) + [6]*exp(-0.5*((x-[7])/[8])*((x-[7])/[8]))", 1370, 1440);
+    //F_Cal3->SetParLimits(1,410,430);
+    F_Cal3->SetParLimits(1,417,417.9);
+    F_Cal3->SetParLimits(2,0,8.39);
+    F_Cal3->SetParameters(80, 418, 8, 500, 450, 9, 3000, 475, 6);
+    F_Cal3->SetParNames("C1","#mu1", "#sigma1","C2","#mu2", "#sigma2","C3","#mu3", "#sigma3");
+    F_Cal3->SetLineColor(kBlue);
+    F_Cal3->SetLineWidth(3);
+    G_Cal3.Fit("F_Cal3","","",375, 525);
+
     c1.Clear();
     G_Cal3.Draw("AP");
+    F_Cal3->Draw("same C");
     c1.Update();
     c1.SaveAs("Graphs/Cal3.png");
     c1.WaitPrimitive();
