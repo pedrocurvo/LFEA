@@ -102,6 +102,34 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
+
+    /////////////////////////////// Areas for Each Gaussian //////////////////////////////
+    TF1 *Area_1 = new TF1("Area_1", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2]))", 1370, 1440);
+    Area_1->SetParameters(F_Cal3->GetParameters()[0], F_Cal3->GetParameters()[1], F_Cal3->GetParameters()[2]);
+    double area_one = 0;
+    for(int i=0; i<cal3.size(); i++){
+        area_one += Area_1->Eval(cal3[i].first);
+    }
+    cout << "Area 1: " << area_one << endl;
+
+    TF1 *Area_2 = new TF1("Area_2", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2]))", 1370, 1440);   
+    Area_2->SetParameters(F_Cal3->GetParameters()[3], F_Cal3->GetParameters()[4], F_Cal3->GetParameters()[5]);
+    double area_two = 0;
+    for(int i=0; i<cal3.size(); i++){
+        area_two += Area_2->Eval(cal3[i].first);
+    }
+    cout << "Area 2: " << area_two << endl;
+
+    TF1 *Area_3 = new TF1("Area_3", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2]))", 1370, 1440);
+    Area_3->SetParameters(F_Cal3->GetParameters()[6], F_Cal3->GetParameters()[7], F_Cal3->GetParameters()[8]);
+    double area_three = 0;
+    for(int i=0; i<cal3.size(); i++){
+        area_three += Area_3->Eval(cal3[i].first);
+    }
+
+    cout << "Area 3: " << area_three << endl;
+
+    //////////////////////////////////////////////////////////////////////////////////////
     c1.Clear();
     G_Cal3.SetMarkerColor(kBlack);
     G_Cal3.Fit("F_Cal3","","",375, 525);
