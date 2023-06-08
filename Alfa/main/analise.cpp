@@ -52,7 +52,6 @@ int main(){
         n = G_Cal2.GetN();
         G_Cal2.SetPoint(n, cal2[i].first, cal2[i].second);
         G_Cal2.SetPointError(n,0,sqrt(cal2[i].second));
-        cout << cal2[i].first << cal2[i].second << endl;
     }
     G_Cal2.SetMarkerStyle(20);
     G_Cal2.SetMarkerSize(0.5);
@@ -281,4 +280,127 @@ int main(){
     c1.SaveAs("Graphs/Prateleira_8_s_vacuo.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+    /////////////////////////// Atenuacao da Materia ////////////////////////////////////
+    /////////Prateleira 8/////////
+    vector<pair<double, double>> aten_8;
+    ReadFile("Data_Files/Prateleira_8_c_vacuo.dat", aten_8);
+
+    double counts_8_one = 0;
+    double counts_8_two = 0;
+
+    TGraphErrors G_aten_8;
+    for (int i = 100; i < aten_8.size(); i++){
+        n = G_aten_8.GetN();
+        G_aten_8.SetPoint(n, aten_8[i].first, aten_8[i].second);
+        G_aten_8.SetPointError(n,0,sqrt(aten_8[i].second));
+        counts_8_one += aten_8[i].second;
+    }
+
+    vector<pair<double, double>> aten_8_s;
+    ReadFile("Data_Files/Prateleira_8_s_vacuo.dat", aten_8_s);
+
+    TGraphErrors G_aten_8_s;
+    for (int i = 100; i < aten_8_s.size(); i++){
+        n = G_aten_8_s.GetN();
+        G_aten_8_s.SetPoint(n, aten_8_s[i].first, aten_8_s[i].second);
+        G_aten_8_s.SetPointError(n,0,sqrt(aten_8_s[i].second));
+        counts_8_two += aten_8_s[i].second;
+    }
+
+    G_aten_8.SetLineColor(kBlue);
+    G_aten_8.SetTitle("Atenuacao Prateleira 8; Channels; Energy [Pulser Units] ");
+    G_aten_8.GetXaxis()->CenterTitle();
+    G_aten_8.GetYaxis()->CenterTitle();
+
+
+    G_aten_8_s.SetLineColor(kRed);
+    G_aten_8_s.SetTitle("Atenuacao Prateleira 8; Channels; Energy [Pulser Units] ");
+    G_aten_8_s.GetXaxis()->CenterTitle();
+    G_aten_8_s.GetYaxis()->CenterTitle();
+
+
+    TLegend leg(0.7,0.7,0.85,0.85);
+    leg.AddEntry(&G_aten_8, "Com Vacuo", "l");
+    leg.AddEntry(&G_aten_8_s, "Sem Vacuo", "l");
+
+    c1.Clear();
+    G_aten_8.Draw("AP");
+    G_aten_8_s.Draw("same P");
+    leg.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/Atenuacao_8.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    cout << "Atenuacao da prateleira 8: " << endl;
+    cout << "Counts com vacuo: " << counts_8_one << endl;
+    cout << "Counts sem vacuo: " << counts_8_two << endl;
+    cout << "Centroide com vácuo: 710.60 " <<  endl;
+    cout << "Centroide sem vácuo: 224.74 "  << endl;
+    cout << "FWHM com vacuo:   4.36 " << endl;
+    cout << "FWHM sem vacuo:  25.98 " << endl << endl;
+
+    /////////Prateleira 4/////////
+    vector<pair<double, double>> aten_4;
+    ReadFile("Data_Files/4Cal.dat", aten_4);
+
+    double counts_4_one = 0;
+    double counts_4_two = 0;
+
+    TGraphErrors G_aten_4;
+    for (int i = 0; i < aten_4.size(); i++){
+        n = G_aten_4.GetN();
+        G_aten_4.SetPoint(n, aten_4[i].first, aten_4[i].second);
+        G_aten_4.SetPointError(n,0,sqrt(aten_4[i].second));
+        counts_4_one += aten_4[i].second;
+    }
+
+    vector<pair<double, double>> aten_4_s;
+    ReadFile("Data_Files/Prateleira_4_s_vacuo.dat", aten_4_s);
+
+    TGraphErrors G_aten_4_s;
+    for (int i = 100; i < aten_4_s.size(); i++){
+        n = G_aten_4_s.GetN();
+        G_aten_4_s.SetPoint(n, aten_4_s[i].first, aten_4_s[i].second);
+        G_aten_4_s.SetPointError(n,0,sqrt(aten_4_s[i].second));
+        counts_4_two += aten_4_s[i].second;
+    }
+
+    G_aten_4.SetLineColor(kBlue);
+    G_aten_4.SetTitle("Atenuacao Prateleira 4; Channels; Energy [Pulser Units] ");
+    G_aten_4.GetXaxis()->CenterTitle();
+    G_aten_4.GetYaxis()->CenterTitle();
+
+
+    G_aten_4_s.SetLineColor(kRed);
+    G_aten_4_s.SetTitle("Atenuacao Prateleira 4; Channels; Energy [Pulser Units] ");
+    G_aten_4_s.GetXaxis()->CenterTitle();
+    G_aten_4_s.GetYaxis()->CenterTitle();
+
+
+    TLegend leg2(0.7,0.7,0.85,0.85);
+    leg2.AddEntry(&G_aten_4, "Com Vacuo", "l");
+    leg2.AddEntry(&G_aten_4_s, "Sem Vacuo", "l");
+
+    c1.Clear();
+    G_aten_4.Draw("AP");
+    G_aten_4_s.Draw("same P");
+    leg2.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/Atenuacao_4.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    cout << "Atenuacao da prateleira 4: " << endl;
+    cout << "Counts com vacuo: " << counts_4_one << endl;
+    cout << "Counts sem vacuo: " << counts_4_two << endl;
+    cout << "Centroide com vácuo: 709.78 " <<  endl;
+    cout << "Centroide sem vácuo: -- "  << endl;
+    cout << "FWHM com vácuo:   4.21 " << endl;
+    cout << "FWHM sem vácuo:  -- " << endl;
+
+
+
+
 }

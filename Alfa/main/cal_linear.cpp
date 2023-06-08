@@ -113,10 +113,12 @@ int main(){
     
 
     double pico_am = find_max(689, 717, cal_1);
+    cout << "Pico Am: " << pico_am << endl;
     double pico_am_energy = 5485.56; // keV
 
 
     double pico_am_unidades_de_pulser = fit1->Eval(pico_am);
+    cout << "Pico Am in Pulser Units: " << pico_am_unidades_de_pulser << endl;
     double ratio = pico_am_energy / pico_am_unidades_de_pulser / 1000;
     cout << "Ratio: " << ratio << endl;
 
