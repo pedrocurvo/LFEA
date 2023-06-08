@@ -9,7 +9,7 @@ if __name__ == '__main__':
     values = sys.argv
     values.pop(0)
 
-    N=contagens_corrigidas(float(values[0]))
+    N = contagens_corrigidas(float(values[0]))
     dN = float(values[1])
 
     print(f"Contagens: {N:.3f} +- {abs(1 / (N * -219 / 2e+7 + 1) ** 2) * dN:.3f}")

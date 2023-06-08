@@ -25,57 +25,59 @@ int main(){
     TCanvas c1("c1", "c1", 1200, 800); 
 
 /////////////////////////////////////// Plateau //////////////////////////////////////////////////////////////////////
-vector<vector<double>> plateau;
-ReadFile("data/plateau.dat", plateau);
+    vector<vector<double>> plateau;
+    ReadFile("data/plateau.dat", plateau);
 
-int numPoints = plateau.size();
+    int numPoints = plateau.size();
 
-std::vector<double> xValues(numPoints);
-std::vector<double> yValues(numPoints);
-std::vector<double> exValues(numPoints);
-std::vector<double> eyValues(numPoints);
+    std::vector<double> xValues(numPoints);
+    std::vector<double> yValues(numPoints);
+    std::vector<double> exValues(numPoints);
+    std::vector<double> eyValues(numPoints);
 
-for (int i = 0; i < numPoints; i++) {
-    cout << plateau[i][0] << " " << plateau[i][9] << endl;
-    xValues[i] = plateau[i][0];     // x values are stored in plateau[i][0]
-    yValues[i] = plateau[i][7];     // y values are stored in plateau[i][1]
-    exValues[i] = 0;    // error in x values are stored in plateau[i][2]
-    eyValues[i] = plateau[i][8];    // error in y values are stored in plateau[i][3]
-}
+    for (int i = 0; i < numPoints; i++) {
+        cout << plateau[i][0] << " " << plateau[i][9] << endl;
+        xValues[i] = plateau[i][0];     // x values are stored in plateau[i][0]
+        yValues[i] = plateau[i][7];     // y values are stored in plateau[i][1]
+        exValues[i] = 0;    // error in x values are stored in plateau[i][2]
+        eyValues[i] = plateau[i][8];    // error in y values are stored in plateau[i][3]
+    }
 
-TGraphErrors graph_plateau(numPoints, &xValues[0], &yValues[0], &exValues[0], &eyValues[0]);
-gStyle->SetOptFit(111);
-// Set Graph Style
-graph_plateau.SetMarkerStyle(20);
-graph_plateau.SetMarkerColor(kRed);
-graph_plateau.SetLineColor(kRed);
-graph_plateau.SetTitle("Plateau");
-graph_plateau.GetXaxis()->SetTitle("Tensao [V]");
-graph_plateau.GetYaxis()->SetTitle("Taxa [counts/s]");
-graph_plateau.GetXaxis()->CenterTitle();
-graph_plateau.GetYaxis()->CenterTitle();
+    TGraphErrors graph_plateau(numPoints, &xValues[0], &yValues[0], &exValues[0], &eyValues[0]);
+    gStyle->SetOptFit(111);
+    // Set Graph Style
+    graph_plateau.SetMarkerStyle(20);
+    graph_plateau.SetMarkerColor(kRed);
+    graph_plateau.SetLineColor(kRed);
+    graph_plateau.SetTitle("Plateau");
+    graph_plateau.GetXaxis()->SetTitle("Tensao [V]");
+    graph_plateau.GetYaxis()->SetTitle("Taxa [counts/s]");
+    graph_plateau.GetXaxis()->CenterTitle();
+    graph_plateau.GetYaxis()->CenterTitle();
 
-// Create Legend
-TLegend legend_plateau(0.65, 0.35, 0.85, 0.5);
+    // Create Legend
+    TLegend legend_plateau(0.65, 0.35, 0.85, 0.5);
 
-// Fit
-TF1 fit_plateau("fit", "[0]*x + [1]", 775, 1200);
-fit_plateau.SetParameter(0, 1);
-fit_plateau.SetParameter(1, 1);
-fit_plateau.SetLineColor(kBlue);
+    // Fit
+    TF1 fit_plateau("fit", "[0]*x + [1]", 775, 1200);
+    fit_plateau.SetParameter(0, 1);
+    fit_plateau.SetParameter(1, 1);
+    fit_plateau.SetLineColor(kBlue);
+    fit_plateau.SetParName(0, "A");
+    fit_plateau.SetParName(1, "B");
 
-// Draw
-graph_plateau.Draw("AP");
-graph_plateau.Fit(&fit_plateau, "R");
-legend_plateau.AddEntry(&graph_plateau, "Dados Experimentais", "lep");
-legend_plateau.AddEntry(&fit_plateau, "Fit Plateau de Geiger", "l");
-legend_plateau.Draw();
+    // Draw
+    graph_plateau.Draw("AP");
+    graph_plateau.Fit(&fit_plateau, "R");
+    legend_plateau.AddEntry(&graph_plateau, "Dados Experimentais", "lep");
+    legend_plateau.AddEntry(&fit_plateau, "Fit Plateau de Geiger", "l");
+    legend_plateau.Draw();
 
-// Save
-c1.Update();
-c1.SaveAs("graphs/plateau.png");
-c1.WaitPrimitive();
-gSystem->ProcessEvents();
+    // Save
+    c1.Update();
+    c1.SaveAs("graphs/plateau.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
 
 
 
