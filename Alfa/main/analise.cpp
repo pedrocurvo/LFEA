@@ -64,7 +64,7 @@ int main(){
     c1.Clear();
     G_Cal2.Draw("AP");
     c1.Update();
-    c1.SaveAs("Graphs/Cal1.png");
+    c1.SaveAs("Graphs/Cal2.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -87,7 +87,7 @@ int main(){
     c1.Clear();
     G_Cal3.Draw("AP");
     c1.Update();
-    c1.SaveAs("Graphs/Cal1.png");
+    c1.SaveAs("Graphs/Cal3.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
