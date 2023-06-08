@@ -380,14 +380,11 @@ int main(){
 
     TF1 *f = new TF1("f", "gaus");
     f->SetParameter(2000, 510);
-    f->SetLineColor(kBlue);
-    f->SetLineStyle(2);
-    f->SetLineWidth(2);
     G_aten_4_s.Fit("f","","", 450, 550);
 
 
 
-
+    
     TLegend leg2(0.7,0.7,0.85,0.85);
     leg2.AddEntry(&G_aten_4, "Com Vacuo", "l");
     leg2.AddEntry(&G_aten_4_s, "Sem Vacuo", "l");

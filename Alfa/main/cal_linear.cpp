@@ -57,7 +57,7 @@ int main(){
     fit1->SetParName(1, "Offset");
     
     // Draw calibration
-    Cal1.SetTitle("Points for Calibration (Linear Pulser)");
+    Cal1.SetTitle("Points for Calibration");
     Cal1.GetXaxis()->CenterTitle();
     Cal1.GetYaxis()->CenterTitle();
     Cal1.GetXaxis()->SetTitle("Channel");
@@ -97,7 +97,7 @@ int main(){
     Calibrations.SetPoint(3, fourth_point, 6);
     Calibrations.SetPointError(3, 0, 0.01);
     Calibrations.Fit("fit1", "R");
-    Calibrations.SetTitle("Calibration in Pulser Units (Linear Pulser)");
+    Calibrations.SetTitle("Calibration in Pulser Units");
     Calibrations.GetXaxis()->CenterTitle();
     Calibrations.GetYaxis()->CenterTitle();
     Calibrations.GetXaxis()->SetTitle("Channel");
@@ -137,7 +137,7 @@ int main(){
     Calibrations_Energy.SetPointError(2, 0, 0.01* ratio);
     Calibrations_Energy.SetPoint(3, fourth_point, 6 * ratio);
     Calibrations_Energy.SetPointError(3, 0, 0.01* ratio);
-    Calibrations_Energy.SetTitle("Calibration in Energy (Linear Pulser)");
+    Calibrations_Energy.SetTitle("Calibration in Energy");
     Calibrations_Energy.GetXaxis()->CenterTitle();
     Calibrations_Energy.GetYaxis()->CenterTitle();
     Calibrations_Energy.GetXaxis()->SetTitle("Channel");
