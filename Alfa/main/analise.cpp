@@ -137,13 +137,23 @@ int main(){
     double area_three = F_Cal3->GetParameter(6)*sqrt(2*TMath::Pi())*F_Cal3->GetParameter(8);
     cout << "Area 1: " << area_one << endl;
     cout << "Area 2: " << area_two << endl;
-    cout << "Area 3: " << area_three << endl;
+    cout << "Area 3: " << area_three << endl << endl;
     double sum = area_one + area_two + area_three;
 
-    cout << "per100 of first " << area_one/sum*100 << endl;
-    cout << "per100 of second " << area_two/sum*100 << endl;
-    cout << "per100 of third " << area_three/sum*100 << endl;
+    double per_one = area_one/sum*100;
+    double per_two = area_two/sum*100;
+    double per_three = area_three/sum*100;
+    cout << "per100 of first " << per_one << endl;
+    cout << "per100 of second " << per_two << endl;
+    cout << "per100 of third " << per_three << endl << endl;
 
+    double teorico_one = 1.6;
+    double teorico_two = 13;
+    double teorico_three = 84.5;
+
+    cout << "err per100 of first " << abs(per_one - teorico_one)/teorico_one * 100 << endl;
+    cout << "err per100 of second " << abs(per_two - teorico_two)/teorico_two * 100 << endl;
+    cout << "err per100 of third " << abs(per_three - teorico_three)/teorico_three * 100 << endl << endl;
 
     //////////////////////////////////////////////////////////////////////////////////////
     c1.Clear();
