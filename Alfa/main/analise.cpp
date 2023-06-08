@@ -208,7 +208,7 @@ int main(){
     c1.Clear();
     G_Cal5.Draw("AP");
     c1.Update();
-    c1.SaveAs("Graphs/Prateleira_4_c_vacuo.png");
+    //c1.SaveAs("Graphs/Prateleira_4_c_vacuo.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -231,7 +231,7 @@ int main(){
     c1.Clear();
     G_Cal6.Draw("AP");
     c1.Update();
-    c1.SaveAs("Graphs/Prateleira_4_s_vacuo.png");
+    //c1.SaveAs("Graphs/Prateleira_4_s_vacuo.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -254,7 +254,7 @@ int main(){
     c1.Clear();
     G_Cal7.Draw("AP");
     c1.Update();
-    c1.SaveAs("Graphs/Prateleira_8_c_vacuo.png");
+    //c1.SaveAs("Graphs/Prateleira_8_c_vacuo.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -277,7 +277,7 @@ int main(){
     c1.Clear();
     G_Cal8.Draw("AP");
     c1.Update();
-    c1.SaveAs("Graphs/Prateleira_8_s_vacuo.png");
+    //c1.SaveAs("Graphs/Prateleira_8_s_vacuo.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -309,13 +309,13 @@ int main(){
     }
 
     G_aten_8.SetLineColor(kBlue);
-    G_aten_8.SetTitle("Atenuacao Prateleira 8; Channels; Energy [Pulser Units] ");
+    G_aten_8.SetTitle("Atenuacao Prateleira 8; Channels; Counts ");
     G_aten_8.GetXaxis()->CenterTitle();
     G_aten_8.GetYaxis()->CenterTitle();
 
 
     G_aten_8_s.SetLineColor(kRed);
-    G_aten_8_s.SetTitle("Atenuacao Prateleira 8; Channels; Energy [Pulser Units] ");
+    G_aten_8_s.SetTitle("Atenuacao Prateleira 8; Channels; Counts ");
     G_aten_8_s.GetXaxis()->CenterTitle();
     G_aten_8_s.GetYaxis()->CenterTitle();
 
@@ -368,15 +368,24 @@ int main(){
     }
 
     G_aten_4.SetLineColor(kBlue);
-    G_aten_4.SetTitle("Atenuacao Prateleira 4; Channels; Energy [Pulser Units] ");
+    G_aten_4.SetTitle("Atenuacao Prateleira 4; Channels; Counts ");
     G_aten_4.GetXaxis()->CenterTitle();
     G_aten_4.GetYaxis()->CenterTitle();
 
 
     G_aten_4_s.SetLineColor(kRed);
-    G_aten_4_s.SetTitle("Atenuacao Prateleira 4; Channels; Energy [Pulser Units] ");
+    G_aten_4_s.SetTitle("Atenuacao Prateleira 4; Channels; Counts");
     G_aten_4_s.GetXaxis()->CenterTitle();
     G_aten_4_s.GetYaxis()->CenterTitle();
+
+    TF1 *f = new TF1("f", "gaus");
+    f->SetParameter(2000, 510);
+    f->SetLineColor(kBlue);
+    f->SetLineStyle(2);
+    f->SetLineWidth(2);
+    G_aten_4_s.Fit("f","","", 450, 550);
+
+
 
 
     TLegend leg2(0.7,0.7,0.85,0.85);
@@ -386,6 +395,7 @@ int main(){
     c1.Clear();
     G_aten_4.Draw("AP");
     G_aten_4_s.Draw("same P");
+    f->Draw("same P");
     leg2.Draw();
     c1.Update();
     c1.SaveAs("graphs/Atenuacao_4.png");
@@ -396,9 +406,9 @@ int main(){
     cout << "Counts com vacuo: " << counts_4_one << endl;
     cout << "Counts sem vacuo: " << counts_4_two << endl;
     cout << "Centroide com vácuo: 709.78 " <<  endl;
-    cout << "Centroide sem vácuo: -- "  << endl;
+    cout << "Centroide sem vácuo: "  << f->GetParameter("Mean")<< endl;
     cout << "FWHM com vácuo:   4.21 " << endl;
-    cout << "FWHM sem vácuo:  -- " << endl;
+    cout << "FWHM sem vácuo: " << f->GetParameter("Sigma") * 2.355 << endl;
 
 
 
