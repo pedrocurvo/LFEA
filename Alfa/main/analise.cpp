@@ -395,7 +395,6 @@ int main(){
     c1.Clear();
     G_aten_4.Draw("AP");
     G_aten_4_s.Draw("same P");
-    f->Draw("same P");
     leg2.Draw();
     c1.Update();
     c1.SaveAs("graphs/Atenuacao_4.png");
@@ -409,8 +408,4 @@ int main(){
     cout << "Centroide sem vácuo: "  << f->GetParameter("Mean")<< endl;
     cout << "FWHM com vácuo:   4.21 " << endl;
     cout << "FWHM sem vácuo: " << f->GetParameter("Sigma") * 2.355 << endl;
-
-
-
-
 }
