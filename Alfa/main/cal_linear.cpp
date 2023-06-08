@@ -41,10 +41,10 @@ int main(){
     //////////////////// Calibration of First Pulser ////////////////////
     TGraphErrors Cal1; 
     vector<pair<double, double>> cal_1;
-    ReadFile("Data_Files/2Cal.dat", cal_1);
+    ReadFile("Data_Files/Prateleira_4_c_vacuo.dat", cal_1);
 
     for (int i = 0; i < cal_1.size(); i++){
-        if(cal_1[i].first < 340 || cal_1[i].first > 550){
+        if(cal_1[i].first < 675|| cal_1[i].first > 725){
         Cal1.SetPoint(i, cal_1[i].first, cal_1[i].second);
         }else{
             Cal1.SetPoint(i, cal_1[i].first, 0);
@@ -53,13 +53,11 @@ int main(){
 
     // Function Fit 
     TF1 *fit1 = new TF1("fit1", "[0]*x+[1]", 0, 1000);
-    fit1->SetParameter(0, 0.01);
-    fit1->SetParameter(1, 0);
     fit1->SetParName(0, "Slope");
     fit1->SetParName(1, "Offset");
     
     // Draw calibration
-    Cal1.SetTitle("Points for Calibration");
+    Cal1.SetTitle("Points for Calibration (Linear Pulser)");
     Cal1.GetXaxis()->CenterTitle();
     Cal1.GetYaxis()->CenterTitle();
     Cal1.GetXaxis()->SetTitle("Channel");
@@ -68,24 +66,24 @@ int main(){
     Cal1.SetMarkerSize(0.5);
     Cal1.Draw("AP");
     c1.Update();
-    c1.SaveAs("graphs/Points_for_Calibration.png");
+    c1.SaveAs("graphs/Points_for_Calibration_Linear.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
     // Cout 1st point
-    double first_point = find_max(200, 400, cal_1);
+    double first_point = find_max(655, 680, cal_1);
     cout << first_point << endl;
 
     // Cout 2nd point
-    double second_point = find_max(550, 600, cal_1);
+    double second_point = find_max(729, 746, cal_1);
     cout << second_point << endl;
 
     // Cout 3rd point
-    double third_point = find_max(600, 800, cal_1);
+    double third_point = find_max(760, 778, cal_1);
     cout << third_point << endl;
 
     // Cout 4th point
-    double fourth_point = find_max(800, 1000, cal_1);
+    double fourth_point = find_max(800, 815, cal_1);
     cout << fourth_point << endl;
     
     // Calibration 
@@ -99,7 +97,7 @@ int main(){
     Calibrations.SetPoint(3, fourth_point, 6);
     Calibrations.SetPointError(3, 0, 0.01);
     Calibrations.Fit("fit1", "R");
-    Calibrations.SetTitle("Calibration in Pulser Units");
+    Calibrations.SetTitle("Calibration in Pulser Units (Linear Pulser)");
     Calibrations.GetXaxis()->CenterTitle();
     Calibrations.GetYaxis()->CenterTitle();
     Calibrations.GetXaxis()->SetTitle("Channel");
@@ -109,12 +107,12 @@ int main(){
     c1.Clear();
     Calibrations.Draw("AP");
     c1.Update();
-    c1.SaveAs("graphs/Calibration_in_Pulser_Units.png");
+    c1.SaveAs("graphs/Calibration_in_Pulser_Units_Linear_Pulser.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
     
 
-    double pico_am = 474;
+    double pico_am = find_max(689, 717, cal_1);
     double pico_am_energy = 5485.56; // keV
 
 
@@ -137,7 +135,7 @@ int main(){
     Calibrations_Energy.SetPointError(2, 0, 0.01* ratio);
     Calibrations_Energy.SetPoint(3, fourth_point, 6 * ratio);
     Calibrations_Energy.SetPointError(3, 0, 0.01* ratio);
-    Calibrations_Energy.SetTitle("Calibration in Energy");
+    Calibrations_Energy.SetTitle("Calibration in Energy (Linear Pulser)");
     Calibrations_Energy.GetXaxis()->CenterTitle();
     Calibrations_Energy.GetYaxis()->CenterTitle();
     Calibrations_Energy.GetXaxis()->SetTitle("Channel");
@@ -148,7 +146,7 @@ int main(){
     Calibrations_Energy.Fit("fit1", "R");
     Calibrations_Energy.Draw("AP");
     c1.Update();
-    c1.SaveAs("graphs/Calibration_in_Energy.png");
+    c1.SaveAs("graphs/Calibration_in_Energy_Linear_Pulser.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
