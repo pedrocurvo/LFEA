@@ -4,8 +4,8 @@ LFEA 2022/2023
 Este repositório contém os relatórios e os códigos desenvolvidos no âmbito da cadeira de Laboratórios de Física Experimental Avançada (LFEA) do 2º ano da Licenciatura em Engenharia Física Tecnológica (MIEFT) do Instituto Superior Técnico (IST).
 
 ## Autores
-- Estêvão Gomes (ist1102650)
 - Pedro Curvo (ist1102716)
+- Estêvão Gomes (ist1102650)
 - Sofia Tété (ist1102633)
 - Salvador Torpes (ist1102474)
 
