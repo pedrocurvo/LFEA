@@ -13,4 +13,11 @@ A experiência que em seguida se descreve foi realizada no dia 12 de junho de 20
    - Fizemos uma análise qualitativa do espetro: conseguimos observar a distribuição característica da emissão da radiação gama - tem a forma de uma bossa na escala logarítmica no início do espetro. Não observámos mais nenhum picos, uma vez que o tálio não tem picos de conversão interna. Verificámos que, em comparação com o espetro obtido para a mesma fonte fechada, que medimos na aula anterior, o espetro obtido para a fonte aberta tem uma intensidade maior, o que é de esperar, uma vez que a fonte aberta tem menos atenuação que a fonte fechada. Logo, o espetro está distribuido por uma maior quantidade de channels (maior energia).
    - Verificámos que o numero de contagens total era maior (ROI INT = 42594 +- 206 e ROI NET = 34134 +- 483) do que no caso em que a fonte era fechada uma vez que agora não há atenuação
    - Guardámos os dados adquiridos num ficheiro com o nome ttalberto.asc;
-   - 
+
+3. **Estudo da atenuação**
+   - Fizemos uma aquisição de 600 segundos para uma fonte de bismuto,na câmara com ar. 
+   - Fizemos uma análise qualitativa do espetro: observámos a existência de 6 picos: o 1º relativo aos eletrões de Auger, o 2º é ruído do detetor e os 4 seguintes aparecem em pares, sendo cada par correspondente à conversão interna de duas emissões gama diferentes do bismuto.
+   - Guardámos os dados adquiridos num ficheiro com o nome ttbis.asc;
+   - Fizemos uma aquisição de 600 segundos para a fonte de bismuto com cartão, tendo guardado os dados no documanto ttbiscar.asc;
+   - Fizemos uma outra aquisição de 600 segundos para a mesma fonte, mas desta vez com uma placa de acrílico, guardando no documento ttbisacr.asc; 
+
