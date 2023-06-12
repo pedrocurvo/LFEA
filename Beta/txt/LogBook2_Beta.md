@@ -4,9 +4,13 @@ A experiência que em seguida se descreve foi realizada no dia 12 de junho de 20
 
 1. **Calibração:**
    - Inicialmente, confirmámos que a calibração realizada na aula anterior se mantinha válida. Para tal, observámos o espetro da fonte de Césio no MCA.
-   - Colocámos a fonte na câmara, fizemos vácuo e realizamos uma aquisição durante 120 segundos, guardando os dados num ficheiro.  
+   - Colocámos a fonte na câmara, ligámos o vácuo, selecionamos o modo BIAS e realizamos uma aquisição durante 120 segundos, guardando os dados num ficheiro com o nome tt_cali.asc.
 
 2. **Estudo de uma fonte de Tálio aberta**
-   - Escolhemos uma fonte de Tálio-204 de outubro de 2015, que estava marcada com L12.
-   - Colocámo-la dentro da câmara do detetor e ligámos o vácuo.
+   - Escolhemos uma fonte de Tálio-204 aberta de outubro de 2015, que estava marcada com L12.
+   - Colocámo-la dentro da câmara do detetor, ligámos o vácuo e selecionamos o modo BIAS.
+   - Fizemos uma aquisição durante 600 segundos.
+   - Fizemos uma análise qualitativa do espetro: conseguimos observar a distribuição característica da emissão da radiação gama - tem a forma de uma bossa na escala logarítmica no início do espetro. Não observámos mais nenhum picos, uma vez que o tálio não tem picos de conversão interna. Verificámos que, em comparação com o espetro obtido para a mesma fonte fechada, que medimos na aula anterior, o espetro obtido para a fonte aberta tem uma intensidade maior, o que é de esperar, uma vez que a fonte aberta tem menos atenuação que a fonte fechada. Logo, o espetro está distribuido por uma maior quantidade de channels (maior energia).
+   - Verificámos que o numero de contagens total era maior (ROI INT = 42594 +- 206 e ROI NET = 34134 +- 483) do que no caso em que a fonte era fechada uma vez que agora não há atenuação
+   - Guardámos os dados adquiridos num ficheiro com o nome ttalberto.asc;
    - 
