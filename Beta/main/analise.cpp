@@ -18,6 +18,20 @@
 
 using namespace std;
 
+double find_max(double min, double max, vector<pair<double, double>>& cal_1){
+    double max_val = 0;
+    double integer = 0;
+    for (int i = 0; i < cal_1.size(); i++){
+        if(cal_1[i].first > min && cal_1[i].first < max){
+            if(cal_1[i].second > max_val){
+                max_val = cal_1[i].second;
+                integer = cal_1[i].first;
+            }
+        }
+    }
+    return integer;
+}
+
 int main(){
     TApplication A("A", nullptr, nullptr);
     TCanvas c1("c1", "c1", 1200, 800); 
@@ -69,9 +83,21 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    //////////////////////////////// Talium ////////////////////////////////
+    // Find peaks for further calibration 
+    double first_peak = find_max(6, 30, bismuto);
+    double second_peak = find_max(30, 45, bismuto);
+    double third_peak = find_max(100, 108, bismuto);
+    double fourth_peak = find_max(116, 125, bismuto);
+    double fifth_peak = find_max(207, 215, bismuto);
+    double sixth_peak = find_max(223, 234, bismuto);
+
+    cout << first_peak << " " << second_peak << " " << third_peak << " " << fourth_peak << " " << fifth_peak << " " << sixth_peak << endl;
+
+
+
+    //////////////////////////////// Closed Talium ////////////////////////////////
     vector<pair<double, double>> talium;
-    ReadFile("data/talium.dat", talium);
+    ReadFile("data/talium_closed.dat", talium);
     TGraphErrors tal;
     for (int i = 0; i < talium.size(); i++){
         tal.SetPoint(i, talium[i].first, talium[i].second);
@@ -90,6 +116,45 @@ int main(){
     tal.Draw("APL");
     c1.Update();
     c1.SaveAs("graphs/Talio.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Open Talium ////////////////////////////////
+    vector<pair<double, double>> talium_open;
+    ReadFile("data/talium_open.dat", talium_open);
+    TGraphErrors tal_open;
+    for (int i = 0; i < talium_open.size(); i++){
+        tal_open.SetPoint(i, talium_open[i].first, talium_open[i].second);
+        tal_open.SetPointError(i, 0, sqrt(talium_open[i].second));
+    }
+    tal_open.SetMarkerStyle(1);
+    tal_open.SetMarkerColor(kBlue);
+    tal_open.SetLineColor(kBlue);
+    tal_open.SetTitle("Talio");
+    tal_open.GetXaxis()->SetTitle(" Channels");
+    tal_open.GetYaxis()->SetTitle("Counts");
+    tal_open.GetXaxis()->CenterTitle();
+    tal_open.GetYaxis()->CenterTitle();
+    tal_open.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    tal_open.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Talio_open.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Graph Both Tals ////////////////////////////////
+    c1.Clear();
+    TLegend leg(0.65, 0.75, 0.85, 0.85);
+    leg.AddEntry(&tal, "Talio Fechado", "l");
+    leg.AddEntry(&tal_open, "Talio Aberto", "l");
+    tal_open.SetTitle("Talio Aberto e Talio Fechado");
+    tal_open.SetLineColor(kRed);
+    tal_open.Draw("APL");
+    tal.Draw("PL");
+    leg.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/Talio_both.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -167,7 +232,7 @@ int main(){
 
     //////////////////////////////// Talium + Aluminum ////////////////////////////////
     vector<pair<double, double>> taliumAl;
-    ReadFile("data/taliumAl.dat", taliumAl);
+    ReadFile("data/talium_closedAl.dat", taliumAl);
     TGraphErrors talAl;
     for (int i = 0; i < taliumAl.size(); i++){
         talAl.SetPoint(i, taliumAl[i].first, taliumAl[i].second);
@@ -212,6 +277,9 @@ int main(){
     c1.SaveAs("graphs/CesioAluminio.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+
+
 
 
 
