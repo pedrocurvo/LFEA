@@ -182,6 +182,10 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
+    // Find peaks for further analysis
+    double cesium_peak_channels = find_max(0, 0, cesio); // add range
+    double cesium_peak_theoretical_energy = 0; // add theoretical value
+
     //////////////////////////////// Strontium ////////////////////////////////
     vector<pair<double, double>> strontium;
     ReadFile("data/strontium.dat", strontium);
@@ -277,6 +281,145 @@ int main(){
     c1.SaveAs("graphs/CesioAluminio.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+    //////////////////////////////// Bismuth + Air ////////////////////////////////
+    vector<pair<double, double>> bismuthAir;
+    ReadFile("data/bis_air.dat", bismuthAir);
+    TGraphErrors bisAir;
+    for (int i = 0; i < bismuthAir.size(); i++){
+        bisAir.SetPoint(i, bismuthAir[i].first, bismuthAir[i].second);
+        bisAir.SetPointError(i, 0, sqrt(bismuthAir[i].second));
+    }
+    bisAir.SetMarkerStyle(1);
+    bisAir.SetMarkerColor(kBlue);
+    bisAir.SetLineColor(kBlue);
+    bisAir.SetTitle("Bismuto c ar");
+    bisAir.GetXaxis()->SetTitle(" Channels");
+    bisAir.GetYaxis()->SetTitle("Counts");
+    bisAir.GetXaxis()->CenterTitle();
+    bisAir.GetYaxis()->CenterTitle();
+    bisAir.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    bisAir.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/BismutoAr.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Bismuth + Car ////////////////////////////////
+    vector<pair<double, double>> bismuthCar;
+    ReadFile("data/bis_car.dat", bismuthCar);
+    TGraphErrors bisCar;
+    for (int i = 0; i < bismuthCar.size(); i++){
+        bisCar.SetPoint(i, bismuthCar[i].first, bismuthCar[i].second);
+        bisCar.SetPointError(i, 0, sqrt(bismuthCar[i].second));
+    }
+    bisCar.SetMarkerStyle(1);
+    bisCar.SetMarkerColor(kOrange);
+    bisCar.SetLineColor(kOrange);
+    bisCar.SetTitle("Bismuto c cartao");
+    bisCar.GetXaxis()->SetTitle(" Channels");
+    bisCar.GetYaxis()->SetTitle("Counts");
+    bisCar.GetXaxis()->CenterTitle();
+    bisCar.GetYaxis()->CenterTitle();
+    bisCar.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    bisCar.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/BismutoCartao.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Bismuth + Acrylic ////////////////////////////////
+    vector<pair<double, double>> bismuthAcrylic;
+    ReadFile("data/bis_acr.dat", bismuthAcrylic);
+    TGraphErrors bisAcr;
+    for (int i = 0; i < bismuthAcrylic.size(); i++){
+        bisAcr.SetPoint(i, bismuthAcrylic[i].first, bismuthAcrylic[i].second);
+        bisAcr.SetPointError(i, 0, sqrt(bismuthAcrylic[i].second));
+    }
+    bisAcr.SetMarkerStyle(1);
+    bisAcr.SetMarkerColor(kGreen);
+    bisAcr.SetLineColor(kGreen);
+    bisAcr.SetTitle("Bismuto c acrilico");
+    bisAcr.GetXaxis()->SetTitle(" Channels");
+    bisAcr.GetYaxis()->SetTitle("Counts");
+    bisAcr.GetXaxis()->CenterTitle();
+    bisAcr.GetYaxis()->CenterTitle();
+    bisAcr.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    bisAcr.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/BismutoAcrilico.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+
+    //////////////////////////////// Bismuth with 3 ////////////////////////////////
+    c1.Clear();
+    leg.Clear();
+    leg.SetHeader("Bismuto");
+    leg.AddEntry(&bis, "Bismuto", "l");
+    leg.AddEntry(&bisAir, "Bismuto c ar", "l");
+    leg.AddEntry(&bisCar, "Bismuto c cartao", "l");
+    leg.AddEntry(&bisAcr, "Bismuto c acrilico", "l");
+    bis.Draw("APL");
+    bisAir.Draw("PL");
+    bisCar.Draw("PL");
+    bisAcr.Draw("PL");
+    leg.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/Bismuto_Atenuation.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Calibration Function ////////////////////////////////
+    // Using Bismuth Peaks 
+    double first_theoretical = 80.9979; // change
+    double second_theoretical = 276.3989; // change
+    double third_theoretical = 302.8508; // change
+    double fourth_theoretical = 356.0129; // change
+
+    double first_experimental = 0; // change
+    double second_experimental = 0; // change
+    double third_experimental = 0; // change
+    double fourth_experimental = 0; // change
+
+    TGraphErrors calibration;
+    calibration.SetPoint(0, first_experimental, first_theoretical);
+    calibration.SetPoint(1, second_experimental, second_theoretical);
+    calibration.SetPoint(2, third_experimental, third_theoretical);
+    calibration.SetPoint(3, fourth_experimental, fourth_theoretical);
+    
+    calibration.SetMarkerStyle(1);
+    calibration.SetMarkerColor(kRed);
+    calibration.SetLineColor(kRed);
+    calibration.SetTitle("Calibration");
+    calibration.GetXaxis()->SetTitle(" Channels [keV]");
+    calibration.GetYaxis()->SetTitle("Energy [keV]");
+    calibration.GetXaxis()->CenterTitle();
+    calibration.GetYaxis()->CenterTitle();
+    calibration.GetXaxis()->SetRangeUser(0, 300);
+    
+    TF1 *calibrationFunction = new TF1("calibrationFunction", "[0] + [1]*x", 0, 300);
+    calibrationFunction->SetParameter(0, 0);
+    calibrationFunction->SetParameter(1, 1);
+    calibration.Fit("calibrationFunction", "R");
+    c1.Clear();
+    calibration.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Calibration.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Find Material with Cesium ////////////////////////////////
+    double difference = abs(cesium_peak_theoretical_energy - calibrationFunction->Eval(cesium_peak_channels));
+    cout << "Difference: " << difference << endl;
+    
+
+    
+
+
 
 
 
