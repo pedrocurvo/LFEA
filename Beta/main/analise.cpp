@@ -450,8 +450,29 @@ int main(){
     c1.SaveAs("graphs/Polyethylene_Stopping_Powers.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-    c1.SetLogx(0);
-    c1.SetLogy(0);
+    //c1.SetLogx(0);
+    //c1.SetLogy(0);
+
+    // Composition of Polyethylene
+    double density = 0.94; //g/cm^3
+    double mean_excitation_energy = 57.4; // eV
+
+    TF1 *f2 = new TF1("f2", "exp(x-[0])^2 +1");
+    f2->SetParameter(0,2);
+    f2->SetParLimits(0,0,10);
+
+    c1.Clear();
+    polyethylene_stopping_powers.Fit("f2", "R");
+    polyethylene_stopping_powers.Draw("APL");
+    f2->Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/Polyethylene_Stopping_Powers_Fit.png");
+
+    // Using Cesium Peak
+    // Find Stopping power for cesium peak
+    // Divide Stopping Power by density to find length 
+    // Divide difference by Stopping power above
+    // That's the thickness of the material, should be around 1/2/3 mm
 
     
 
