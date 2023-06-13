@@ -21,3 +21,4 @@ A experiência que em seguida se descreve foi realizada no dia 12 de junho de 20
    - Fizemos uma aquisição de 600 segundos para a fonte de bismuto com cartão, tendo guardado os dados no documanto ttbiscar.asc;
    - Fizemos uma outra aquisição de 600 segundos para a mesma fonte, mas desta vez com uma placa de acrílico, guardando no documento ttbisacr.asc; 
 
+Na quarta fazer polietilenos ..

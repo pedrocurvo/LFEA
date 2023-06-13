@@ -15,6 +15,7 @@
 #include "TGraphErrors.h"
 #include "TStyle.h"
 #include "TLatex.h"
+#include "ReadEth.h"
 
 using namespace std;
 
@@ -183,8 +184,8 @@ int main(){
     gSystem->ProcessEvents();
 
     // Find peaks for further analysis
-    double cesium_peak_channels = find_max(0, 0, cesio); // add range
-    double cesium_peak_theoretical_energy = 0; // add theoretical value
+    double cesium_peak_channels = find_max(100, 150, cesio); // add range
+    double cesium_peak_theoretical_energy = 624.216; // add theoretical value
 
     //////////////////////////////// Strontium ////////////////////////////////
     vector<pair<double, double>> strontium;
@@ -375,15 +376,16 @@ int main(){
 
     //////////////////////////////// Calibration Function ////////////////////////////////
     // Using Bismuth Peaks 
-    double first_theoretical = 80.9979; // change
-    double second_theoretical = 276.3989; // change
-    double third_theoretical = 302.8508; // change
-    double fourth_theoretical = 356.0129; // change
+    gStyle->SetOptFit(111);
+    double first_theoretical = 481.694;
+    double second_theoretical = 555.251;
+    double third_theoretical = 975.655; 
+    double fourth_theoretical = 1049.211; 
 
-    double first_experimental = 0; // change
-    double second_experimental = 0; // change
-    double third_experimental = 0; // change
-    double fourth_experimental = 0; // change
+    double first_experimental = third_peak; 
+    double second_experimental = fourth_peak; 
+    double third_experimental = fifth_peak;
+    double fourth_experimental = sixth_peak; 
 
     TGraphErrors calibration;
     calibration.SetPoint(0, first_experimental, first_theoretical);
@@ -391,7 +393,7 @@ int main(){
     calibration.SetPoint(2, third_experimental, third_theoretical);
     calibration.SetPoint(3, fourth_experimental, fourth_theoretical);
     
-    calibration.SetMarkerStyle(1);
+    calibration.SetMarkerStyle(20);
     calibration.SetMarkerColor(kRed);
     calibration.SetLineColor(kRed);
     calibration.SetTitle("Calibration");
@@ -414,7 +416,43 @@ int main(){
 
     //////////////////////////////// Find Material with Cesium ////////////////////////////////
     double difference = abs(cesium_peak_theoretical_energy - calibrationFunction->Eval(cesium_peak_channels));
-    cout << "Difference: " << difference << endl;
+    cout << "Difference in Energy: " << difference << endl;
+
+    vector<double> KineticalEnergy;
+    vector<double> Collision;
+    vector<double> Radiative;
+    vector<double> Total;
+    vector<double> CSDA;
+    vector<double> Y;
+    vector<double> Param;
+
+    ReadFile("data/polyethylene.dat", KineticalEnergy, Collision, Radiative, Total, CSDA, Y, Param);
+
+    TGraphErrors polyethylene_stopping_powers;
+    for (int i = 0; i < KineticalEnergy.size(); i++){
+        polyethylene_stopping_powers.SetPoint(i, KineticalEnergy[i], Total[i]);
+        polyethylene_stopping_powers.SetPointError(i, 0, 0);
+    }
+    polyethylene_stopping_powers.SetMarkerStyle(1);
+    polyethylene_stopping_powers.SetMarkerColor(kRed);
+    polyethylene_stopping_powers.SetLineColor(kRed);
+    polyethylene_stopping_powers.SetTitle("Polyethylene Stopping Powers");
+    polyethylene_stopping_powers.GetXaxis()->SetTitle("Kinetical Energy [MeV]");
+    polyethylene_stopping_powers.GetYaxis()->SetTitle("Stopping Power [MeV cm^{2}/g]");
+    polyethylene_stopping_powers.GetXaxis()->CenterTitle();
+    polyethylene_stopping_powers.GetYaxis()->CenterTitle();
+    polyethylene_stopping_powers.GetXaxis()->SetRangeUser(0, 1);
+    c1.SetLogx();
+    c1.SetLogy();
+    c1.Clear();
+    polyethylene_stopping_powers.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Polyethylene_Stopping_Powers.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    c1.SetLogx(0);
+    c1.SetLogy(0);
+
     
 
     
