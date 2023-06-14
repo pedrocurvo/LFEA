@@ -406,6 +406,8 @@ int main(){
     TF1 *calibrationFunction = new TF1("calibrationFunction", "[0] + [1]*x", 0, 300);
     calibrationFunction->SetParameter(0, 0);
     calibrationFunction->SetParameter(1, 1);
+    calibrationFunction->SetParName(0, "slope");
+    calibrationFunction->SetParName(1, "intercept");
     calibration.Fit("calibrationFunction", "R");
     c1.Clear();
     calibration.Draw("APL");
@@ -469,7 +471,7 @@ int main(){
     c1.SaveAs("graphs/Polyethylene_Stopping_Powers_Fit.png");
 
     // Using Cesium Peak
-    // Find Stopping power for cesium peak
+    // Find Stopping power for cesium peak using integral from theoretical energy to experimental energy
     // Divide Stopping Power by density to find length 
     // Divide difference by Stopping power above
     // That's the thickness of the material, should be around 1/2/3 mm
