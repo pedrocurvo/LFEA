@@ -15,8 +15,23 @@
 #include "TGraphErrors.h"
 #include "TStyle.h"
 #include "TLatex.h"
+#include "ReadEth.h"
 
 using namespace std;
+
+double find_max(double min, double max, vector<pair<double, double>>& cal_1){
+    double max_val = 0;
+    double integer = 0;
+    for (int i = 0; i < cal_1.size(); i++){
+        if(cal_1[i].first > min && cal_1[i].first < max){
+            if(cal_1[i].second > max_val){
+                max_val = cal_1[i].second;
+                integer = cal_1[i].first;
+            }
+        }
+    }
+    return integer;
+}
 
 int main(){
     TApplication A("A", nullptr, nullptr);
@@ -69,9 +84,21 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    //////////////////////////////// Talium ////////////////////////////////
+    // Find peaks for further calibration 
+    double first_peak = find_max(6, 30, bismuto);
+    double second_peak = find_max(30, 45, bismuto);
+    double third_peak = find_max(100, 108, bismuto);
+    double fourth_peak = find_max(116, 125, bismuto);
+    double fifth_peak = find_max(207, 215, bismuto);
+    double sixth_peak = find_max(223, 234, bismuto);
+
+    cout << first_peak << " " << second_peak << " " << third_peak << " " << fourth_peak << " " << fifth_peak << " " << sixth_peak << endl;
+
+
+
+    //////////////////////////////// Closed Talium ////////////////////////////////
     vector<pair<double, double>> talium;
-    ReadFile("data/talium.dat", talium);
+    ReadFile("data/talium_closed.dat", talium);
     TGraphErrors tal;
     for (int i = 0; i < talium.size(); i++){
         tal.SetPoint(i, talium[i].first, talium[i].second);
@@ -90,6 +117,45 @@ int main(){
     tal.Draw("APL");
     c1.Update();
     c1.SaveAs("graphs/Talio.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Open Talium ////////////////////////////////
+    vector<pair<double, double>> talium_open;
+    ReadFile("data/talium_open.dat", talium_open);
+    TGraphErrors tal_open;
+    for (int i = 0; i < talium_open.size(); i++){
+        tal_open.SetPoint(i, talium_open[i].first, talium_open[i].second);
+        tal_open.SetPointError(i, 0, sqrt(talium_open[i].second));
+    }
+    tal_open.SetMarkerStyle(1);
+    tal_open.SetMarkerColor(kBlue);
+    tal_open.SetLineColor(kBlue);
+    tal_open.SetTitle("Talio");
+    tal_open.GetXaxis()->SetTitle(" Channels");
+    tal_open.GetYaxis()->SetTitle("Counts");
+    tal_open.GetXaxis()->CenterTitle();
+    tal_open.GetYaxis()->CenterTitle();
+    tal_open.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    tal_open.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Talio_open.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Graph Both Tals ////////////////////////////////
+    c1.Clear();
+    TLegend leg(0.65, 0.75, 0.85, 0.85);
+    leg.AddEntry(&tal, "Talio Fechado", "l");
+    leg.AddEntry(&tal_open, "Talio Aberto", "l");
+    tal_open.SetTitle("Talio Aberto e Talio Fechado");
+    tal_open.SetLineColor(kRed);
+    tal_open.Draw("APL");
+    tal.Draw("PL");
+    leg.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/Talio_both.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -116,6 +182,10 @@ int main(){
     c1.SaveAs("graphs/Cesio.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+    // Find peaks for further analysis
+    double cesium_peak_channels = find_max(100, 150, cesio); // add range
+    double cesium_peak_theoretical_energy = 624.216; // add theoretical value
 
     //////////////////////////////// Strontium ////////////////////////////////
     vector<pair<double, double>> strontium;
@@ -167,7 +237,7 @@ int main(){
 
     //////////////////////////////// Talium + Aluminum ////////////////////////////////
     vector<pair<double, double>> taliumAl;
-    ReadFile("data/taliumAl.dat", taliumAl);
+    ReadFile("data/talium_closedAl.dat", taliumAl);
     TGraphErrors talAl;
     for (int i = 0; i < taliumAl.size(); i++){
         talAl.SetPoint(i, taliumAl[i].first, taliumAl[i].second);
@@ -212,6 +282,206 @@ int main(){
     c1.SaveAs("graphs/CesioAluminio.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+    //////////////////////////////// Bismuth + Air ////////////////////////////////
+    vector<pair<double, double>> bismuthAir;
+    ReadFile("data/bis_air.dat", bismuthAir);
+    TGraphErrors bisAir;
+    for (int i = 0; i < bismuthAir.size(); i++){
+        bisAir.SetPoint(i, bismuthAir[i].first, bismuthAir[i].second);
+        bisAir.SetPointError(i, 0, sqrt(bismuthAir[i].second));
+    }
+    bisAir.SetMarkerStyle(1);
+    bisAir.SetMarkerColor(kBlue);
+    bisAir.SetLineColor(kBlue);
+    bisAir.SetTitle("Bismuto c ar");
+    bisAir.GetXaxis()->SetTitle(" Channels");
+    bisAir.GetYaxis()->SetTitle("Counts");
+    bisAir.GetXaxis()->CenterTitle();
+    bisAir.GetYaxis()->CenterTitle();
+    bisAir.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    bisAir.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/BismutoAr.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Bismuth + Car ////////////////////////////////
+    vector<pair<double, double>> bismuthCar;
+    ReadFile("data/bis_car.dat", bismuthCar);
+    TGraphErrors bisCar;
+    for (int i = 0; i < bismuthCar.size(); i++){
+        bisCar.SetPoint(i, bismuthCar[i].first, bismuthCar[i].second);
+        bisCar.SetPointError(i, 0, sqrt(bismuthCar[i].second));
+    }
+    bisCar.SetMarkerStyle(1);
+    bisCar.SetMarkerColor(kOrange);
+    bisCar.SetLineColor(kOrange);
+    bisCar.SetTitle("Bismuto c cartao");
+    bisCar.GetXaxis()->SetTitle(" Channels");
+    bisCar.GetYaxis()->SetTitle("Counts");
+    bisCar.GetXaxis()->CenterTitle();
+    bisCar.GetYaxis()->CenterTitle();
+    bisCar.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    bisCar.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/BismutoCartao.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Bismuth + Acrylic ////////////////////////////////
+    vector<pair<double, double>> bismuthAcrylic;
+    ReadFile("data/bis_acr.dat", bismuthAcrylic);
+    TGraphErrors bisAcr;
+    for (int i = 0; i < bismuthAcrylic.size(); i++){
+        bisAcr.SetPoint(i, bismuthAcrylic[i].first, bismuthAcrylic[i].second);
+        bisAcr.SetPointError(i, 0, sqrt(bismuthAcrylic[i].second));
+    }
+    bisAcr.SetMarkerStyle(1);
+    bisAcr.SetMarkerColor(kGreen);
+    bisAcr.SetLineColor(kGreen);
+    bisAcr.SetTitle("Bismuto c acrilico");
+    bisAcr.GetXaxis()->SetTitle(" Channels");
+    bisAcr.GetYaxis()->SetTitle("Counts");
+    bisAcr.GetXaxis()->CenterTitle();
+    bisAcr.GetYaxis()->CenterTitle();
+    bisAcr.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    bisAcr.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/BismutoAcrilico.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+
+    //////////////////////////////// Bismuth with 3 ////////////////////////////////
+    c1.Clear();
+    leg.Clear();
+    leg.SetHeader("Bismuto");
+    leg.AddEntry(&bis, "Bismuto", "l");
+    leg.AddEntry(&bisAir, "Bismuto c ar", "l");
+    leg.AddEntry(&bisCar, "Bismuto c cartao", "l");
+    leg.AddEntry(&bisAcr, "Bismuto c acrilico", "l");
+    bis.Draw("APL");
+    bisAir.Draw("PL");
+    bisCar.Draw("PL");
+    bisAcr.Draw("PL");
+    leg.Draw();
+    c1.Update();
+    c1.SaveAs("graphs/Bismuto_Atenuation.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Calibration Function ////////////////////////////////
+    // Using Bismuth Peaks 
+    gStyle->SetOptFit(111);
+    double first_theoretical = 481.694;
+    double second_theoretical = 555.251;
+    double third_theoretical = 975.655; 
+    double fourth_theoretical = 1049.211; 
+
+    double first_experimental = third_peak; 
+    double second_experimental = fourth_peak; 
+    double third_experimental = fifth_peak;
+    double fourth_experimental = sixth_peak; 
+
+    TGraphErrors calibration;
+    calibration.SetPoint(0, first_experimental, first_theoretical);
+    calibration.SetPoint(1, second_experimental, second_theoretical);
+    calibration.SetPoint(2, third_experimental, third_theoretical);
+    calibration.SetPoint(3, fourth_experimental, fourth_theoretical);
+    
+    calibration.SetMarkerStyle(20);
+    calibration.SetMarkerColor(kRed);
+    calibration.SetLineColor(kRed);
+    calibration.SetTitle("Calibration");
+    calibration.GetXaxis()->SetTitle(" Channels [keV]");
+    calibration.GetYaxis()->SetTitle("Energy [keV]");
+    calibration.GetXaxis()->CenterTitle();
+    calibration.GetYaxis()->CenterTitle();
+    calibration.GetXaxis()->SetRangeUser(0, 300);
+    
+    TF1 *calibrationFunction = new TF1("calibrationFunction", "[0] + [1]*x", 0, 300);
+    calibrationFunction->SetParameter(0, 0);
+    calibrationFunction->SetParameter(1, 1);
+    calibration.Fit("calibrationFunction", "R");
+    c1.Clear();
+    calibration.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Calibration.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    //////////////////////////////// Find Material with Cesium ////////////////////////////////
+    double difference = abs(cesium_peak_theoretical_energy - calibrationFunction->Eval(cesium_peak_channels));
+    cout << "Difference in Energy: " << difference << endl;
+
+    vector<double> KineticalEnergy;
+    vector<double> Collision;
+    vector<double> Radiative;
+    vector<double> Total;
+    vector<double> CSDA;
+    vector<double> Y;
+    vector<double> Param;
+
+    ReadFile("data/polyethylene.dat", KineticalEnergy, Collision, Radiative, Total, CSDA, Y, Param);
+
+    TGraphErrors polyethylene_stopping_powers;
+    for (int i = 0; i < KineticalEnergy.size(); i++){
+        polyethylene_stopping_powers.SetPoint(i, KineticalEnergy[i], Total[i]);
+        polyethylene_stopping_powers.SetPointError(i, 0, 0);
+    }
+    polyethylene_stopping_powers.SetMarkerStyle(1);
+    polyethylene_stopping_powers.SetMarkerColor(kRed);
+    polyethylene_stopping_powers.SetLineColor(kRed);
+    polyethylene_stopping_powers.SetTitle("Polyethylene Stopping Powers");
+    polyethylene_stopping_powers.GetXaxis()->SetTitle("Kinetical Energy [MeV]");
+    polyethylene_stopping_powers.GetYaxis()->SetTitle("Stopping Power [MeV cm^{2}/g]");
+    polyethylene_stopping_powers.GetXaxis()->CenterTitle();
+    polyethylene_stopping_powers.GetYaxis()->CenterTitle();
+    polyethylene_stopping_powers.GetXaxis()->SetRangeUser(0, 1);
+    c1.SetLogx();
+    c1.SetLogy();
+    c1.Clear();
+    polyethylene_stopping_powers.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Polyethylene_Stopping_Powers.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    //c1.SetLogx(0);
+    //c1.SetLogy(0);
+
+    // Composition of Polyethylene
+    double density = 0.94; //g/cm^3
+    double mean_excitation_energy = 57.4; // eV
+
+    TF1 *f2 = new TF1("f2", "exp(x-[0])^2 +1");
+    f2->SetParameter(0,2);
+    f2->SetParLimits(0,0,10);
+
+    c1.Clear();
+    polyethylene_stopping_powers.Fit("f2", "R");
+    polyethylene_stopping_powers.Draw("APL");
+    f2->Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/Polyethylene_Stopping_Powers_Fit.png");
+
+    // Using Cesium Peak
+    // Find Stopping power for cesium peak
+    // Divide Stopping Power by density to find length 
+    // Divide difference by Stopping power above
+    // That's the thickness of the material, should be around 1/2/3 mm
+
+    
+
+    
+
+
+
+
+
 
 
 
