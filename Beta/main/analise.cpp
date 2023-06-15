@@ -489,12 +489,9 @@ int main(){
         if(KineticalEnergy[i]*1000 > calibrationFunction->Eval(cesium_peak_channels) && KineticalEnergy[i]*1000 < cesium_peak_theoretical_energy){
             double dx = KineticalEnergy[i] - KineticalEnergy[i - 1];
             integral += (1/(Total[i] * density) + 1/(Total[i - 1] * density)) * dx / 2.0;
-            tentauva += Total[i];
         }
     }
     cout << integral << endl;
-    cout << difference / integral << endl;
-    cout << "tentativa" << tentauva << endl;
 
     // Using Cesium Peak
     // Find Stopping power for cesium peak using integral from theoretical energy to experimental energy
@@ -536,6 +533,44 @@ int main(){
     double integral2 = linearInterpolation(KineticalEnergy2, CSDA2, cesium_peak_theoretical_energy/1000);
     double integral3 = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(cesium_peak_channels)/1000);
     cout << (integral2 - integral3) / density << endl;
+
+    // Reajust cesium spectrum
+    double thickness = (integral2 - integral3) / density;
+    TGraphErrors cesium_spectrum_reajusted;
+    double first = 0;
+    double energy = 0;
+    double difference2 = thickness/1000;
+    for (int i = 0; i < cesio.size(); i++){
+        first = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(cesio[i].first)/1000);
+        energy = 0;
+        for(int j = i; j < KineticalEnergy.size(); j++){
+            double second = linearInterpolation(KineticalEnergy2, CSDA2, KineticalEnergy[j]);
+            if(abs(second - first)/density - thickness < difference2){
+                energy = (KineticalEnergy[j]*1000 - 4.61603) / 1.49913;
+            }
+            
+        }
+        cesium_spectrum_reajusted.SetPoint(i, energy, cesio[i].second);
+    }
+    cesium_spectrum_reajusted.SetMarkerStyle(1);
+    cesium_spectrum_reajusted.SetMarkerColor(kRed);
+    cesium_spectrum_reajusted.SetLineColor(kRed);
+    cesium_spectrum_reajusted.SetTitle("Cesium Spectrum Reajusted");
+    cesium_spectrum_reajusted.GetXaxis()->SetTitle("Channels");
+    cesium_spectrum_reajusted.GetYaxis()->SetTitle("Counts");
+    cesium_spectrum_reajusted.GetXaxis()->CenterTitle();
+    cesium_spectrum_reajusted.GetYaxis()->CenterTitle();
+    cesium_spectrum_reajusted.GetXaxis()->SetRangeUser(0, 700);
+    c1.SetLogx(0);
+    c1.SetLogy(0);
+    c1.Clear();
+    cesium_spectrum_reajusted.Draw("APL");
+    ces.Draw("same");
+    c1.Update();
+    //c1.SaveAs("graphs/Cesium_Spectrum_Reajusted.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
 
 
 
