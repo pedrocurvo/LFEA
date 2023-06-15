@@ -1,5 +1,8 @@
-from star import electron
-hydrogen = electron.PredefinedMaterials.HYDROGEN
-data = electron.calculate_stopping_power(hydrogen, energy=[1e2,2e2,3e2]) # Energy in MeV
-for data_points in data:
-    print(data_points)
+# Open the file in write mode
+file_path = "main/ok.txt"
+with open(file_path, 'w') as file:
+    # Write some text to the file
+    for i in range(1, 1001):
+        file.write(f'{0.001 * i}\n')
+
+# The file is automatically closed once the `with` block is exited

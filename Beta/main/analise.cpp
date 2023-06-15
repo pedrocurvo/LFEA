@@ -19,6 +19,29 @@
 
 using namespace std;
 
+// Perform linear interpolation
+double linearInterpolation(const std::vector<double>& x, const std::vector<double>& y, double xValue) {
+    int n = x.size();
+    if (n != y.size() || n < 2) {
+        // Invalid input, return 0 or handle error appropriately
+        return 0.0;
+    }
+
+    for (int i = 0; i < n - 1; ++i) {
+        if (xValue >= x[i] && xValue <= x[i + 1]) {
+            double xDiff = x[i + 1] - x[i];
+            double yDiff = y[i + 1] - y[i];
+            double slope = yDiff / xDiff;
+            double interpolatedValue = y[i] + slope * (xValue - x[i]);
+            return interpolatedValue;
+        }
+    }
+
+    // xValue is outside the range of given x values
+    // Return 0 or handle error appropriately
+    return 0.0;
+}
+
 double find_max(double min, double max, vector<pair<double, double>>& cal_1){
     double max_val = 0;
     double integer = 0;
@@ -428,7 +451,7 @@ int main(){
     vector<double> Y;
     vector<double> Param;
 
-    ReadFile("data/polyethylene.dat", KineticalEnergy, Collision, Radiative, Total, CSDA, Y, Param);
+    ReadFile("data/polyethylene.dat", KineticalEnergy, Collision, Radiative, Total, Param);
 
     TGraphErrors polyethylene_stopping_powers;
     for (int i = 0; i < KineticalEnergy.size(); i++){
@@ -459,22 +482,63 @@ int main(){
     double density = 0.94; //g/cm^3
     double mean_excitation_energy = 57.4; // eV
 
-    TF1 *f2 = new TF1("f2", "exp(x-[0])^2 +1");
-    f2->SetParameter(0,2);
-    f2->SetParLimits(0,0,10);
-
-    c1.Clear();
-    polyethylene_stopping_powers.Fit("f2", "R");
-    polyethylene_stopping_powers.Draw("APL");
-    f2->Draw("same");
-    c1.Update();
-    c1.SaveAs("graphs/Polyethylene_Stopping_Powers_Fit.png");
+    // try integration simple
+    double integral = 0;
+    double tentauva = 0;
+    for(int i = 0; i < KineticalEnergy.size(); i++){
+        if(KineticalEnergy[i]*1000 > calibrationFunction->Eval(cesium_peak_channels) && KineticalEnergy[i]*1000 < cesium_peak_theoretical_energy){
+            double dx = KineticalEnergy[i] - KineticalEnergy[i - 1];
+            integral += (1/(Total[i] * density) + 1/(Total[i - 1] * density)) * dx / 2.0;
+            tentauva += Total[i];
+        }
+    }
+    cout << integral << endl;
+    cout << difference / integral << endl;
+    cout << "tentativa" << tentauva << endl;
 
     // Using Cesium Peak
     // Find Stopping power for cesium peak using integral from theoretical energy to experimental energy
     // Divide Stopping Power by density to find length 
     // Divide difference by Stopping power above
     // That's the thickness of the material, should be around 1/2/3 mm
+
+    vector<double> KineticalEnergy2;
+    vector<double> Collision2;
+    vector<double> Radiative2;
+    vector<double> Total2;
+    vector<double> CSDA2;
+    vector<double> Y2;
+    vector<double> Param2;
+
+    ReadFile("data/polyethylene_no_use.dat", KineticalEnergy2, Collision2, Radiative2, Total2, CSDA2,Param2);
+    TGraphErrors polyethylene_stopping_powers2;
+    for (int i = 0; i < KineticalEnergy2.size(); i++){
+        polyethylene_stopping_powers2.SetPoint(i, KineticalEnergy2[i], CSDA2[i]);
+        polyethylene_stopping_powers2.SetPointError(i, 0, 0);
+    }
+    polyethylene_stopping_powers2.SetMarkerStyle(1);
+    polyethylene_stopping_powers2.SetMarkerColor(kRed);
+    polyethylene_stopping_powers2.SetLineColor(kRed);
+    polyethylene_stopping_powers2.SetTitle("CSDA Range");
+    polyethylene_stopping_powers2.GetXaxis()->SetTitle("Kinetical Energy [MeV]");
+    polyethylene_stopping_powers2.GetYaxis()->SetTitle("Stopping Power [MeV cm^{2}/g]");
+    polyethylene_stopping_powers2.GetXaxis()->CenterTitle();
+    polyethylene_stopping_powers2.GetYaxis()->CenterTitle();
+    c1.SetLogx();
+    c1.SetLogy();
+    c1.Clear();
+    polyethylene_stopping_powers2.Draw("APL");
+    c1.Update();
+    //c1.SaveAs("graphs/Polyethylene_Stopping_Powers2.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    double integral2 = linearInterpolation(KineticalEnergy2, CSDA2, cesium_peak_theoretical_energy/1000);
+    double integral3 = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(cesium_peak_channels)/1000);
+    cout << (integral2 - integral3) / density << endl;
+
+
+
 
     
 

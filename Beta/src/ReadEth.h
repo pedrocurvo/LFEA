@@ -5,4 +5,5 @@
 #include <utility>
 using namespace std;
 
-void ReadFile(const std::string&, vector<double>&, vector<double>&,vector<double>&,vector<double>&,vector<double>&, vector<double>&, vector<double>&);
+void ReadFile(const std::string&, vector<double>&, vector<double>&,vector<double>&,vector<double>&, vector<double>&);
+void ReadFile(const std::string&, vector<double>&, vector<double>&,vector<double>&,vector<double>&, vector<double>&, vector<double>&);
