@@ -243,21 +243,6 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    ///////// Thickness /////////
-    TF1 *f1 = new TF1("f1", "gauss", 20, 50);
-    f1->SetParameter(0, 600);
-    f1->SetParameter(1, 40);
-    f1->SetParameter(2, 5);
-    f1->SetLineColor(kRed);
-    str.Fit("f1", "R");
-    c1.Clear();
-    str.Draw("APL");
-    f1->Draw("same");
-    c1.Update();
-    //c1.SaveAs("graphs/Estroncio_thickness.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
-
     //////////////////////////////// Pontos de Calibração ////////////////////////////////
     vector<pair<double, double>> calib;
     ReadFile("data/calib.dat", calib);
@@ -547,12 +532,6 @@ int main(){
     }
     cout << integral << endl;
 
-    // Using Cesium Peak
-    // Find Stopping power for cesium peak using integral from theoretical energy to experimental energy
-    // Divide Stopping Power by density to find length 
-    // Divide difference by Stopping power above
-    // That's the thickness of the material, should be around 1/2/3 mm
-
     vector<double> KineticalEnergy2;
     vector<double> Collision2;
     vector<double> Radiative2;
@@ -644,18 +623,23 @@ int main(){
         talium_spectrum_reajusted.SetPoint(i, energy2, talium[i].second);
     }
     talium_spectrum_reajusted.SetMarkerStyle(1);
-    talium_spectrum_reajusted.SetMarkerColor(kRed);
-    talium_spectrum_reajusted.SetLineColor(kRed);
+    talium_spectrum_reajusted.SetMarkerColor(kBlack);
+    talium_spectrum_reajusted.SetLineColor(kBlack);
     talium_spectrum_reajusted.SetTitle("Talium Spectrum Reajusted");
     talium_spectrum_reajusted.GetXaxis()->SetTitle("Channels");
     talium_spectrum_reajusted.GetYaxis()->SetTitle("Counts");
     talium_spectrum_reajusted.GetXaxis()->CenterTitle();
     talium_spectrum_reajusted.GetYaxis()->CenterTitle();
+    TLegend t(0.65,0.65,0.85,0.75);
+    t.AddEntry(&tal, "Closed Talium", "l");
+    t.AddEntry(&talium_spectrum_reajusted, "Closed Talium Reajusted", "l");
+    t.AddEntry(&tal_open, "Open Talium", "l");
     
     c1.Clear();
     tal_open.Draw("APL");
     talium_spectrum_reajusted.Draw("same");
     tal.Draw("same");
+    t.Draw();
     c1.Update();
     c1.SaveAs("graphs/Talium_Spectrum_Reajusted.png");
     c1.WaitPrimitive();
@@ -663,7 +647,7 @@ int main(){
 
     ////////////////////////////// Derivative of Talium Spectrum //////////////////////////////
     vector<pair<double, double> > der_tal;
-    ReadFile("data/talium_open_Smoothed.dat", der_tal);
+    ReadFile("data/talium_open_Smoothed_Smoothed.dat", der_tal);
     vector<pair<double, long double> > end_point = calculateDerivative(der_tal);
     TGraphErrors talium_spectrum_derivative;
     for (int i = 0; i < end_point.size(); i++){
@@ -700,7 +684,7 @@ int main(){
     }
     
     cout << calibrationFunction->Eval(value_end_point) << endl;
-    TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",30, 300);
+    TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",0, 30);
     ajuste->SetParameter(0, 80);
     ajuste->SetParLimits(0, 50, 1000);
     ajuste->SetParameter(2, 167);
@@ -772,17 +756,50 @@ int main(){
     double silicon_density = 2.33;
 
     ReadFile("data/silicon_one.dat", KineticalEnergySilicon, CollisionSilicon, RadiativeSilicon, TotalSilicon, CSDASilicon, ParamSilicon);
+    TGraphErrors silicon_graph_normal;
+    for (int i = 0; i < KineticalEnergySilicon.size(); i++){
+        silicon_graph_normal.SetPoint(i, KineticalEnergySilicon[i], TotalSilicon[i]);
+        silicon_graph_normal.SetPointError(i, 0, 0);
+    }
+    silicon_graph_normal.SetMarkerStyle(1);
+    silicon_graph_normal.SetMarkerColor(kRed);
+    silicon_graph_normal.SetLineColor(kRed);
+    silicon_graph_normal.SetTitle("Silicon Normal");
+    silicon_graph_normal.GetYaxis()->SetTitle("Total Stopping Power [MeV cm^{2} g^{-1}]");
+    silicon_graph_normal.GetXaxis()->SetTitle("Kinetic Energy [MeV]");
+    silicon_graph_normal.GetXaxis()->CenterTitle();
+    silicon_graph_normal.GetYaxis()->CenterTitle();
+    c1.SetLogx();
+    c1.SetLogy();
+    c1.Clear();
+    silicon_graph_normal.Draw("APL");
+    c1.Update();
+    //c1.SaveAs("graphs/Silicon_Normal.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    double testar = 0;
+    double control = 0;
+    for(int i = 0; i < KineticalEnergySilicon.size(); i++){
+        if(KineticalEnergySilicon[i] >= 1 && KineticalEnergySilicon[i] <= 10){
+            testar += TotalSilicon[i];
+            control++;
+        }
+    }
+    cout << "Silicon Normal: " << mean_channels_energy / 1000/ (testar / control * silicon_density) << endl;
+    
+    
+    
     TGraphErrors silicon_graph;
     for (int i = 0; i < KineticalEnergySilicon.size(); i++){
-        silicon_graph.SetPoint(i, CSDASilicon[i] * silicon_density, KineticalEnergySilicon[i]);
+        silicon_graph.SetPoint(i, KineticalEnergySilicon[i], CSDASilicon[i] / silicon_density);
         silicon_graph.SetPointError(i, 0, 0);
     }
     silicon_graph.SetMarkerStyle(1);
     silicon_graph.SetMarkerColor(kRed);
     silicon_graph.SetLineColor(kRed);
     silicon_graph.SetTitle("Silicon CSDA");
-    silicon_graph.GetYaxis()->SetTitle("Kinetic Energy [MeV]");
-    silicon_graph.GetXaxis()->SetTitle("CSDA [cm]");
+    silicon_graph.GetXaxis()->SetTitle("Kinetic Energy [MeV]");
+    silicon_graph.GetYaxis()->SetTitle("CSDA [cm]");
     silicon_graph.GetXaxis()->CenterTitle();
     silicon_graph.GetYaxis()->CenterTitle();
     c1.Clear();
@@ -792,9 +809,10 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
+
     vector<pair<double, double> > silicon_csda_energy;
     for (int i = 0; i < KineticalEnergySilicon.size(); i++){
-        silicon_csda_energy.push_back(make_pair(CSDASilicon[i] * silicon_density, KineticalEnergySilicon[i]));
+        silicon_csda_energy.push_back(make_pair(CSDASilicon[i] / silicon_density, KineticalEnergySilicon[i]));
     }
     vector<pair<double, long double> > silicon_csda_energy_sorted = calculateDerivative(silicon_csda_energy);
     TGraphErrors silicon_csda_energy_graph;
@@ -834,9 +852,9 @@ int main(){
         x.push_back(silicon_csda_energy_sorted[i].first);
         y.push_back(silicon_csda_energy_sorted[i].second);
     }
-    double step = 1e-5;
+    double step = 1e-6;
     integral = 0;
-    for(int i=0; i < 10000000; i++){
+    for(int i=0; i < 1e9; i++){
         if(integral > mean_channels_energy/1000){
             cout << "Thickness of Silicon: " << step*i << endl;
             break;
@@ -844,6 +862,40 @@ int main(){
             integral += (linearInterpolation(x, y, step*i) + linearInterpolation(x, y, step*i + step))/2 * step;
         }
     }
+    cout << mean_channels << endl;
+    cout << mean_channels_energy << endl;
+
+    // Integral 4 
+    TGraphErrors silicon_csda_energy_graph_4;
+    for (int i = 0; i < silicon_csda_energy_sorted.size(); i++){
+        silicon_csda_energy_graph_4.SetPoint(i, CSDASilicon[i], TotalSilicon[i]);
+        silicon_csda_energy_graph_4.SetPointError(i, 0, 0);
+    }
+    silicon_csda_energy_graph_4.SetMarkerStyle(1);
+    silicon_csda_energy_graph_4.SetMarkerColor(kRed);
+    silicon_csda_energy_graph_4.SetLineColor(kRed);
+    silicon_csda_energy_graph_4.SetTitle("Silicon CSDA Energy");
+    silicon_csda_energy_graph_4.GetYaxis()->SetTitle("Stopping Power [MeV/cm]");
+    silicon_csda_energy_graph_4.GetXaxis()->SetTitle("CSDA [cm]");
+    silicon_csda_energy_graph_4.GetXaxis()->CenterTitle();
+    silicon_csda_energy_graph_4.GetYaxis()->CenterTitle();
+    c1.Clear();
+    silicon_csda_energy_graph_4.Draw("APL");
+    c1.Update();
+    //c1.SaveAs("graphs/Silicon_CSDA_Energy_4.png");
+    c1.WaitPrimitive();
+
+    integral = 0;
+    for(int i=0; i < 1e9; i++){
+        if(integral > mean_channels_energy/1000){
+            cout << "Thickness of Silicon: " << step*i/silicon_density << endl;
+            break;
+        }else{
+            integral += (linearInterpolation(CSDASilicon, TotalSilicon, step*i) + linearInterpolation(CSDASilicon, TotalSilicon, step*i + step))/2 * step;
+        }
+    }
+
+
 
 
 
