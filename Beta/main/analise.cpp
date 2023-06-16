@@ -774,13 +774,13 @@ int main(){
     c1.Clear();
     silicon_graph_normal.Draw("APL");
     c1.Update();
-    //c1.SaveAs("graphs/Silicon_Normal.png");
+    c1.SaveAs("graphs/Silicon_Stopping_Power.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
     double testar = 0;
     double control = 0;
     for(int i = 0; i < KineticalEnergySilicon.size(); i++){
-        if(KineticalEnergySilicon[i] >= 1 && KineticalEnergySilicon[i] <= 10){
+        if(KineticalEnergySilicon[i] >= 1 && KineticalEnergySilicon[i] <= 3){
             testar += TotalSilicon[i];
             control++;
         }
