@@ -19,6 +19,18 @@
 
 using namespace std;
 
+std::vector<std::pair<double, long double>> calculateDerivative(const std::vector<std::pair<double, double>>& points) {
+    std::vector<std::pair<double, long double>> derivativePoints;
+
+    for (size_t i = 1; i < points.size(); ++i) {
+        double x = points[i].first;
+        long double y = (points[i].second - points[i - 1].second) / (points[i].first - points[i - 1].first);
+        derivativePoints.emplace_back(x, y);
+    }
+
+    return derivativePoints;
+}
+
 // Perform linear interpolation
 double linearInterpolation(const std::vector<double>& x, const std::vector<double>& y, double xValue) {
     int n = x.size();
@@ -114,9 +126,6 @@ int main(){
     double fourth_peak = find_max(116, 125, bismuto);
     double fifth_peak = find_max(207, 215, bismuto);
     double sixth_peak = find_max(223, 234, bismuto);
-
-    cout << first_peak << " " << second_peak << " " << third_peak << " " << fourth_peak << " " << fifth_peak << " " << sixth_peak << endl;
-
 
 
     //////////////////////////////// Closed Talium ////////////////////////////////
@@ -231,6 +240,21 @@ int main(){
     str.Draw("APL");
     c1.Update();
     c1.SaveAs("graphs/Estroncio.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    ///////// Thickness /////////
+    TF1 *f1 = new TF1("f1", "gauss", 20, 50);
+    f1->SetParameter(0, 600);
+    f1->SetParameter(1, 40);
+    f1->SetParameter(2, 5);
+    f1->SetLineColor(kRed);
+    str.Fit("f1", "R");
+    c1.Clear();
+    str.Draw("APL");
+    f1->Draw("same");
+    c1.Update();
+    //c1.SaveAs("graphs/Estroncio_thickness.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -439,6 +463,36 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
+    // inverse calibration
+    c1.Clear();
+    TGraphErrors inverseCalibration;
+    inverseCalibration.SetPoint(0, first_theoretical, first_experimental);
+    inverseCalibration.SetPoint(1, second_theoretical, second_experimental);
+    inverseCalibration.SetPoint(2, third_theoretical, third_experimental);
+    inverseCalibration.SetPoint(3, fourth_theoretical, fourth_experimental);
+    inverseCalibration.SetMarkerStyle(20);
+    inverseCalibration.SetMarkerColor(kRed);
+    inverseCalibration.SetLineColor(kRed);
+    inverseCalibration.SetTitle("Inverse Calibration");
+    inverseCalibration.GetXaxis()->SetTitle(" Energy [keV]");
+    inverseCalibration.GetYaxis()->SetTitle("Channels [keV]");
+    inverseCalibration.GetXaxis()->CenterTitle();
+    inverseCalibration.GetYaxis()->CenterTitle();
+    TF1 f = TF1("f", "[0]*x+[1]", 0, 1200);
+    f.SetParName(0, "slope");
+    f.SetParName(1, "intercept");
+    inverseCalibration.Fit("f", "R");
+    
+    inverseCalibration.Draw("APL");
+    f.Draw("same");
+    inverseCalibration.SetTitle("Inverse Calibration");
+    c1.Update();
+    c1.SaveAs("graphs/InverseCalibration.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+
+
     //////////////////////////////// Find Material with Cesium ////////////////////////////////
     double difference = abs(cesium_peak_theoretical_energy - calibrationFunction->Eval(cesium_peak_channels));
     cout << "Difference in Energy: " << difference << endl;
@@ -526,7 +580,7 @@ int main(){
     c1.Clear();
     polyethylene_stopping_powers2.Draw("APL");
     c1.Update();
-    //c1.SaveAs("graphs/Polyethylene_Stopping_Powers2.png");
+    c1.SaveAs("graphs/Polyethylene_CSDA_Range.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
@@ -539,14 +593,14 @@ int main(){
     TGraphErrors cesium_spectrum_reajusted;
     double first = 0;
     double energy = 0;
-    double difference2 = thickness/1000;
+    double difference2 = thickness/100;
     for (int i = 0; i < cesio.size(); i++){
         first = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(cesio[i].first)/1000);
         energy = 0;
         for(int j = i; j < KineticalEnergy.size(); j++){
             double second = linearInterpolation(KineticalEnergy2, CSDA2, KineticalEnergy[j]);
-            if(abs(second - first)/density - thickness < difference2){
-                energy = (KineticalEnergy[j]*1000 - 4.61603) / 1.49913;
+            if(abs(abs(second - first)/density - thickness) < difference2){
+                energy = f.Eval(KineticalEnergy[j]*1000);
             }
             
         }
@@ -560,16 +614,239 @@ int main(){
     cesium_spectrum_reajusted.GetYaxis()->SetTitle("Counts");
     cesium_spectrum_reajusted.GetXaxis()->CenterTitle();
     cesium_spectrum_reajusted.GetYaxis()->CenterTitle();
-    cesium_spectrum_reajusted.GetXaxis()->SetRangeUser(0, 700);
+    cesium_spectrum_reajusted.GetXaxis()->SetRangeUser(0, 300);
     c1.SetLogx(0);
     c1.SetLogy(0);
     c1.Clear();
     cesium_spectrum_reajusted.Draw("APL");
     ces.Draw("same");
     c1.Update();
-    //c1.SaveAs("graphs/Cesium_Spectrum_Reajusted.png");
+    c1.SaveAs("graphs/Cesium_Spectrum_Reajusted.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+    // Reajust talium spectrum
+    double thickness2 = (integral2 - integral3) / density;
+    TGraphErrors talium_spectrum_reajusted;
+    double first2 = 0;
+    double energy2 = 0;
+    double difference3 = thickness2/100;
+    for (int i = 0; i < talium.size(); i++){
+        first2 = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(talium[i].first)/1000);
+        energy2 = 0;
+        for(int j = i; j < KineticalEnergy.size(); j++){
+            double second2 = linearInterpolation(KineticalEnergy2, CSDA2, KineticalEnergy[j]);
+            if(abs(abs(second2 - first2)/density - thickness2) < difference3){
+                energy2 = f.Eval(KineticalEnergy[j]*1000);
+            }
+            
+        }
+        talium_spectrum_reajusted.SetPoint(i, energy2, talium[i].second);
+    }
+    talium_spectrum_reajusted.SetMarkerStyle(1);
+    talium_spectrum_reajusted.SetMarkerColor(kRed);
+    talium_spectrum_reajusted.SetLineColor(kRed);
+    talium_spectrum_reajusted.SetTitle("Talium Spectrum Reajusted");
+    talium_spectrum_reajusted.GetXaxis()->SetTitle("Channels");
+    talium_spectrum_reajusted.GetYaxis()->SetTitle("Counts");
+    talium_spectrum_reajusted.GetXaxis()->CenterTitle();
+    talium_spectrum_reajusted.GetYaxis()->CenterTitle();
+    
+    c1.Clear();
+    tal_open.Draw("APL");
+    talium_spectrum_reajusted.Draw("same");
+    tal.Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/Talium_Spectrum_Reajusted.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    ////////////////////////////// Derivative of Talium Spectrum //////////////////////////////
+    vector<pair<double, double> > der_tal;
+    ReadFile("data/talium_open_Smoothed.dat", der_tal);
+    vector<pair<double, long double> > end_point = calculateDerivative(der_tal);
+    TGraphErrors talium_spectrum_derivative;
+    for (int i = 0; i < end_point.size(); i++){
+        talium_spectrum_derivative.SetPoint(i, end_point[i].first, end_point[i].second);
+        talium_spectrum_derivative.SetPointError(i, 0, sqrt(end_point[i].second));
+    }
+    talium_spectrum_derivative.SetMarkerStyle(1);
+    talium_spectrum_derivative.SetMarkerColor(kRed);
+    talium_spectrum_derivative.SetLineColor(kRed);
+    talium_spectrum_derivative.SetTitle("Talium Spectrum Derivative");
+    talium_spectrum_derivative.GetXaxis()->SetTitle("Channels");
+    talium_spectrum_derivative.GetYaxis()->SetTitle("Counts");
+    talium_spectrum_derivative.GetXaxis()->CenterTitle();
+    talium_spectrum_derivative.GetYaxis()->CenterTitle();
+    talium_spectrum_derivative.GetXaxis()->SetRangeUser(0, 300);
+    c1.Clear();
+    talium_spectrum_derivative.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Talium_Spectrum_Derivative.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    double error_endpoint = 0.001;
+    double value_end_point = 0;
+    for(int i = 0; i < end_point.size(); i++){
+        if(abs(end_point[i].second) < error_endpoint && end_point[i].first < 167){
+            value_end_point = end_point[i].first;
+            cout << end_point[i].second << end_point[i].first << endl;
+            if(abs(end_point[i].second) > 0){
+
+            value_end_point = end_point[i].first;
+            }
+            //break;
+        }
+    }
+    
+    cout << calibrationFunction->Eval(value_end_point) << endl;
+    TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",30, 300);
+    ajuste->SetParameter(0, 80);
+    ajuste->SetParLimits(0, 50, 1000);
+    ajuste->SetParameter(2, 167);
+
+    talium_spectrum_derivative.Fit("ajuste", "R");
+    c1.Clear();
+    talium_spectrum_derivative.Draw("APL");
+    ajuste->Draw("same");
+    c1.Update();
+    //c1.SaveAs("graphs/Talium_Spectrum_Derivative_Fit.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    
+    // velocity of light to the power of 5? ... 3e8^5
+    // what is mass of electron? ... 0.511 MeV/c^2
+
+
+    //////////////// Strontium and Bismuth Spectrum ///////////////////////
+    c1.Clear();
+    TLegend *leg_str_bis = new TLegend(0.65, 0.65, 0.85, 0.75);
+    leg_str_bis->SetHeader("Strontium and Bismuth Spectrum", "C");
+    leg_str_bis->AddEntry(&str, "Strontium", "l");
+    leg_str_bis->AddEntry(&bis, "Bismuth", "l");
+    bis.Draw("APL");
+    str.Draw("same");
+    leg_str_bis->Draw();
+    c1.Update();
+    c1.SaveAs("graphs/Strontium_Bismuth_Spectrum_For_Thickness.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    // Find Thickness
+    TF1 gaus_bismuth("gaus_bismuth", "gaus", 20, 43);
+    TF1 gaus_strontium("gaus_strontium", "gaus", 20, 43);
+    gaus_bismuth.SetParameter(0, 800);
+    gaus_strontium.SetParameter(0, 600);
+    gaus_bismuth.SetParameter(1, 23);
+    gaus_strontium.SetParameter(1, 23);
+
+    bis.Fit("gaus_bismuth", "R");
+    str.Fit("gaus_strontium", "R");
+    double mean_bismuth = gaus_bismuth.GetParameter(1);
+    double mean_strontium = gaus_strontium.GetParameter(1);
+    double sigma_bismuth = gaus_bismuth.GetParameter(2);
+    double sigma_strontium = gaus_strontium.GetParameter(2);
+    gaus_bismuth.SetLineColor(kRed);
+    gaus_strontium.SetLineColor(kBlue);
+    gaus_bismuth.SetLineStyle(2);
+    gaus_strontium.SetLineStyle(2);
+    gaus_bismuth.SetLineWidth(2);
+    gaus_strontium.SetLineWidth(2);
+    gaus_bismuth.Draw("same");
+    gaus_strontium.Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/Strontium_Bismuth_Spectrum_For_Thickness_Fit.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    double mean_channels = (mean_bismuth + mean_strontium) / 2;
+    double mean_channels_energy = calibrationFunction->Eval(mean_channels);
+
+    vector<double> KineticalEnergySilicon;
+    vector<double> CollisionSilicon;
+    vector<double> RadiativeSilicon;
+    vector<double> TotalSilicon;
+    vector<double> CSDASilicon;
+    vector<double> YSilicon;
+    vector<double> ParamSilicon;
+    double silicon_density = 2.33;
+
+    ReadFile("data/silicon_one.dat", KineticalEnergySilicon, CollisionSilicon, RadiativeSilicon, TotalSilicon, CSDASilicon, ParamSilicon);
+    TGraphErrors silicon_graph;
+    for (int i = 0; i < KineticalEnergySilicon.size(); i++){
+        silicon_graph.SetPoint(i, CSDASilicon[i] * silicon_density, KineticalEnergySilicon[i]);
+        silicon_graph.SetPointError(i, 0, 0);
+    }
+    silicon_graph.SetMarkerStyle(1);
+    silicon_graph.SetMarkerColor(kRed);
+    silicon_graph.SetLineColor(kRed);
+    silicon_graph.SetTitle("Silicon CSDA");
+    silicon_graph.GetYaxis()->SetTitle("Kinetic Energy [MeV]");
+    silicon_graph.GetXaxis()->SetTitle("CSDA [cm]");
+    silicon_graph.GetXaxis()->CenterTitle();
+    silicon_graph.GetYaxis()->CenterTitle();
+    c1.Clear();
+    silicon_graph.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Silicon_CSDA.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    vector<pair<double, double> > silicon_csda_energy;
+    for (int i = 0; i < KineticalEnergySilicon.size(); i++){
+        silicon_csda_energy.push_back(make_pair(CSDASilicon[i] * silicon_density, KineticalEnergySilicon[i]));
+    }
+    vector<pair<double, long double> > silicon_csda_energy_sorted = calculateDerivative(silicon_csda_energy);
+    TGraphErrors silicon_csda_energy_graph;
+    for (int i = 0; i < silicon_csda_energy_sorted.size(); i++){
+        silicon_csda_energy_graph.SetPoint(i, silicon_csda_energy_sorted[i].first, silicon_csda_energy_sorted[i].second);
+        silicon_csda_energy_graph.SetPointError(i, 0, 0);
+    }
+    silicon_csda_energy_graph.SetMarkerStyle(1);
+    silicon_csda_energy_graph.SetMarkerColor(kRed);
+    silicon_csda_energy_graph.SetLineColor(kRed);
+    silicon_csda_energy_graph.SetTitle("Silicon CSDA Energy");
+    silicon_csda_energy_graph.GetYaxis()->SetTitle("Kinetic Energy/cm [MeV/cm]");
+    silicon_csda_energy_graph.GetXaxis()->SetTitle("CSDA [cm]");
+    silicon_csda_energy_graph.GetXaxis()->CenterTitle();
+    silicon_csda_energy_graph.GetYaxis()->CenterTitle();
+    c1.Clear();
+    silicon_csda_energy_graph.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Silicon_CSDA_Energy.png");
+    c1.WaitPrimitive();
+
+    // Integral to Find Thickness of Silicon
+    double int_detector = 0;
+    for(int i=0; i< silicon_csda_energy_sorted.size(); i++){
+        if(int_detector > mean_channels_energy/1000){
+            cout << "Thickness of Silicon: " << silicon_csda_energy_sorted[i].first << endl;
+            break;
+        }else{
+            int_detector += silicon_csda_energy_sorted[i].second;
+        }
+    }
+
+    // Integral to Find Thickness of Silicon
+    vector<double> x;
+    vector<double> y;
+    for(int i=0; i< silicon_csda_energy_sorted.size(); i++){
+        x.push_back(silicon_csda_energy_sorted[i].first);
+        y.push_back(silicon_csda_energy_sorted[i].second);
+    }
+    double step = 1e-5;
+    integral = 0;
+    for(int i=0; i < 10000000; i++){
+        if(integral > mean_channels_energy/1000){
+            cout << "Thickness of Silicon: " << step*i << endl;
+            break;
+        }else{
+            integral += (linearInterpolation(x, y, step*i) + linearInterpolation(x, y, step*i + step))/2 * step;
+        }
+    }
+
+
+
 
 
 
