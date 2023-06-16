@@ -56,8 +56,8 @@ if __name__ == "__main__":
     write_file = name_of_file.replace('.dat', '_Smoothed.dat')
 
     # Apply moving average to remove noise
-    smoothed_signal = moving_average(x_noisy, 10)
-    smoothed_signal = wavelet_denoising(smoothed_signal)
+    #smoothed_signal = moving_average(x_noisy, 10)
+    smoothed_signal = wavelet_denoising(x_noisy)
     # Write to file
     write_to_file(write_file, smoothed_signal)
 

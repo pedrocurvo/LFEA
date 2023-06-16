@@ -127,6 +127,62 @@ int main(){
     double fifth_peak = find_max(207, 215, bismuto);
     double sixth_peak = find_max(223, 234, bismuto);
 
+    // gaussians in peaks 
+    TF1* gaus1 = new TF1("gaus1", "gaus", third_peak - 5, third_peak + 5);
+    TF1* gaus2 = new TF1("gaus2", "gaus", fourth_peak - 3, fourth_peak + 3);
+    TF1* gaus3 = new TF1("gaus3", "gaus", fifth_peak - 5, fifth_peak + 5);
+    TF1* gaus4 = new TF1("gaus4", "gaus", sixth_peak - 5, sixth_peak + 5);
+
+    gaus2->SetParameter(0, 400);
+
+    gaus1->SetLineColor(kBlue);
+    gaus2->SetLineColor(kBlue);
+    gaus3->SetLineColor(kBlue);
+    gaus4->SetLineColor(kBlue);
+
+    bis.Fit(gaus1, "R");
+    bis.Fit(gaus2, "R");
+    bis.Fit(gaus3, "R");
+    bis.Fit(gaus4, "R");
+
+    c1.Clear();
+    bis.Draw("APL");
+    gaus1->Draw("same");
+    gaus2->Draw("same");
+    gaus3->Draw("same");
+    gaus4->Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/Bismuto_peaks.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+
+    /// Find Number of Counts
+    double counts_one = 0;
+    double counts_two = 0;
+    double counts_three = 0;
+    double counts_four = 0;
+
+    for(int i = 0; i < bismuto.size(); i++){
+        if(bismuto[i].first > 100 && bismuto[i].first < 107){
+            counts_one += bismuto[i].second;
+        }
+        if(bismuto[i].first > 116 && bismuto[i].first < 126){
+            counts_two += bismuto[i].second;
+        }
+        if(bismuto[i].first > 208 && bismuto[i].first < 213){
+            counts_three += bismuto[i].second;
+        }
+        if(bismuto[i].first > 225 && bismuto[i].first < 231){
+            counts_four += bismuto[i].second;
+        }
+    }
+
+    cout << "Counts in first peak: " << counts_one << endl;
+    cout << "Counts in second peak: " << counts_two << endl;
+    cout << "Counts in third peak: " << counts_three << endl;
+    cout << "Counts in fourth peak: " << counts_four << endl;
+
+
 
     //////////////////////////////// Closed Talium ////////////////////////////////
     vector<pair<double, double>> talium;
@@ -530,7 +586,7 @@ int main(){
             integral += (1/(Total[i] * density) + 1/(Total[i - 1] * density)) * dx / 2.0;
         }
     }
-    cout << integral << endl;
+    cout << "Thickness of Poly by Num. Integration "<< integral << endl;
 
     vector<double> KineticalEnergy2;
     vector<double> Collision2;
@@ -565,7 +621,7 @@ int main(){
 
     double integral2 = linearInterpolation(KineticalEnergy2, CSDA2, cesium_peak_theoretical_energy/1000);
     double integral3 = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(cesium_peak_channels)/1000);
-    cout << (integral2 - integral3) / density << endl;
+    cout << "Thickness of Poly by Interpolation: "<< (integral2 - integral3) / density << endl;
 
     // Reajust cesium spectrum
     double thickness = (integral2 - integral3) / density;
@@ -674,7 +730,6 @@ int main(){
     for(int i = 0; i < end_point.size(); i++){
         if(abs(end_point[i].second) < error_endpoint && end_point[i].first < 167){
             value_end_point = end_point[i].first;
-            cout << end_point[i].second << end_point[i].first << endl;
             if(abs(end_point[i].second) > 0){
 
             value_end_point = end_point[i].first;
@@ -683,7 +738,7 @@ int main(){
         }
     }
     
-    cout << calibrationFunction->Eval(value_end_point) << endl;
+    cout << "Zero Derivative EndPoint: "<< calibrationFunction->Eval(value_end_point) << endl;
     TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",0, 30);
     ajuste->SetParameter(0, 80);
     ajuste->SetParLimits(0, 50, 1000);
