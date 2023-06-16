@@ -785,7 +785,7 @@ int main(){
             control++;
         }
     }
-    cout << "Silicon Normal: " << mean_channels_energy / 1000/ (testar / control * silicon_density) << endl;
+    cout << "Silicon Thickness: " << mean_channels_energy / 1000/ (testar / control * silicon_density) * 10000 << " microns" << endl;
     
     
     
@@ -808,100 +808,6 @@ int main(){
     c1.SaveAs("graphs/Silicon_CSDA.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-
-
-    vector<pair<double, double> > silicon_csda_energy;
-    for (int i = 0; i < KineticalEnergySilicon.size(); i++){
-        silicon_csda_energy.push_back(make_pair(CSDASilicon[i] / silicon_density, KineticalEnergySilicon[i]));
-    }
-    vector<pair<double, long double> > silicon_csda_energy_sorted = calculateDerivative(silicon_csda_energy);
-    TGraphErrors silicon_csda_energy_graph;
-    for (int i = 0; i < silicon_csda_energy_sorted.size(); i++){
-        silicon_csda_energy_graph.SetPoint(i, silicon_csda_energy_sorted[i].first, silicon_csda_energy_sorted[i].second);
-        silicon_csda_energy_graph.SetPointError(i, 0, 0);
-    }
-    silicon_csda_energy_graph.SetMarkerStyle(1);
-    silicon_csda_energy_graph.SetMarkerColor(kRed);
-    silicon_csda_energy_graph.SetLineColor(kRed);
-    silicon_csda_energy_graph.SetTitle("Silicon CSDA Energy");
-    silicon_csda_energy_graph.GetYaxis()->SetTitle("Kinetic Energy/cm [MeV/cm]");
-    silicon_csda_energy_graph.GetXaxis()->SetTitle("CSDA [cm]");
-    silicon_csda_energy_graph.GetXaxis()->CenterTitle();
-    silicon_csda_energy_graph.GetYaxis()->CenterTitle();
-    c1.Clear();
-    silicon_csda_energy_graph.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Silicon_CSDA_Energy.png");
-    c1.WaitPrimitive();
-
-    // Integral to Find Thickness of Silicon
-    double int_detector = 0;
-    for(int i=0; i< silicon_csda_energy_sorted.size(); i++){
-        if(int_detector > mean_channels_energy/1000){
-            cout << "Thickness of Silicon: " << silicon_csda_energy_sorted[i].first << endl;
-            break;
-        }else{
-            int_detector += silicon_csda_energy_sorted[i].second;
-        }
-    }
-
-    // Integral to Find Thickness of Silicon
-    vector<double> x;
-    vector<double> y;
-    for(int i=0; i< silicon_csda_energy_sorted.size(); i++){
-        x.push_back(silicon_csda_energy_sorted[i].first);
-        y.push_back(silicon_csda_energy_sorted[i].second);
-    }
-    double step = 1e-6;
-    integral = 0;
-    for(int i=0; i < 1e9; i++){
-        if(integral > mean_channels_energy/1000){
-            cout << "Thickness of Silicon: " << step*i << endl;
-            break;
-        }else{
-            integral += (linearInterpolation(x, y, step*i) + linearInterpolation(x, y, step*i + step))/2 * step;
-        }
-    }
-    cout << mean_channels << endl;
-    cout << mean_channels_energy << endl;
-
-    // Integral 4 
-    TGraphErrors silicon_csda_energy_graph_4;
-    for (int i = 0; i < silicon_csda_energy_sorted.size(); i++){
-        silicon_csda_energy_graph_4.SetPoint(i, CSDASilicon[i], TotalSilicon[i]);
-        silicon_csda_energy_graph_4.SetPointError(i, 0, 0);
-    }
-    silicon_csda_energy_graph_4.SetMarkerStyle(1);
-    silicon_csda_energy_graph_4.SetMarkerColor(kRed);
-    silicon_csda_energy_graph_4.SetLineColor(kRed);
-    silicon_csda_energy_graph_4.SetTitle("Silicon CSDA Energy");
-    silicon_csda_energy_graph_4.GetYaxis()->SetTitle("Stopping Power [MeV/cm]");
-    silicon_csda_energy_graph_4.GetXaxis()->SetTitle("CSDA [cm]");
-    silicon_csda_energy_graph_4.GetXaxis()->CenterTitle();
-    silicon_csda_energy_graph_4.GetYaxis()->CenterTitle();
-    c1.Clear();
-    silicon_csda_energy_graph_4.Draw("APL");
-    c1.Update();
-    //c1.SaveAs("graphs/Silicon_CSDA_Energy_4.png");
-    c1.WaitPrimitive();
-
-    integral = 0;
-    for(int i=0; i < 1e9; i++){
-        if(integral > mean_channels_energy/1000){
-            cout << "Thickness of Silicon: " << step*i/silicon_density << endl;
-            break;
-        }else{
-            integral += (linearInterpolation(CSDASilicon, TotalSilicon, step*i) + linearInterpolation(CSDASilicon, TotalSilicon, step*i + step))/2 * step;
-        }
-    }
-
-
-
-
-
-
-
-
 
 
     
