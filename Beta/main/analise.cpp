@@ -31,12 +31,14 @@ void CustomizeGraph(TGraphErrors& graph, Color_t markerColor, Color_t lineColor,
     graph.GetYaxis()->CenterTitle();
     graph.GetXaxis()->SetRangeUser(xMin, xMax);
 }
-void SaveCanvas(TCanvas& canvas, const std::string& filename) {
+void SaveCanvas(TCanvas& canvas, const std::string& filename, bool Clear = true) {
     canvas.Update();
     canvas.SaveAs(filename.c_str());
     canvas.WaitPrimitive();
     gSystem->ProcessEvents();
-    canvas.Clear();
+    if(Clear){
+        canvas.Clear();
+    }
 }
 
 std::vector<std::pair<double, long double>> calculateDerivative(const std::vector<std::pair<double, double>>& points) {
@@ -483,12 +485,7 @@ int main(){
     c1.SetLogy();
     c1.Clear();
     polyethylene_stopping_powers.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Polyethylene_Stopping_Powers.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
-    //c1.SetLogx(0);
-    //c1.SetLogy(0);
+    SaveCanvas(c1, "graphs/Polyethylene_Stopping_Powers.png");
 
     // Composition of Polyethylene
     double density = 0.94; //g/cm^3
@@ -844,23 +841,14 @@ int main(){
         kurie_graph_closed_talium.SetPointError(i, 0, 0);
     }
 
-    kurie_graph_closed_talium.SetMarkerStyle(2);
-    kurie_graph_closed_talium.SetMarkerColor(kRed);
-    kurie_graph_closed_talium.SetLineColor(kRed);
-    kurie_graph_closed_talium.SetTitle("Kurie Plot for Closed Talium");
-    kurie_graph_closed_talium.GetXaxis()->SetTitle("Energy [keV]");
-    kurie_graph_closed_talium.GetYaxis()->SetTitle("?");
-    kurie_graph_closed_talium.GetXaxis()->CenterTitle();
-    kurie_graph_closed_talium.GetYaxis()->CenterTitle();
-    kurie_graph_closed_talium.GetXaxis()->SetRangeUser(0, 800);
+    CustomizeGraph(kurie_graph_closed_talium, kRed, kRed, "Kurie Plot for Closed Talium", "Energy [keV]", "?", 0, 800, 2);
+
     TF1 *kurie_fit2 = new TF1("kurie_fit2", "[0] * x + [1]", 300, 780);
     kurie_graph_closed_talium.Fit(kurie_fit2, "R");
     c1.Clear();
     kurie_graph_closed_talium.Draw("AP");
     kurie_fit2->Draw("same");
-    c1.Update();
-    c1.SaveAs("graphs/KuriePlotClosedTaliumReajusted.png");
-    c1.WaitPrimitive();
+    SaveCanvas(c1, "graphs/KuriePlotClosedTaliumReajusted.png");
 
 
 
