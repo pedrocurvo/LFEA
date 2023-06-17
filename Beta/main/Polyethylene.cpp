@@ -159,7 +159,7 @@ int main(){
     plot7.SetLineColor(kOrange);
     plot7.Draw("same PL");
 
-    TLegend leg(0.75, 0.65, 0.85, .85);
+    TLegend leg(0.7, 0.6, 0.85, .85);
     leg.AddEntry(&plot7, "Thickness = 1/4 inc", "l");
     leg.AddEntry(&plot6, "Thickness = 1/8 inc", "l");
     leg.AddEntry(&plot5, "Thickness = 1/16 inc", "l");
@@ -195,7 +195,7 @@ int main(){
     plotmm.Draw("APC");
 
     c1.Update();
-    c1.SaveAs("graphs/Counts_Thickness.png");
+    c1.SaveAs("graphs/Counts_Thickness_mm.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
     
@@ -204,14 +204,14 @@ int main(){
     plotmgcm2.SetMarkerColor(kRed);
     plotmgcm2.SetLineColor(kRed);
     plotmgcm2.SetTitle("Counts relation with thickness");
-    plotmgcm2.GetXaxis()->SetTitle("Thickness [mm]");
+    plotmgcm2.GetXaxis()->SetTitle("Thickness [mg/cm^{2}]");
     plotmgcm2.GetYaxis()->SetTitle("Counts");
     plotmgcm2.GetXaxis()->CenterTitle();
     plotmgcm2.GetYaxis()->CenterTitle();
     plotmgcm2.GetXaxis()->SetRangeUser(0, 620);
     plotmgcm2.Draw("APC");
     c1.Update();
-    c1.SaveAs("graphs/Counts_Thickness_mg/cm{2}.png");
+    c1.SaveAs("graphs/Counts_Thickness_mgcm2.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 }
