@@ -128,12 +128,19 @@ int main(){
     double sixth_peak = find_max(223, 234, bismuto);
 
     // gaussians in peaks 
-    TF1* gaus1 = new TF1("gaus1", "gaus", third_peak - 5, third_peak + 5);
-    TF1* gaus2 = new TF1("gaus2", "gaus", fourth_peak - 3, fourth_peak + 3);
+    TF1* gaus1 = new TF1("gaus1", "gaus", third_peak - 2, third_peak + 1.7);
+    TF1* gaus2 = new TF1("gaus2", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2])) + [3]*exp(-0.5*((x-[4])/[5])*((x-[4])/[5]))", fourth_peak - 3.1, fourth_peak + 3.1);
     TF1* gaus3 = new TF1("gaus3", "gaus", fifth_peak - 5, fifth_peak + 5);
-    TF1* gaus4 = new TF1("gaus4", "gaus", sixth_peak - 5, sixth_peak + 5);
+    TF1* gaus4 = new TF1("gaus4", "gaus", sixth_peak - 4, sixth_peak + 4);
 
-    gaus2->SetParameter(0, 400);
+    gaus1->SetParameters(1500,third_peak,1);
+    gaus2->SetParameters(200,fourth_peak,1,150,fourth_peak-3,0.5);
+    gaus2->SetParLimits(0,0,250);
+    gaus2->SetParLimits(1,fourth_peak-1,fourth_peak+2);
+    gaus2->SetParLimits(2,0,1);
+    gaus2->SetParLimits(3,0,200);
+    gaus2->SetParLimits(4,fourth_peak-3.1,fourth_peak);
+    gaus2->SetParLimits(5,0,1);
 
     gaus1->SetLineColor(kBlue);
     gaus2->SetLineColor(kBlue);
