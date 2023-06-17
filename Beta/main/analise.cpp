@@ -16,6 +16,7 @@
 #include "TStyle.h"
 #include "TLatex.h"
 #include "ReadEth.h"
+#include "TSpline.h"
 
 using namespace std;
 
@@ -299,6 +300,32 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
+    /// Find Number of Counts
+    double counts_one2 = 0;
+    double counts_two2 = 0;
+    double counts_three2 = 0;
+    double counts_four2 = 0;
+
+    for(int i = 0; i < strontium.size(); i++){
+        if(strontium[i].first > 100 && strontium[i].first < 107){
+            counts_one2 += strontium[i].second;
+        }
+        if(strontium[i].first > 116 && strontium[i].first < 126){
+            counts_two2 += strontium[i].second;
+        }
+        if(strontium[i].first > 208 && strontium[i].first < 213){
+            counts_three2 += strontium[i].second;
+        }
+        if(strontium[i].first > 225 && strontium[i].first < 231){
+            counts_four2 += strontium[i].second;
+        }
+    }
+
+    cout << "Counts in first peak Str: " << counts_one - counts_one2 << endl;
+    cout << "Counts in second peak: " << counts_two - counts_two2 << endl;
+    cout << "Counts in third peak: " << counts_three - counts_three2 << endl;
+    cout << "Counts in fourth peak: " << counts_four - counts_four2 << endl;
+
     //////////////////////////////// Pontos de Calibração ////////////////////////////////
     vector<pair<double, double>> calib;
     ReadFile("data/calib.dat", calib);
@@ -485,7 +512,7 @@ int main(){
     calibration.SetMarkerColor(kRed);
     calibration.SetLineColor(kRed);
     calibration.SetTitle("Calibration");
-    calibration.GetXaxis()->SetTitle(" Channels [keV]");
+    calibration.GetXaxis()->SetTitle(" Channels");
     calibration.GetYaxis()->SetTitle("Energy [keV]");
     calibration.GetXaxis()->CenterTitle();
     calibration.GetYaxis()->CenterTitle();
@@ -494,8 +521,8 @@ int main(){
     TF1 *calibrationFunction = new TF1("calibrationFunction", "[0] + [1]*x", 0, 300);
     calibrationFunction->SetParameter(0, 0);
     calibrationFunction->SetParameter(1, 1);
-    calibrationFunction->SetParName(0, "slope");
-    calibrationFunction->SetParName(1, "intercept");
+    calibrationFunction->SetParName(0, "intercept");
+    calibrationFunction->SetParName(1, "slope");
     calibration.Fit("calibrationFunction", "R");
     c1.Clear();
     calibration.Draw("APL");
@@ -516,7 +543,7 @@ int main(){
     inverseCalibration.SetLineColor(kRed);
     inverseCalibration.SetTitle("Inverse Calibration");
     inverseCalibration.GetXaxis()->SetTitle(" Energy [keV]");
-    inverseCalibration.GetYaxis()->SetTitle("Channels [keV]");
+    inverseCalibration.GetYaxis()->SetTitle("Channels");
     inverseCalibration.GetXaxis()->CenterTitle();
     inverseCalibration.GetYaxis()->CenterTitle();
     TF1 f = TF1("f", "[0]*x+[1]", 0, 1200);
@@ -739,10 +766,11 @@ int main(){
     }
     
     cout << "Zero Derivative EndPoint: "<< calibrationFunction->Eval(value_end_point) << endl;
-    TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",0, 30);
+    TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",70, 800);
     ajuste->SetParameter(0, 80);
     ajuste->SetParLimits(0, 50, 1000);
     ajuste->SetParameter(2, 167);
+    ajuste->SetLineColor(kBlack);
 
     talium_spectrum_derivative.Fit("ajuste", "R");
     c1.Clear();
@@ -778,7 +806,6 @@ int main(){
     gaus_strontium.SetParameter(0, 600);
     gaus_bismuth.SetParameter(1, 23);
     gaus_strontium.SetParameter(1, 23);
-
     bis.Fit("gaus_bismuth", "R");
     str.Fit("gaus_strontium", "R");
     double mean_bismuth = gaus_bismuth.GetParameter(1);
@@ -863,6 +890,103 @@ int main(){
     c1.SaveAs("graphs/Silicon_CSDA.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    c1.SetLogx(0);
+    c1.SetLogy(0);
+
+    ////////////////// Kurie Plot ///////////////////////
+    vector<double> P = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4};
+    vector<double> G = {28.26, 28.19, 27.99, 27.67, 27.25, 26.76, 26.23, 25.66, 25.09, 24.53, 23.98, 22.95, 22.01, 21.17, 20.41, 19.72, 19.10, 18.54};
+
+    TGraphErrors kurie_graph;
+    for (int i = 0; i < P.size(); i++){
+        kurie_graph.SetPoint(i, P[i], G[i]);
+        kurie_graph.SetPointError(i, 0, 0);
+    }
+
+    TSpline3 *kurie_spline = new TSpline3("kurie_spline", &kurie_graph);
+
+    kurie_graph.SetMarkerStyle(1);
+    kurie_graph.SetMarkerColor(kRed);
+    kurie_graph.SetLineColor(kRed);
+    kurie_graph.SetTitle("Fermi Modified Function");
+    kurie_graph.GetXaxis()->SetTitle("P");
+    kurie_graph.GetYaxis()->SetTitle("G(Z, W)");
+    kurie_graph.GetXaxis()->CenterTitle();
+    kurie_graph.GetYaxis()->CenterTitle();
+    c1.Clear();
+    kurie_graph.Draw("AP");
+    kurie_spline->Draw("same C");
+    c1.Update();
+    c1.SaveAs("graphs/CubicSplineInterpolation.png");
+    c1.WaitPrimitive();
+
+    // Kurie Plot for Open Talium
+    TGraphErrors kurie_graph_open_talium;
+    for(int i = 0; i < talium_open.size(); i++){
+        double x = calibrationFunction->Eval(talium_open[i].first);
+        double W = x / 511 + 1;
+        double P = sqrt(W * W - 1);
+        double G = kurie_spline->Eval(P);
+        double N = talium_open[i].second;
+        double y = 1/W * sqrt(N/G);
+
+
+        kurie_graph_open_talium.SetPoint(i, x, y);
+        kurie_graph_open_talium.SetPointError(i, 0, 0);
+    }
+
+    kurie_graph_open_talium.SetMarkerStyle(2);
+    kurie_graph_open_talium.SetMarkerColor(kRed);
+    kurie_graph_open_talium.SetLineColor(kRed);
+    kurie_graph_open_talium.SetTitle("Kurie Plot for Open Talium");
+    kurie_graph_open_talium.GetXaxis()->SetTitle("Energy [keV]");
+    kurie_graph_open_talium.GetYaxis()->SetTitle("?");
+    kurie_graph_open_talium.GetXaxis()->CenterTitle();
+    kurie_graph_open_talium.GetYaxis()->CenterTitle();
+    kurie_graph_open_talium.GetXaxis()->SetRangeUser(0, 800);
+    TF1 *kurie_fit = new TF1("kurie_fit", "[0] * x + [1]", 50, 800);
+    kurie_graph_open_talium.Fit(kurie_fit, "R");
+    c1.Clear();
+    kurie_graph_open_talium.Draw("AP");
+    kurie_fit->Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/KuriePlotOpenTalium.png");
+    c1.WaitPrimitive();
+
+
+    // Kurie Plot for Closed Talium Recalibrated
+    TGraphErrors kurie_graph_closed_talium;
+    for(int i = 0; i < talium_spectrum_reajusted.GetN(); i++){
+        double x = calibrationFunction->Eval(talium_spectrum_reajusted.GetX()[i]);
+        double W = x / 511 + 1;
+        double P = sqrt(W * W - 1);
+        double G = kurie_spline->Eval(P);
+        double N = talium_spectrum_reajusted.GetY()[i];
+        double y = 1/W * sqrt(N/G);
+
+
+        kurie_graph_closed_talium.SetPoint(i, x, y);
+        kurie_graph_closed_talium.SetPointError(i, 0, 0);
+    }
+
+    kurie_graph_closed_talium.SetMarkerStyle(2);
+    kurie_graph_closed_talium.SetMarkerColor(kRed);
+    kurie_graph_closed_talium.SetLineColor(kRed);
+    kurie_graph_closed_talium.SetTitle("Kurie Plot for Closed Talium");
+    kurie_graph_closed_talium.GetXaxis()->SetTitle("Energy [keV]");
+    kurie_graph_closed_talium.GetYaxis()->SetTitle("?");
+    kurie_graph_closed_talium.GetXaxis()->CenterTitle();
+    kurie_graph_closed_talium.GetYaxis()->CenterTitle();
+    kurie_graph_closed_talium.GetXaxis()->SetRangeUser(0, 800);
+    TF1 *kurie_fit2 = new TF1("kurie_fit2", "[0] * x + [1]", 300, 780);
+    kurie_graph_closed_talium.Fit(kurie_fit2, "R");
+    c1.Clear();
+    kurie_graph_closed_talium.Draw("AP");
+    kurie_fit2->Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/KuriePlotClosedTaliumReajusted.png");
+    c1.WaitPrimitive();
+
 
 
     
