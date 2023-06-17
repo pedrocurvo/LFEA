@@ -20,6 +20,25 @@
 
 using namespace std;
 
+void CustomizeGraph(TGraphErrors& graph, Color_t markerColor, Color_t lineColor, const std::string& title, const std::string& xAxisTitle, const std::string& yAxisTitle, double xMin = 0.0, double xMax = 300.0, double MarkerStyle = 1) {
+    graph.SetMarkerStyle(MarkerStyle);
+    graph.SetMarkerColor(markerColor);
+    graph.SetLineColor(lineColor);
+    graph.SetTitle(title.c_str());
+    graph.GetXaxis()->SetTitle(xAxisTitle.c_str());
+    graph.GetYaxis()->SetTitle(yAxisTitle.c_str());
+    graph.GetXaxis()->CenterTitle();
+    graph.GetYaxis()->CenterTitle();
+    graph.GetXaxis()->SetRangeUser(xMin, xMax);
+}
+void SaveCanvas(TCanvas& canvas, const std::string& filename) {
+    canvas.Update();
+    canvas.SaveAs(filename.c_str());
+    canvas.WaitPrimitive();
+    gSystem->ProcessEvents();
+    canvas.Clear();
+}
+
 std::vector<std::pair<double, long double>> calculateDerivative(const std::vector<std::pair<double, double>>& points) {
     std::vector<std::pair<double, long double>> derivativePoints;
 
@@ -81,21 +100,10 @@ int main(){
         amb.SetPoint(i, ambiente[i].first, ambiente[i].second);
         amb.SetPointError(i, 0, sqrt(ambiente[i].second));
     }
-    amb.SetMarkerStyle(1);
-    amb.SetMarkerColor(kOrange);
-    amb.SetLineColor(kOrange);
-    amb.SetTitle("Ambiente");
-    amb.GetXaxis()->SetTitle(" Channels");
-    amb.GetYaxis()->SetTitle("Counts");
-    amb.GetXaxis()->CenterTitle();
-    amb.GetYaxis()->CenterTitle();
-    amb.GetXaxis()->SetRangeUser(0, 300);
-    c1.Clear();
+    CustomizeGraph(amb, kBlack, kBlack, "Ambiente", "Channels", "Counts");
     amb.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Ambiente.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Ambiente.png");
+    
 
     //////////////////////////////// Bismuto ////////////////////////////////
     vector<pair<double, double>> bismuto;
@@ -105,20 +113,9 @@ int main(){
         bis.SetPoint(i, bismuto[i].first, bismuto[i].second);
         bis.SetPointError(i, 0, sqrt(bismuto[i].second));
     }
-    bis.SetMarkerStyle(1);
-    bis.SetMarkerColor(kRed);
-    bis.SetLineColor(kRed);
-    bis.SetTitle("Bismuto");
-    bis.GetXaxis()->SetTitle(" Channels");
-    bis.GetYaxis()->SetTitle("Counts");
-    bis.GetXaxis()->CenterTitle();
-    bis.GetYaxis()->CenterTitle();
-    bis.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(bis, kRed, kRed, "Bismuto", "Channels", "Counts");
     bis.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Bismuto.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Bismuto.png");
 
     // Find peaks for further calibration 
     double first_peak = find_max(6, 30, bismuto);
@@ -193,21 +190,10 @@ int main(){
         tal.SetPoint(i, talium[i].first, talium[i].second);
         tal.SetPointError(i, 0, sqrt(talium[i].second));
     }
-    tal.SetMarkerStyle(1);
-    tal.SetMarkerColor(kBlue);
-    tal.SetLineColor(kBlue);
-    tal.SetTitle("Talio");
-    tal.GetXaxis()->SetTitle(" Channels");
-    tal.GetYaxis()->SetTitle("Counts");
-    tal.GetXaxis()->CenterTitle();
-    tal.GetYaxis()->CenterTitle();
-    tal.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(tal, kBlue, kBlue, "Talio", "Channels", "Counts");
     c1.Clear();
     tal.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Talio.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Talio.png");
 
     //////////////////////////////// Open Talium ////////////////////////////////
     vector<pair<double, double>> talium_open;
@@ -217,21 +203,9 @@ int main(){
         tal_open.SetPoint(i, talium_open[i].first, talium_open[i].second);
         tal_open.SetPointError(i, 0, sqrt(talium_open[i].second));
     }
-    tal_open.SetMarkerStyle(1);
-    tal_open.SetMarkerColor(kBlue);
-    tal_open.SetLineColor(kBlue);
-    tal_open.SetTitle("Talio");
-    tal_open.GetXaxis()->SetTitle(" Channels");
-    tal_open.GetYaxis()->SetTitle("Counts");
-    tal_open.GetXaxis()->CenterTitle();
-    tal_open.GetYaxis()->CenterTitle();
-    tal_open.GetXaxis()->SetRangeUser(0, 300);
-    c1.Clear();
+    CustomizeGraph(tal_open, kBlue, kBlue, "Talio", "Channels", "Counts");
     tal_open.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Talio_open.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Talio_open.png");
 
     //////////////////////////////// Graph Both Tals ////////////////////////////////
     c1.Clear();
@@ -243,10 +217,7 @@ int main(){
     tal_open.Draw("APL");
     tal.Draw("PL");
     leg.Draw();
-    c1.Update();
-    c1.SaveAs("graphs/Talio_both.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Talio_both.png");
 
     //////////////////////////////// Césio ////////////////////////////////
     vector<pair<double, double>> cesio;
@@ -256,15 +227,7 @@ int main(){
         ces.SetPoint(i, cesio[i].first, cesio[i].second);
         ces.SetPointError(i, 0, sqrt(cesio[i].second));
     }
-    ces.SetMarkerStyle(1);
-    ces.SetMarkerColor(kGreen);
-    ces.SetLineColor(kGreen);
-    ces.SetTitle("Cesio");
-    ces.GetXaxis()->SetTitle(" Channels");
-    ces.GetYaxis()->SetTitle("Counts");
-    ces.GetXaxis()->CenterTitle();
-    ces.GetYaxis()->CenterTitle();
-    ces.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(ces, kGreen, kGreen, "Cesio", "Channels", "Counts");
     c1.Clear();
     ces.Draw("APL");
     c1.Update();
@@ -284,15 +247,7 @@ int main(){
         str.SetPoint(i, strontium[i].first, strontium[i].second);
         str.SetPointError(i, 0, sqrt(strontium[i].second));
     }
-    str.SetMarkerStyle(1);
-    str.SetMarkerColor(kBlack);
-    str.SetLineColor(kBlack);
-    str.SetTitle("Estroncio");
-    str.GetXaxis()->SetTitle(" Channels");
-    str.GetYaxis()->SetTitle("Counts");
-    str.GetXaxis()->CenterTitle();
-    str.GetYaxis()->CenterTitle();
-    str.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(str, kBlack, kBlack, "Estroncio", "Channels", "Counts");
     c1.Clear();
     str.Draw("APL");
     c1.Update();
@@ -334,15 +289,7 @@ int main(){
         cal.SetPoint(i, calib[i].first, calib[i].second);
         cal.SetPointError(i, 0, sqrt(calib[i].second));
     }
-    cal.SetMarkerStyle(1);
-    cal.SetMarkerColor(kBlack);
-    cal.SetLineColor(kBlack);
-    cal.SetTitle("Calibracao");
-    cal.GetXaxis()->SetTitle(" Channels");
-    cal.GetYaxis()->SetTitle("Counts");
-    cal.GetXaxis()->CenterTitle();
-    cal.GetYaxis()->CenterTitle();
-    cal.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(cal, kBlack, kBlack, "Calibracao", "Channels", "Counts");
     c1.Clear();
     cal.Draw("APL");
     c1.Update();
@@ -358,15 +305,7 @@ int main(){
         talAl.SetPoint(i, taliumAl[i].first, taliumAl[i].second);
         talAl.SetPointError(i, 0, sqrt(taliumAl[i].second));
     }
-    talAl.SetMarkerStyle(1);
-    talAl.SetMarkerColor(kBlue);
-    talAl.SetLineColor(kBlue);
-    talAl.SetTitle("Talio c placa de Aluminio");
-    talAl.GetXaxis()->SetTitle(" Channels");
-    talAl.GetYaxis()->SetTitle("Counts");
-    talAl.GetXaxis()->CenterTitle();
-    talAl.GetYaxis()->CenterTitle();
-    talAl.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(talAl, kBlue, kBlue, "Talio c placa de Aluminio", "Channels", "Counts");
     c1.Clear();
     talAl.Draw("APL");
     c1.Update();
@@ -382,15 +321,7 @@ int main(){
         cesAl.SetPoint(i, cesiumAl[i].first, cesiumAl[i].second);
         cesAl.SetPointError(i, 0, sqrt(cesiumAl[i].second));
     }
-    cesAl.SetMarkerStyle(1);
-    cesAl.SetMarkerColor(kGreen);
-    cesAl.SetLineColor(kGreen);
-    cesAl.SetTitle("Cesio c placa de Aluminio");
-    cesAl.GetXaxis()->SetTitle(" Channels");
-    cesAl.GetYaxis()->SetTitle("Counts");
-    cesAl.GetXaxis()->CenterTitle();
-    cesAl.GetYaxis()->CenterTitle();
-    cesAl.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(cesAl, kGreen, kGreen, "Cesio c placa de Aluminio", "Channels", "Counts");
     c1.Clear();
     cesAl.Draw("APL");
     c1.Update();
@@ -406,15 +337,8 @@ int main(){
         bisAir.SetPoint(i, bismuthAir[i].first, bismuthAir[i].second);
         bisAir.SetPointError(i, 0, sqrt(bismuthAir[i].second));
     }
-    bisAir.SetMarkerStyle(1);
-    bisAir.SetMarkerColor(kBlue);
-    bisAir.SetLineColor(kBlue);
-    bisAir.SetTitle("Bismuto c ar");
-    bisAir.GetXaxis()->SetTitle(" Channels");
-    bisAir.GetYaxis()->SetTitle("Counts");
-    bisAir.GetXaxis()->CenterTitle();
-    bisAir.GetYaxis()->CenterTitle();
-    bisAir.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(bisAir, kBlue, kBlue, "Bismuto c ar", "Channels", "Counts");
+
     c1.Clear();
     bisAir.Draw("APL");
     c1.Update();
@@ -430,15 +354,8 @@ int main(){
         bisCar.SetPoint(i, bismuthCar[i].first, bismuthCar[i].second);
         bisCar.SetPointError(i, 0, sqrt(bismuthCar[i].second));
     }
-    bisCar.SetMarkerStyle(1);
-    bisCar.SetMarkerColor(kOrange);
-    bisCar.SetLineColor(kOrange);
-    bisCar.SetTitle("Bismuto c cartao");
-    bisCar.GetXaxis()->SetTitle(" Channels");
-    bisCar.GetYaxis()->SetTitle("Counts");
-    bisCar.GetXaxis()->CenterTitle();
-    bisCar.GetYaxis()->CenterTitle();
-    bisCar.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(bisCar, kOrange, kOrange, "Bismuto c cartao", "Channels", "Counts");
+
     c1.Clear();
     bisCar.Draw("APL");
     c1.Update();
@@ -454,15 +371,8 @@ int main(){
         bisAcr.SetPoint(i, bismuthAcrylic[i].first, bismuthAcrylic[i].second);
         bisAcr.SetPointError(i, 0, sqrt(bismuthAcrylic[i].second));
     }
-    bisAcr.SetMarkerStyle(1);
-    bisAcr.SetMarkerColor(kGreen);
-    bisAcr.SetLineColor(kGreen);
-    bisAcr.SetTitle("Bismuto c acrilico");
-    bisAcr.GetXaxis()->SetTitle(" Channels");
-    bisAcr.GetYaxis()->SetTitle("Counts");
-    bisAcr.GetXaxis()->CenterTitle();
-    bisAcr.GetYaxis()->CenterTitle();
-    bisAcr.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(bisAcr, kGreen, kGreen, "Bismuto c acrilico", "Channels", "Counts");
+  
     c1.Clear();
     bisAcr.Draw("APL");
     c1.Update();
@@ -508,15 +418,8 @@ int main(){
     calibration.SetPoint(2, third_experimental, third_theoretical);
     calibration.SetPoint(3, fourth_experimental, fourth_theoretical);
     
+    CustomizeGraph(calibration, kRed, kRed, "Calibration", "Channels", "Energy [keV]");
     calibration.SetMarkerStyle(20);
-    calibration.SetMarkerColor(kRed);
-    calibration.SetLineColor(kRed);
-    calibration.SetTitle("Calibration");
-    calibration.GetXaxis()->SetTitle(" Channels");
-    calibration.GetYaxis()->SetTitle("Energy [keV]");
-    calibration.GetXaxis()->CenterTitle();
-    calibration.GetYaxis()->CenterTitle();
-    calibration.GetXaxis()->SetRangeUser(0, 300);
     
     TF1 *calibrationFunction = new TF1("calibrationFunction", "[0] + [1]*x", 0, 300);
     calibrationFunction->SetParameter(0, 0);
@@ -538,14 +441,8 @@ int main(){
     inverseCalibration.SetPoint(1, second_theoretical, second_experimental);
     inverseCalibration.SetPoint(2, third_theoretical, third_experimental);
     inverseCalibration.SetPoint(3, fourth_theoretical, fourth_experimental);
-    inverseCalibration.SetMarkerStyle(20);
-    inverseCalibration.SetMarkerColor(kRed);
-    inverseCalibration.SetLineColor(kRed);
-    inverseCalibration.SetTitle("Inverse Calibration");
-    inverseCalibration.GetXaxis()->SetTitle(" Energy [keV]");
-    inverseCalibration.GetYaxis()->SetTitle("Channels");
-    inverseCalibration.GetXaxis()->CenterTitle();
-    inverseCalibration.GetYaxis()->CenterTitle();
+    CustomizeGraph(inverseCalibration, kRed, kRed, "Inverse Calibration", "Energy [keV]", "Channels", 0, 1200, 20);
+    
     TF1 f = TF1("f", "[0]*x+[1]", 0, 1200);
     f.SetParName(0, "slope");
     f.SetParName(1, "intercept");
@@ -580,15 +477,8 @@ int main(){
         polyethylene_stopping_powers.SetPoint(i, KineticalEnergy[i], Total[i]);
         polyethylene_stopping_powers.SetPointError(i, 0, 0);
     }
-    polyethylene_stopping_powers.SetMarkerStyle(1);
-    polyethylene_stopping_powers.SetMarkerColor(kRed);
-    polyethylene_stopping_powers.SetLineColor(kRed);
-    polyethylene_stopping_powers.SetTitle("Polyethylene Stopping Powers");
-    polyethylene_stopping_powers.GetXaxis()->SetTitle("Kinetical Energy [MeV]");
-    polyethylene_stopping_powers.GetYaxis()->SetTitle("Stopping Power [MeV cm^{2}/g]");
-    polyethylene_stopping_powers.GetXaxis()->CenterTitle();
-    polyethylene_stopping_powers.GetYaxis()->CenterTitle();
-    polyethylene_stopping_powers.GetXaxis()->SetRangeUser(0, 1);
+    CustomizeGraph(polyethylene_stopping_powers, kRed, kRed, "Polyethylene Stopping Powers", "Kinetical Energy [MeV]", "Stopping Power [MeV cm^{2}/g]", 0, 1);
+
     c1.SetLogx();
     c1.SetLogy();
     c1.Clear();
@@ -629,12 +519,13 @@ int main(){
         polyethylene_stopping_powers2.SetPoint(i, KineticalEnergy2[i], CSDA2[i]);
         polyethylene_stopping_powers2.SetPointError(i, 0, 0);
     }
+
     polyethylene_stopping_powers2.SetMarkerStyle(1);
     polyethylene_stopping_powers2.SetMarkerColor(kRed);
     polyethylene_stopping_powers2.SetLineColor(kRed);
     polyethylene_stopping_powers2.SetTitle("CSDA Range");
     polyethylene_stopping_powers2.GetXaxis()->SetTitle("Kinetical Energy [MeV]");
-    polyethylene_stopping_powers2.GetYaxis()->SetTitle("Stopping Power [MeV cm^{2}/g]");
+    polyethylene_stopping_powers2.GetYaxis()->SetTitle("CSDA [MeV cm^{2}/g]");
     polyethylene_stopping_powers2.GetXaxis()->CenterTitle();
     polyethylene_stopping_powers2.GetYaxis()->CenterTitle();
     c1.SetLogx();
@@ -648,6 +539,8 @@ int main(){
 
     double integral2 = linearInterpolation(KineticalEnergy2, CSDA2, cesium_peak_theoretical_energy/1000);
     double integral3 = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(cesium_peak_channels)/1000);
+    integral2 = polyethylene_stopping_powers2.Eval(cesium_peak_theoretical_energy/1000);
+    integral3 = polyethylene_stopping_powers2.Eval(calibrationFunction->Eval(cesium_peak_channels)/1000);
     cout << "Thickness of Poly by Interpolation: "<< (integral2 - integral3) / density << endl;
 
     // Reajust cesium spectrum
@@ -668,15 +561,9 @@ int main(){
         }
         cesium_spectrum_reajusted.SetPoint(i, energy, cesio[i].second);
     }
-    cesium_spectrum_reajusted.SetMarkerStyle(1);
-    cesium_spectrum_reajusted.SetMarkerColor(kRed);
-    cesium_spectrum_reajusted.SetLineColor(kRed);
-    cesium_spectrum_reajusted.SetTitle("Cesium Spectrum Reajusted");
-    cesium_spectrum_reajusted.GetXaxis()->SetTitle("Channels");
-    cesium_spectrum_reajusted.GetYaxis()->SetTitle("Counts");
-    cesium_spectrum_reajusted.GetXaxis()->CenterTitle();
-    cesium_spectrum_reajusted.GetYaxis()->CenterTitle();
-    cesium_spectrum_reajusted.GetXaxis()->SetRangeUser(0, 300);
+
+    CustomizeGraph(cesium_spectrum_reajusted, kRed, kRed, "Cesium Spectrum Reajusted", "Channels", "Counts", 0, 300);
+
     c1.SetLogx(0);
     c1.SetLogy(0);
     c1.Clear();
@@ -698,6 +585,7 @@ int main(){
         energy2 = 0;
         for(int j = i; j < KineticalEnergy.size(); j++){
             double second2 = linearInterpolation(KineticalEnergy2, CSDA2, KineticalEnergy[j]);
+            //second2 = polyethylene_stopping_powers2.Eval(KineticalEnergy[j]);
             if(abs(abs(second2 - first2)/density - thickness2) < difference3){
                 energy2 = f.Eval(KineticalEnergy[j]*1000);
             }
@@ -705,14 +593,8 @@ int main(){
         }
         talium_spectrum_reajusted.SetPoint(i, energy2, talium[i].second);
     }
-    talium_spectrum_reajusted.SetMarkerStyle(1);
-    talium_spectrum_reajusted.SetMarkerColor(kBlack);
-    talium_spectrum_reajusted.SetLineColor(kBlack);
-    talium_spectrum_reajusted.SetTitle("Talium Spectrum Reajusted");
-    talium_spectrum_reajusted.GetXaxis()->SetTitle("Channels");
-    talium_spectrum_reajusted.GetYaxis()->SetTitle("Counts");
-    talium_spectrum_reajusted.GetXaxis()->CenterTitle();
-    talium_spectrum_reajusted.GetYaxis()->CenterTitle();
+    CustomizeGraph(talium_spectrum_reajusted, kBlack, kBlack, "Talium Spectrum Reajusted", "Channels", "Counts", 0, 300);
+    
     TLegend t(0.65,0.65,0.85,0.75);
     t.AddEntry(&tal, "Closed Talium", "l");
     t.AddEntry(&talium_spectrum_reajusted, "Closed Talium Reajusted", "l");
@@ -737,15 +619,8 @@ int main(){
         talium_spectrum_derivative.SetPoint(i, end_point[i].first, end_point[i].second);
         talium_spectrum_derivative.SetPointError(i, 0, sqrt(end_point[i].second));
     }
-    talium_spectrum_derivative.SetMarkerStyle(1);
-    talium_spectrum_derivative.SetMarkerColor(kRed);
-    talium_spectrum_derivative.SetLineColor(kRed);
-    talium_spectrum_derivative.SetTitle("Talium Spectrum Derivative");
-    talium_spectrum_derivative.GetXaxis()->SetTitle("Channels");
-    talium_spectrum_derivative.GetYaxis()->SetTitle("Counts");
-    talium_spectrum_derivative.GetXaxis()->CenterTitle();
-    talium_spectrum_derivative.GetYaxis()->CenterTitle();
-    talium_spectrum_derivative.GetXaxis()->SetRangeUser(0, 300);
+    CustomizeGraph(talium_spectrum_derivative, kRed, kRed, "Talium Spectrum Derivative", "Channels", "Counts", 0, 300);
+
     c1.Clear();
     talium_spectrum_derivative.Draw("APL");
     c1.Update();
@@ -903,7 +778,7 @@ int main(){
         kurie_graph.SetPointError(i, 0, 0);
     }
 
-    TSpline3 *kurie_spline = new TSpline3("kurie_spline", &kurie_graph);
+    TSpline5 *kurie_spline = new TSpline5("kurie_spline", &kurie_graph);
 
     kurie_graph.SetMarkerStyle(1);
     kurie_graph.SetMarkerColor(kRed);
