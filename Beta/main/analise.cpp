@@ -110,6 +110,12 @@ int main(){
     //////////////////////////////// Bismuto ////////////////////////////////
     vector<pair<double, double>> bismuto;
     ReadFile("data/bismuto.dat", bismuto);
+    double counts = 0;
+    for(int i=0; i<bismuto.size(); i++){
+        counts += bismuto[i].second;
+    }
+    cout << "Bismuth Counts: " << counts << endl;
+
     TGraphErrors bis;
     for (int i = 0; i < bismuto.size(); i++){
         bis.SetPoint(i, bismuto[i].first, bismuto[i].second);
@@ -207,6 +213,11 @@ int main(){
     //////////////////////////////// Open Talium ////////////////////////////////
     vector<pair<double, double>> talium_open;
     ReadFile("data/talium_open.dat", talium_open);
+    counts = 0;
+    for(int i=0; i<talium_open.size(); i++){
+        counts += talium_open[i].second;
+    }
+    cout << "Counts in open talium: " << counts << endl;
     TGraphErrors tal_open;
     for (int i = 0; i < talium_open.size(); i++){
         tal_open.SetPoint(i, talium_open[i].first, talium_open[i].second);
@@ -371,6 +382,9 @@ int main(){
     c1.SaveAs("graphs/BismutoCartao.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+    // Find Peak for X Rays 
+
 
     //////////////////////////////// Bismuth + Acrylic ////////////////////////////////
     vector<pair<double, double>> bismuthAcrylic;
@@ -685,8 +699,8 @@ int main(){
     gaus_strontium.SetParameter(0, 600);
     gaus_bismuth.SetParameter(1, 23);
     gaus_strontium.SetParameter(1, 23);
-    bis.Fit("gaus_bismuth", "R");
-    str.Fit("gaus_strontium", "R");
+    bis.Fit("gaus_bismuth", "RL");
+    str.Fit("gaus_strontium", "RL");
     double mean_bismuth = gaus_bismuth.GetParameter(1);
     double mean_strontium = gaus_strontium.GetParameter(1);
     double sigma_bismuth = gaus_bismuth.GetParameter(2);
@@ -809,9 +823,9 @@ int main(){
         double N = talium_open[i].second;
         double y = 1/W * sqrt(N/G);
 
-
+        double set_point_error = 1/(W*W*W*W)*sqrt(N/G) * 0.5 * (0.1/0.511) * (0.1 / 0.511) + 1 / (4 * W * W * G);
         kurie_graph_open_talium.SetPoint(i, x, y);
-        kurie_graph_open_talium.SetPointError(i, 0, 0);
+        kurie_graph_open_talium.SetPointError(i, 0, set_point_error);
     }
 
     kurie_graph_open_talium.SetMarkerStyle(2);
@@ -823,8 +837,8 @@ int main(){
     kurie_graph_open_talium.GetXaxis()->CenterTitle();
     kurie_graph_open_talium.GetYaxis()->CenterTitle();
     kurie_graph_open_talium.GetXaxis()->SetRangeUser(0, 800);
-    TF1 *kurie_fit = new TF1("kurie_fit", "[0] * x + [1]", 50, 800);
-    kurie_graph_open_talium.Fit(kurie_fit, "R");
+    TF1 *kurie_fit = new TF1("kurie_fit", "[0] * x + [1]", 70, 720);
+    kurie_graph_open_talium.Fit(kurie_fit, "RL");
     c1.Clear();
     kurie_graph_open_talium.Draw("AP");
     kurie_fit->Draw("same");
@@ -843,15 +857,15 @@ int main(){
         double N = talium_spectrum_reajusted.GetY()[i];
         double y = 1/W * sqrt(N/G);
 
-
+        double set_point_error = 1/(W*W*W*W)*sqrt(N/G) * 0.5 * (0.1/0.511) * (0.1 / 0.511) + 1 / (4 * W * W * G);
         kurie_graph_closed_talium.SetPoint(i, x, y);
-        kurie_graph_closed_talium.SetPointError(i, 0, 0);
+        kurie_graph_closed_talium.SetPointError(i, 0, set_point_error);
     }
 
     CustomizeGraph(kurie_graph_closed_talium, kRed, kRed, "Kurie Plot for Closed Talium", "Energy [keV]", "?", 0, 800, 2);
 
     TF1 *kurie_fit2 = new TF1("kurie_fit2", "[0] * x + [1]", 300, 780);
-    kurie_graph_closed_talium.Fit(kurie_fit2, "R");
+    kurie_graph_closed_talium.Fit(kurie_fit2, "RL");
     c1.Clear();
     kurie_graph_closed_talium.Draw("AP");
     kurie_fit2->Draw("same");
