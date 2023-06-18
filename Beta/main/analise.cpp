@@ -1,8 +1,9 @@
-# include <iostream>
-# include <cmath>
-# include <vector>
-# include <string>
+#include <iostream>
 #include <cmath>
+#include <vector>
+#include <string>
+#include <cmath>
+#include <numeric>
 #include <TLegendEntry.h>
 #include "TCanvas.h"
 #include "TApplication.h"
@@ -17,7 +18,7 @@
 #include "TLatex.h"
 #include "ReadEth.h"
 #include "TSpline.h"
-
+#include <TError.h>
 using namespace std;
 
 void CustomizeGraph(TGraphErrors& graph, Color_t markerColor, Color_t lineColor, const std::string& title, const std::string& xAxisTitle, const std::string& yAxisTitle, double xMin = 0.0, double xMax = 300.0, double MarkerStyle = 1) {
@@ -93,6 +94,7 @@ double find_max(double min, double max, vector<pair<double, double>>& cal_1){
 int main(){
     TApplication A("A", nullptr, nullptr);
     TCanvas c1("c1", "c1", 1200, 800); 
+    gErrorIgnoreLevel = kWarning; // Ignore ROOT messages Info: Graph saved as ...
 
     //////////////////////////////// Ambiente ////////////////////////////////
     vector<pair<double, double>> ambiente;
@@ -218,7 +220,7 @@ int main(){
     //////////////////////////////// Open Talium ////////////////////////////////
     vector<pair<double, double>> talium_open;
     ReadFile("data/talium_open.dat", talium_open);
-    counts = 0;
+    counts = 0; 
     for(int i=0; i<talium_open.size(); i++){
         counts += talium_open[i].second;
     }
@@ -380,7 +382,7 @@ int main(){
         bisCar.SetPointError(i, 0, sqrt(bismuthCar[i].second));
     }
     CustomizeGraph(bisCar, kOrange, kOrange, "Bismuto c cartao", "Channels", "Counts");
-
+    
     c1.Clear();
     bisCar.Draw("APL");
     c1.Update();
@@ -454,13 +456,14 @@ int main(){
     calibrationFunction->SetParameter(1, 1);
     calibrationFunction->SetParName(0, "intercept");
     calibrationFunction->SetParName(1, "slope");
-    calibration.Fit("calibrationFunction", "R");
+    calibration.Fit("calibrationFunction", "RQ");
     c1.Clear();
     calibration.Draw("APL");
     c1.Update();
     c1.SaveAs("graphs/Calibration.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    cout << "Bnana" << calibrationFunction->Eval(cesium_peak_channels) << endl;
 
     // inverse calibration
     c1.Clear();
@@ -474,7 +477,7 @@ int main(){
     TF1 f = TF1("f", "[0]*x+[1]", 0, 1200);
     f.SetParName(0, "slope");
     f.SetParName(1, "intercept");
-    inverseCalibration.Fit("f", "R");
+    inverseCalibration.Fit("f", "RQ");
     
     inverseCalibration.Draw("APL");
     f.Draw("same");
@@ -599,6 +602,7 @@ int main(){
 
     // Reajust talium spectrum
     double thickness2 = (integral2 - integral3) / density;
+    vector<pair<double, double>> reaj_talium_spectrum;
     TGraphErrors talium_spectrum_reajusted;
     double first2 = 0;
     double energy2 = 0;
@@ -614,6 +618,7 @@ int main(){
             }
             
         }
+        reaj_talium_spectrum.push_back(make_pair(energy2, talium[i].second));
         talium_spectrum_reajusted.SetPoint(i, energy2, talium[i].second);
     }
     CustomizeGraph(talium_spectrum_reajusted, kBlack, kBlack, "Talium Spectrum Reajusted", "Channels", "Counts", 0, 300);
@@ -633,7 +638,37 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    ////////////////////////////// Derivative of Talium Spectrum //////////////////////////////
+    /////////////////////////////////// Derivative of Closed Talium
+    vector<pair<double, long double> > end_point_closed = calculateDerivative(reaj_talium_spectrum);
+    TGraphErrors talium_spectrum_derivative_closed;
+    for (int i = 0; i < end_point_closed.size(); i++){
+        talium_spectrum_derivative_closed.SetPoint(i, end_point_closed[i].first, end_point_closed[i].second);
+        talium_spectrum_derivative_closed.SetPointError(i, 0, sqrt(end_point_closed[i].second));
+    }
+    CustomizeGraph(talium_spectrum_derivative_closed, kBlack, kBlack, "Talium Spectrum Derivative Closed", "Channels", "Counts", 0, 300);
+
+    c1.Clear();
+    talium_spectrum_derivative_closed.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Talium_Spectrum_Derivative_Closed.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    double error_end_point_closed = 0.001;
+    double error_end_point_open = 0.001;
+    double value_end_point_closed = 0;
+    for(int i = 0; i < end_point_closed.size(); i++){
+        if(abs(end_point_closed[i].second) < error_end_point_closed && end_point_closed[i].first < 167){
+            value_end_point_closed = end_point_closed[i].first;
+            if(abs(end_point_closed[i].second) > 0){
+
+            value_end_point_closed = end_point_closed[i].first;
+            }
+            //break;
+        }
+    }
+    cout << "Value end point closed: " << calibrationFunction->Eval(value_end_point_closed) << endl;
+
+    ////////////////////////////// Derivative of Talium Open Spectrum //////////////////////////////
     vector<pair<double, double> > der_tal;
     ReadFile("data/talium_open_Smoothed_Smoothed.dat", der_tal);
     vector<pair<double, long double> > end_point = calculateDerivative(der_tal);
@@ -670,7 +705,7 @@ int main(){
     ajuste->SetParameter(2, 167);
     ajuste->SetLineColor(kBlack);
 
-    talium_spectrum_derivative.Fit("ajuste", "R");
+    talium_spectrum_derivative.Fit("ajuste", "RQ");
     c1.Clear();
     talium_spectrum_derivative.Draw("APL");
     ajuste->Draw("same");
@@ -704,8 +739,8 @@ int main(){
     gaus_strontium.SetParameter(0, 600);
     gaus_bismuth.SetParameter(1, 23);
     gaus_strontium.SetParameter(1, 23);
-    bis.Fit("gaus_bismuth", "RL");
-    str.Fit("gaus_strontium", "RL");
+    bis.Fit("gaus_bismuth", "RQ");
+    str.Fit("gaus_strontium", "RQ");
     double mean_bismuth = gaus_bismuth.GetParameter(1);
     double mean_strontium = gaus_strontium.GetParameter(1);
     double sigma_bismuth = gaus_bismuth.GetParameter(2);
@@ -766,6 +801,20 @@ int main(){
         }
     }
     cout << "Silicon Thickness: " << mean_channels_energy / 1000/ (testar / control * silicon_density) * 10000 << " microns" << endl;
+
+    //////////////// TGraph 1/Stopping Power * density ///////////////////////
+    TGraphErrors silicon_graph_normal_density;
+    for (int i = 0; i < KineticalEnergySilicon.size(); i++){
+        silicon_graph_normal_density.SetPoint(i, KineticalEnergySilicon[i], 1 / TotalSilicon[i] / silicon_density);
+        silicon_graph_normal_density.SetPointError(i, 0, 0);
+    }
+    CustomizeGraph(silicon_graph_normal_density, kRed, kRed, "Silicon Normal", "Kinetic Energy [MeV]", "1 / Stopping Power * Density [cm MeV^{-1}]");
+    c1.Clear();
+    silicon_graph_normal_density.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Silicon_1_Stopping_Power_Density.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
     
     
     
@@ -843,7 +892,7 @@ int main(){
     kurie_graph_open_talium.GetYaxis()->CenterTitle();
     kurie_graph_open_talium.GetXaxis()->SetRangeUser(0, 800);
     TF1 *kurie_fit = new TF1("kurie_fit", "[0] * x + [1]", 70, 720);
-    kurie_graph_open_talium.Fit(kurie_fit, "RL");
+    kurie_graph_open_talium.Fit(kurie_fit, "RQ");
     c1.Clear();
     kurie_graph_open_talium.Draw("AP");
     kurie_fit->Draw("same");
@@ -870,7 +919,7 @@ int main(){
     CustomizeGraph(kurie_graph_closed_talium, kRed, kRed, "Kurie Plot for Closed Talium", "Energy [keV]", "?", 0, 800, 2);
 
     TF1 *kurie_fit2 = new TF1("kurie_fit2", "[0] * x + [1]", 300, 780);
-    kurie_graph_closed_talium.Fit(kurie_fit2, "RL");
+    kurie_graph_closed_talium.Fit(kurie_fit2, "RQ");
     c1.Clear();
     kurie_graph_closed_talium.Draw("AP");
     kurie_fit2->Draw("same");
