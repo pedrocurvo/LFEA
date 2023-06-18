@@ -108,6 +108,7 @@ int main(){
     
 
     //////////////////////////////// Bismuto ////////////////////////////////
+    gStyle->SetOptFit(kFALSE); 
     vector<pair<double, double>> bismuto;
     ReadFile("data/bismuto.dat", bismuto);
     TGraphErrors bis;
@@ -143,7 +144,7 @@ int main(){
     gaus2->SetParLimits(2,0,2);
     gaus2->SetParLimits(3,0,300);
     //gaus2->SetParLimits(4,120,121.87);
-    //gaus2->SetParLimits(5,0,2.48);
+    gaus2->SetParLimits(5,0,1.23);
     gaus4->SetParameters(50,sixth_peak,1,20,sixth_peak+2,1);
 
 
@@ -167,6 +168,8 @@ int main(){
     c1.SaveAs("graphs/Bismuto_peaks.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+
 
     /// Find Number of Counts
     double counts_one = 0;
@@ -415,7 +418,7 @@ int main(){
 
     //////////////////////////////// Calibration Function ////////////////////////////////
     // Using Bismuth Peaks 
-    gStyle->SetOptFit(111);
+    gStyle->SetOptFit(kTRUE);
     double first_theoretical = 481.694;
     double second_theoretical = 555.251;
     double third_theoretical = 975.655; 
@@ -469,8 +472,89 @@ int main(){
     c1.SaveAs("graphs/InverseCalibration.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    gStyle->SetOptFit(kFALSE); 
 
+    //////////////////////////////// Resolução ////////////////////////////////
 
+    //Os vetores vão ter 6 valores, relativos aos picos K, L, M, K, L, M
+    vector<double> centroides = {
+        calibrationFunction->Eval(gaus1->GetParameter(1)),
+        calibrationFunction->Eval(gaus2->GetParameter(1)),
+        calibrationFunction->Eval(gaus2->GetParameter(4)),
+        calibrationFunction->Eval(gaus3->GetParameter(1)),
+        calibrationFunction->Eval(gaus4->GetParameter(1)),
+        calibrationFunction->Eval(gaus4->GetParameter(4)),
+    };
+    vector<double> erro_centroides = {
+        calibrationFunction->Eval(gaus1->GetParError(1)),
+        calibrationFunction->Eval(gaus2->GetParError(1)),
+        calibrationFunction->Eval(gaus2->GetParError(4)),
+        calibrationFunction->Eval(gaus3->GetParError(1)),
+        calibrationFunction->Eval(gaus4->GetParError(1)),
+        calibrationFunction->Eval(gaus4->GetParError(4)),
+    };
+    /*
+    vector<double> sigma = {
+        calibrationFunction->GetParameter(1)*gaus1->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(5),
+        calibrationFunction->GetParameter(1)*gaus3->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(5)
+    };
+    vector<double> erro_sigma = {
+        calibrationFunction->GetParameter(1)*gaus1->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(5),
+        calibrationFunction->GetParameter(1)*gaus3->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(5)
+    };
+    */
+    vector<double> sigma = {
+        calibrationFunction->GetParameter(1)*1.29,
+        calibrationFunction->GetParameter(1)*1.25,
+        calibrationFunction->GetParameter(1)*1.17,
+        calibrationFunction->GetParameter(1)*0.89,
+        calibrationFunction->GetParameter(1)*0.84,
+        calibrationFunction->GetParameter(1)*0.65
+    };
+    vector<double> erro_sigma = {
+        calibrationFunction->GetParameter(1)*0.05,
+        calibrationFunction->GetParameter(1)*0.11,
+        calibrationFunction->GetParameter(1)*0.07,
+        calibrationFunction->GetParameter(1)*0.08,
+        calibrationFunction->GetParameter(1)*0.13,
+        calibrationFunction->GetParameter(1)*0.12
+    };
+    
+    gStyle->SetOptFit(kTRUE);
+    TGraphErrors G_resolucao;
+    for (int i = 0; i < 6; i++){
+        cout << "Centroide: " << centroides[i]  << " +- " << erro_centroides[i] << endl;
+        cout << "Sigma [CHN]: " << sigma[i]/calibrationFunction->GetParameter(1) << " +- " << erro_sigma[i]/calibrationFunction->GetParameter(1) << endl;
+        cout << "FWHM: " << sigma[i]*2.355 << " +- " << erro_sigma[i]*2.355 << endl;
+        cout << "R: " << sigma[i]*2.355/centroides[i] << " +- " << abs(471 / 200 / centroides[i]) * erro_sigma[i] + abs(sigma[i] * -471 / 200 / (centroides[i]*centroides[i])) * erro_centroides[i] << endl;
+        cout << "------------" << endl;
+        G_resolucao.SetPoint(i, centroides[i], sigma[i]*2.355/centroides[i]);
+        G_resolucao.SetPointError(i, erro_centroides[i], abs(471 / 200 / centroides[i]) * erro_sigma[i] + abs(sigma[i] * -471 / 200 / (centroides[i]*centroides[i])) * erro_centroides[i]);
+    }
+    CustomizeGraph(G_resolucao, kRed, kRed, "Dependencia da Resolucao com a Energia", "Energia [keV]", "Resolucao");
+    TF1 f_resolucao = TF1("f_resolucao", "[0]/sqrt(x)+[1]", 0, 1200);
+    f_resolucao.SetParName(0, "slope");
+    f_resolucao.SetParName(1, "intercept");
+    G_resolucao.Fit("f_resolucao", "R");
+
+    c1.Clear();
+    G_resolucao.Draw("AP");
+    f_resolucao.Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/Resolucao.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    gStyle->SetOptFit(kFALSE);
+
+    ///////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////// Find Material with Cesium ////////////////////////////////
     double difference = abs(cesium_peak_theoretical_energy - calibrationFunction->Eval(cesium_peak_channels));
@@ -670,6 +754,7 @@ int main(){
 
 
     //////////////// Strontium and Bismuth Spectrum ///////////////////////
+    gStyle->SetOptFit(kFALSE);
     c1.Clear();
     TLegend *leg_str_bis = new TLegend(0.65, 0.65, 0.85, 0.75);
     leg_str_bis->SetHeader("Strontium and Bismuth Spectrum", "C");
