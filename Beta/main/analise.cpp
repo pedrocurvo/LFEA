@@ -129,18 +129,23 @@ int main(){
 
     // gaussians in peaks 
     TF1* gaus1 = new TF1("gaus1", "gaus", third_peak - 2, third_peak + 1.7);
-    TF1* gaus2 = new TF1("gaus2", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2])) + [3]*exp(-0.5*((x-[4])/[5])*((x-[4])/[5]))", fourth_peak - 3.1, fourth_peak + 3.1);
-    TF1* gaus3 = new TF1("gaus3", "gaus", fifth_peak - 5, fifth_peak + 5);
-    TF1* gaus4 = new TF1("gaus4", "gaus", sixth_peak - 4, sixth_peak + 4);
+    TF1* gaus2 = new TF1("gaus2", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2])) + [3]*exp(-0.5*((x-[4])/[5])*((x-[4])/[5]))", fourth_peak - 2.25, fourth_peak + 4.2);
+    TF1* gaus3 = new TF1("gaus3", "gaus", fifth_peak - 3.5, fifth_peak + 3.5);
+    TF1* gaus4 = new TF1("gaus4", "[0]*exp(-0.5*((x-[1])/[2])*((x-[1])/[2])) + [3]*exp(-0.5*((x-[4])/[5])*((x-[4])/[5]))", sixth_peak - 3.9, sixth_peak + 4.2);
 
-    gaus1->SetParameters(1500,third_peak,1);
-    gaus2->SetParameters(200,fourth_peak,1,150,fourth_peak-3,0.5);
-    gaus2->SetParLimits(0,0,250);
-    gaus2->SetParLimits(1,fourth_peak-1,fourth_peak+2);
-    gaus2->SetParLimits(2,0,1);
-    gaus2->SetParLimits(3,0,200);
-    gaus2->SetParLimits(4,fourth_peak-3.1,fourth_peak);
-    gaus2->SetParLimits(5,0,1);
+    gaus1->SetParameters(1300,third_peak,1);
+    gaus2->SetParameters(250,fourth_peak,1,100,fourth_peak+2,1);
+    gaus2->SetParNames("C_{1}","#mu_{1}", "#sigma_{1}","C_{2}","#mu_{2}", "#sigma_{2}","C_{3}","#mu_{3}", "#sigma_{3}");
+    gaus4->SetParNames("C_{1}","#mu_{1}", "#sigma_{1}","C_{2}","#mu_{2}", "#sigma_{2}","C_{3}","#mu_{3}", "#sigma_{3}");
+    gaus2->SetParLimits(0,0,350);
+    gaus2->SetParLimits(1,fourth_peak-1,fourth_peak+1);
+
+    gaus2->SetParLimits(2,0,2);
+    gaus2->SetParLimits(3,0,300);
+    //gaus2->SetParLimits(4,120,121.87);
+    //gaus2->SetParLimits(5,0,2.48);
+    gaus4->SetParameters(50,sixth_peak,1,20,sixth_peak+2,1);
+
 
     gaus1->SetLineColor(kBlue);
     gaus2->SetLineColor(kBlue);
