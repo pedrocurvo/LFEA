@@ -1,3 +1,29 @@
+/* Authors: Pedro Curvo, Estevão Gomes, Salvador Torpes, Sofia Tété
+
+ * This program is used to analyze the data from the Beta experiment. 
+ * It reads the data from the files and plots the graphs.
+ * It also calculates the energy of the peaks and the calibration curve.
+ * The Calibration is done using the peaks from the Bismuth spectrum.
+ * Then we use the calibration and a peak of Cesium to find the thickness of the absorber (polyethylene).
+ * this is done because we have closed and open fonts
+ * Then We recalibrate the graphs
+ * We calculate the End Point Energy of the Beta Decay for an open and closed recalibrated font of Talium 
+ * We do this using the Kurie Plot and a derivative method to find the maximum of the curve
+ * Using the Saturation Zone seen in spectrums we calculate the thickness of the detector
+ * 
+ * Changes in Code to be made for self use: 
+ * 1. You need a bin folder
+ * 2. You need a data folder
+ * 3. You need a graphs folder
+ * 4. Instead you can use your own folders but you need to change the path in the code
+ * 5. Change the name of the files to your own files
+ * 6. All the other changes are commented in the code with the comment "Change For Self Use"
+ * 7. Find it using Cmd (Ctrl) + F
+ * 
+ * 
+*/
+
+
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -203,7 +229,7 @@ int main(){
     cout << "Counts in first peak: " << counts_one << endl;
     cout << "Counts in second peak: " << counts_two << endl;
     cout << "Counts in third peak: " << counts_three << endl;
-    cout << "Counts in fourth peak: " << counts_four << endl;
+    cout << "Counts in fourth peak: " << counts_four << endl << endl;
 
 
 
@@ -258,16 +284,12 @@ int main(){
         ces.SetPointError(i, 0, sqrt(cesio[i].second));
     }
     CustomizeGraph(ces, kGreen, kGreen, "Cesio", "Channels", "Counts");
-    c1.Clear();
     ces.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Cesio.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Cesio.png");
 
     // Find peaks for further analysis
-    double cesium_peak_channels = find_max(100, 150, cesio); // add range
-    double cesium_peak_theoretical_energy = 624.216; // add theoretical value
+    double cesium_peak_channels = find_max(100, 150, cesio);
+    double cesium_peak_theoretical_energy = 624.216;
 
     //////////////////////////////// Strontium ////////////////////////////////
     vector<pair<double, double>> strontium;
@@ -278,12 +300,8 @@ int main(){
         str.SetPointError(i, 0, sqrt(strontium[i].second));
     }
     CustomizeGraph(str, kBlack, kBlack, "Estroncio", "Channels", "Counts");
-    c1.Clear();
     str.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Estroncio.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Estroncio.png");
 
     /// Find Number of Counts
     double counts_one2 = 0;
@@ -309,9 +327,10 @@ int main(){
     cout << "Counts in first peak Str: " << counts_one - counts_one2 << endl;
     cout << "Counts in second peak: " << counts_two - counts_two2 << endl;
     cout << "Counts in third peak: " << counts_three - counts_three2 << endl;
-    cout << "Counts in fourth peak: " << counts_four - counts_four2 << endl;
+    cout << "Counts in fourth peak: " << counts_four - counts_four2 << endl << endl;
 
     //////////////////////////////// Pontos de Calibração ////////////////////////////////
+    /*
     vector<pair<double, double>> calib;
     ReadFile("data/calib.dat", calib);
     TGraphErrors cal;
@@ -326,6 +345,7 @@ int main(){
     c1.SaveAs("graphs/Calib.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    */
 
     //////////////////////////////// Talium + Aluminum ////////////////////////////////
     vector<pair<double, double>> taliumAl;
@@ -336,12 +356,8 @@ int main(){
         talAl.SetPointError(i, 0, sqrt(taliumAl[i].second));
     }
     CustomizeGraph(talAl, kBlue, kBlue, "Talio com placa de Aluminio", "Channels", "Counts");
-    c1.Clear();
     talAl.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/TalioAluminio.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/TalioAluminio.png");
 
     //////////////////////////////// Cesium + Aluminum ////////////////////////////////
     vector<pair<double, double>> cesiumAl;
@@ -352,12 +368,8 @@ int main(){
         cesAl.SetPointError(i, 0, sqrt(cesiumAl[i].second));
     }
     CustomizeGraph(cesAl, kGreen, kGreen, "Cesio com placa de Aluminio", "Channels", "Counts");
-    c1.Clear();
     cesAl.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/CesioAluminio.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/CesioAluminio.png");
 
     //////////////////////////////// Bismuth + Air ////////////////////////////////
     vector<pair<double, double>> bismuthAir;
@@ -368,13 +380,8 @@ int main(){
         bisAir.SetPointError(i, 0, sqrt(bismuthAir[i].second));
     }
     CustomizeGraph(bisAir, kBlue, kBlue, "Bismuto com ar", "Channels", "Counts");
-
-    c1.Clear();
     bisAir.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/BismutoAr.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/BismutoAr.png");
 
     //////////////////////////////// Bismuth + Car ////////////////////////////////
     vector<pair<double, double>> bismuthCar;
@@ -385,15 +392,8 @@ int main(){
         bisCar.SetPointError(i, 0, sqrt(bismuthCar[i].second));
     }
     CustomizeGraph(bisCar, kOrange, kOrange, "Bismuto com cartao", "Channels", "Counts");
-    
-    c1.Clear();
     bisCar.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/BismutoCartao.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
-
-
+    SaveCanvas(c1, "graphs/BismutoCartao.png");
 
     //////////////////////////////// Bismuth + Acrylic ////////////////////////////////
     vector<pair<double, double>> bismuthAcrylic;
@@ -403,18 +403,12 @@ int main(){
         bisAcr.SetPoint(i, bismuthAcrylic[i].first, bismuthAcrylic[i].second);
         bisAcr.SetPointError(i, 0, sqrt(bismuthAcrylic[i].second));
     }
-    CustomizeGraph(bisAcr, kGreen, kGreen, "Bismuto c acrilico", "Channels", "Counts");
-  
-    c1.Clear();
+    CustomizeGraph(bisAcr, kGreen, kGreen, "Bismuto com acrilico", "Channels", "Counts");
     bisAcr.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/BismutoAcrilico.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/BismutoAcrilico.png");
 
 
     //////////////////////////////// Bismuth with All 3 Materials ////////////////////////////////
-    c1.Clear();
     leg.Clear();
     leg.SetHeader("Bismuto");
     leg.AddEntry(&bis, "Bismuto", "l");
@@ -426,14 +420,12 @@ int main(){
     bisCar.Draw("PL");
     bisAcr.Draw("PL");
     leg.Draw();
-    c1.Update();
-    c1.SaveAs("graphs/Bismuto_Atenuation.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
+    SaveCanvas(c1, "graphs/Bismuto_Atenuation.png");
 
     //////////////////////////////// Calibration Function ////////////////////////////////
     // Using Bismuth Peaks 
     gStyle->SetOptFit(kTRUE);
+    vector<double> theoretical_peaks = {481.694, 555.251, 975.655, 1049.211};
     double first_theoretical = 481.694;
     double second_theoretical = 555.251;
     double third_theoretical = 975.655; 
@@ -458,17 +450,12 @@ int main(){
     calibrationFunction->SetParameter(1, 1);
     calibrationFunction->SetParName(0, "intercept");
     calibrationFunction->SetParName(1, "slope");
-    calibration.Fit("calibrationFunction", "RQ");
-    c1.Clear();
-    calibration.Draw("APL");
-    c1.Update();
-    c1.SaveAs("graphs/Calibration.png");
-    c1.WaitPrimitive();
-    gSystem->ProcessEvents();
-    cout << "Pico do Césio Experimental: " << calibrationFunction->Eval(cesium_peak_channels) << endl;
+    calibration.Fit("calibrationFunction", "RQ"); // R = fit between range, Q = quiet
+    calibration.Draw("APL"); 
+    SaveCanvas(c1, "graphs/Calibration.png");
+    cout << "Pico do Césio Experimental: " << calibrationFunction->Eval(cesium_peak_channels) << endl << endl;
 
     // inverse calibration
-    c1.Clear();
     TGraphErrors inverseCalibration;
     inverseCalibration.SetPoint(0, first_theoretical, first_experimental);
     inverseCalibration.SetPoint(1, second_theoretical, second_experimental);
@@ -600,10 +587,10 @@ int main(){
     SaveCanvas(c1, "graphs/Polyethylene_Stopping_Powers.png");
 
     // Composition of Polyethylene
-    double density = 0.94; //g/cm^3
+    double density = 0.94; // g/cm^3
     double mean_excitation_energy = 57.4; // eV
 
-    // try integration simple
+    // Thickness of Polyethylene by Num. Integration
     double integral = 0;
     for(int i = 0; i < KineticalEnergy.size(); i++){
         if(KineticalEnergy[i]*1000 > calibrationFunction->Eval(cesium_peak_channels) && KineticalEnergy[i]*1000 < cesium_peak_theoretical_energy){
@@ -622,38 +609,24 @@ int main(){
     vector<double> Param2;
 
     ReadFile("data/polyethylene_no_use.dat", KineticalEnergy2, Collision2, Radiative2, Total2, CSDA2,Param2);
-    TGraphErrors polyethylene_stopping_powers2;
-    for (int i = 0; i < KineticalEnergy2.size(); i++){
-        polyethylene_stopping_powers2.SetPoint(i, KineticalEnergy2[i], CSDA2[i]);
-        polyethylene_stopping_powers2.SetPointError(i, 0, 0);
-    }
-
-    polyethylene_stopping_powers2.SetMarkerStyle(1);
-    polyethylene_stopping_powers2.SetMarkerColor(kRed);
-    polyethylene_stopping_powers2.SetLineColor(kRed);
-    polyethylene_stopping_powers2.SetTitle("CSDA Range");
-    polyethylene_stopping_powers2.GetXaxis()->SetTitle("Kinetical Energy [MeV]");
-    polyethylene_stopping_powers2.GetYaxis()->SetTitle("CSDA [MeV cm^{2}/g]");
-    polyethylene_stopping_powers2.GetXaxis()->CenterTitle();
-    polyethylene_stopping_powers2.GetYaxis()->CenterTitle();
+    TGraphErrors polyethylene_stopping_powers2 = TGraphErrors(KineticalEnergy2.size(), KineticalEnergy2.data(), CSDA2.data(), 0, 0);
+    CustomizeGraph(polyethylene_stopping_powers2, kRed, kRed, "Polyethylene CSDA Range", "Kinetical Energy [MeV]", "CSDA [MeV cm^{2}/g]", 0, 1000);
     c1.SetLogx();
     c1.SetLogy();
-    c1.Clear();
     polyethylene_stopping_powers2.Draw("APL");
     c1.Update();
     c1.SaveAs("graphs/Polyethylene_CSDA_Range.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    double integral2 = linearInterpolation(KineticalEnergy2, CSDA2, cesium_peak_theoretical_energy/1000);
-    double integral3 = linearInterpolation(KineticalEnergy2, CSDA2, calibrationFunction->Eval(cesium_peak_channels)/1000);
-    integral2 = polyethylene_stopping_powers2.Eval(cesium_peak_theoretical_energy/1000);
-    integral3 = polyethylene_stopping_powers2.Eval(calibrationFunction->Eval(cesium_peak_channels)/1000);
-    cout << "Thickness of Poly by Interpolation: "<< (integral2 - integral3) / density << endl;
+    double integral2 = polyethylene_stopping_powers2.Eval(cesium_peak_theoretical_energy/1000);
+    double integral3 = polyethylene_stopping_powers2.Eval(calibrationFunction->Eval(cesium_peak_channels)/1000);
+    cout << "Thickness of Poly by Interpolation: "<< (integral2 - integral3) / density << endl << endl;
 
     // Reajust cesium spectrum
     double thickness = (integral2 - integral3) / density;
     TGraphErrors cesium_spectrum_reajusted;
+    vector<pair<double, double>> cesio_kurie;
     double first = 0;
     double energy = 0;
     double difference2 = thickness/100;
@@ -668,15 +641,20 @@ int main(){
             
         }
         cesium_spectrum_reajusted.SetPoint(i, energy, cesio[i].second);
+        cesio_kurie.push_back(make_pair(energy, cesio[i].second));
     }
 
     CustomizeGraph(cesium_spectrum_reajusted, kRed, kRed, "Cesium Spectrum Reajusted", "Channels", "Counts", 0, 300);
+    TLegend ces_leg = TLegend(0.65,0.65,0.85,0.75);
+    ces_leg.AddEntry(&cesium_spectrum_reajusted, "Cesium Spectrum Reajusted", "l");
+    ces_leg.AddEntry(&ces, "Cesium Spectrum", "l");
 
     c1.SetLogx(0);
     c1.SetLogy(0);
     c1.Clear();
     cesium_spectrum_reajusted.Draw("APL");
     ces.Draw("same");
+    ces_leg.Draw();
     c1.Update();
     c1.SaveAs("graphs/Cesium_Spectrum_Reajusted.png");
     c1.WaitPrimitive();
@@ -721,6 +699,7 @@ int main(){
     gSystem->ProcessEvents();
 
     /////////////////////////////////// Derivative of Closed Talium
+    /*
     vector<pair<double, long double> > end_point_closed = calculateDerivative(reaj_talium_spectrum);
     TGraphErrors talium_spectrum_derivative_closed;
     for (int i = 0; i < end_point_closed.size(); i++){
@@ -742,13 +721,32 @@ int main(){
         if(abs(end_point_closed[i].second) < error_end_point_closed && end_point_closed[i].first < 167){
             value_end_point_closed = end_point_closed[i].first;
             if(abs(end_point_closed[i].second) > 0){
-
-            value_end_point_closed = end_point_closed[i].first;
+                value_end_point_closed = end_point_closed[i].first;
             }
-            //break;
         }
     }
     cout << "Value end point closed: " << calibrationFunction->Eval(value_end_point_closed) << endl;
+    */
+
+    //TF1 *integral_one = new TF1("integral_one", "[0] * ([1] - x)^2 * sqrt(x^2 + 2 * x * 0.511) * (x + 0.511) / sqrt([1]) / (1 - exp(-[2]/sqrt([1])))", 0, 763.67);
+    TF1 *integral_one = new TF1("integral_one", "[0] * ([1] - x)^2 * (1.002037 - 0.00147 * sqrt( (x/0.511 + 1)^2 -1)) / (x/0.511 + 1)", 0, 763.67);
+    vector<pair<double, double> > integral_one_points;
+    for(int i = 0; i < 300; i++){
+        integral_one_points.push_back(make_pair(calibrationFunction->Eval(talium_open[i].first) /1000, talium_open[i].second));
+    }
+    TGraphErrors integral_one_graph;
+    for(int i = 0; i < integral_one_points.size(); i++){
+        integral_one_graph.SetPoint(i, integral_one_points[i].first, integral_one_points[i].second);
+    }
+    integral_one->SetParameter(0, 1200);
+    integral_one->SetParameter(1, 763.67);
+    integral_one->FixParameter(2, 26484);
+    integral_one_graph.Fit("integral_one", "R");
+    integral_one_graph.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Integral_One.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
 
     ////////////////////////////// Derivative of Talium Open Spectrum //////////////////////////////
     vector<pair<double, double> > der_tal;
@@ -773,24 +771,23 @@ int main(){
         if(abs(end_point[i].second) < error_endpoint && end_point[i].first < 167){
             value_end_point = end_point[i].first;
             if(abs(end_point[i].second) > 0){
-
-            value_end_point = end_point[i].first;
+                value_end_point = end_point[i].first;
             }
-            //break;
         }
     }
     
-    cout << "Zero Derivative EndPoint: "<< calibrationFunction->Eval(value_end_point) << endl;
-    TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",70, 800);
+    cout << "Zero Derivative EndPoint: "<< calibrationFunction->Eval(value_end_point) << endl << endl;
+    /*TF1 *ajuste = new TF1("ajuste", "[0] * sqrt(x**2 + 2*x*0.511) * (x*0.511) * (x-[2])**2",70, 800);
     ajuste->SetParameter(0, 80);
     ajuste->SetParLimits(0, 50, 1000);
     ajuste->SetParameter(2, 167);
     ajuste->SetLineColor(kBlack);
 
     talium_spectrum_derivative.Fit("ajuste", "RQ");
+    */
     c1.Clear();
     talium_spectrum_derivative.Draw("APL");
-    ajuste->Draw("same");
+    //ajuste->Draw("same");
     c1.Update();
     //c1.SaveAs("graphs/Talium_Spectrum_Derivative_Fit.png");
     c1.WaitPrimitive();
@@ -815,7 +812,7 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    // Find Thickness
+    //////////////////////////////////// Find Thickness of Silicon Detector ////////////////////////////////////
     TF1 gaus_bismuth("gaus_bismuth", "gaus", 20, 43);
     TF1 gaus_strontium("gaus_strontium", "gaus", 20, 43);
     gaus_bismuth.SetParameter(0, 800);
@@ -854,11 +851,7 @@ int main(){
     double silicon_density = 2.33;
 
     ReadFile("data/silicon_one.dat", KineticalEnergySilicon, CollisionSilicon, RadiativeSilicon, TotalSilicon, CSDASilicon, ParamSilicon);
-    TGraphErrors silicon_graph_normal;
-    for (int i = 0; i < KineticalEnergySilicon.size(); i++){
-        silicon_graph_normal.SetPoint(i, KineticalEnergySilicon[i], TotalSilicon[i]);
-        silicon_graph_normal.SetPointError(i, 0, 0);
-    }
+    TGraphErrors silicon_graph_normal = TGraphErrors(KineticalEnergySilicon.size(), KineticalEnergySilicon.data(), TotalSilicon.data(), 0, 0);
     CustomizeGraph(silicon_graph_normal, kRed, kRed, "Silicon Normal", "Kinetic Energy [MeV]", "Total Stopping Power [MeV cm^{2} g^{-1}]", 0, 1000);
     c1.SetLogx();
     c1.SetLogy();
@@ -876,7 +869,7 @@ int main(){
             control++;
         }
     }
-    cout << "Silicon Thickness: " << mean_channels_energy / 1000/ (testar / control * silicon_density) * 10000 << " microns" << endl;
+    cout << "Silicon Thickness: " << mean_channels_energy / 1000/ (testar / control * silicon_density) * 10000 << " microns" << endl << endl;
 
     //////////////// TGraph 1/Stopping Power * density ///////////////////////
     TGraphErrors silicon_graph_normal_density;
@@ -909,24 +902,17 @@ int main(){
     c1.SetLogx(0);
     c1.SetLogy(0);
 
-    ////////////////// Kurie Plot ///////////////////////
+    //////////////////////////////////////////// Kurie Plot ////////////////////////////////////////////
     vector<double> P = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4};
     vector<double> G = {28.26, 28.19, 27.99, 27.67, 27.25, 26.76, 26.23, 25.66, 25.09, 24.53, 23.98, 22.95, 22.01, 21.17, 20.41, 19.72, 19.10, 18.54};
 
-    TGraphErrors kurie_graph;
-    for (int i = 0; i < P.size(); i++){
-        kurie_graph.SetPoint(i, P[i], G[i]);
-        kurie_graph.SetPointError(i, 0, 0);
-    }
-
+    TGraphErrors kurie_graph = TGraphErrors(P.size(), P.data(), G.data(), 0, 0);
     TSpline5 *kurie_spline = new TSpline5("kurie_spline", &kurie_graph);
     CustomizeGraph(kurie_graph, kRed, kRed, "Fermi Modified Function", "P", "G(Z, W)", 0, 2.5);
     c1.Clear();
     kurie_graph.Draw("AP");
     kurie_spline->Draw("same C");
-    c1.Update();
-    c1.SaveAs("graphs/CubicSplineInterpolation.png");
-    c1.WaitPrimitive();
+    SaveCanvas(c1, "graphs/CubicSplineInterpolation.png");
 
     // Kurie Plot for Open Talium
     gStyle->SetOptFit(1);
@@ -949,7 +935,6 @@ int main(){
 
     TF1 *kurie_fit = new TF1("kurie_fit", "[0] * x + [1]", 70, 720);
     kurie_graph_open_talium.Fit(kurie_fit, "RQ");
-    c1.Clear();
     kurie_graph_open_talium.Draw("AP");
     kurie_fit->Draw("same");
     c1.Update();
@@ -961,7 +946,9 @@ int main(){
     double b = kurie_fit->GetParameter(1);
     double s_ratio = sqrt(pow((s_b/m),2) + pow((pow(b/m, 2) * s_m), 2));
     double ratio = b/m;
+    double end_point_theoretical = 763.7;
     cout << "EndPoint for Open Talium: " << abs(ratio) << " +- " << s_ratio << endl;
+    cout << "Error Exp %" << (abs(ratio) - end_point_theoretical) / end_point_theoretical  * 100<< endl;
 
 
     // Kurie Plot for Closed Talium Recalibrated
@@ -995,5 +982,43 @@ int main(){
     double s_ratio2 = sqrt(pow((s_b2/m2),2) + pow((pow(b2/m2, 2) * s_m2), 2));
     double ratio2 = b2/m2;
     cout << "EndPoint for Closed Talium Recalibrated: " << abs(ratio2) << " +- " << s_ratio2 << endl;
+    cout << "Error Exp %" << (abs(ratio2) - end_point_theoretical) / end_point_theoretical  * 100<< endl;
+
+    // Kurie Plot for Cesium Kurie
+    TGraphErrors kurie_graph_cesium;
+    for(int i = 0; i < cesium_spectrum_reajusted.GetN(); i++){
+        double x = calibrationFunction->Eval(cesium_spectrum_reajusted.GetX()[i]);
+        double W = x / 511 + 1;
+        double P = sqrt(W * W - 1);
+        double G = kurie_spline->Eval(P);
+        double N = cesium_spectrum_reajusted.GetY()[i];
+        double y = 1/W * sqrt(N/G);
+
+        double set_point_error = 1/(W*W*W*W)*sqrt(N/G) * 0.5 * (0.1/0.511) * (0.1 / 0.511) + 1 / (4 * W * W * G);
+        kurie_graph_cesium.SetPoint(i, x, y);
+        kurie_graph_cesium.SetPointError(i, 0, set_point_error);
+    }
+
+    CustomizeGraph(kurie_graph_cesium, kRed, kRed, "Kurie Plot for Cesium", "Energy [keV]", "#frac{1}{W} #sqrt{#frac{N}{G}}", 0, 800, 2);
+
+    TF1 *kurie_fit3 = new TF1("kurie_fit3", "[0] * x + [1]", 280, 490);
+    kurie_graph_cesium.Fit(kurie_fit3, "RQ");
+    c1.Clear();
+    kurie_graph_cesium.Draw("AP");
+    kurie_fit3->Draw("same");
+    SaveCanvas(c1, "graphs/KuriePlotCesium.png");
+
+    double s_m3 = kurie_fit3->GetParError(0);
+    double s_b3 = kurie_fit3->GetParError(1);
+    double m3 = kurie_fit3->GetParameter(0);
+    double b3 = kurie_fit3->GetParameter(1);
+    double s_ratio3 = sqrt(pow((s_b3/m3),2) + pow((pow(b3/m3, 2) * s_m3), 2));
+    double ratio3 = b3/m3;
+    cout << "EndPoint for Cesium: " << abs(ratio3) << " +- " << s_ratio3 << endl;
+    cout << "Error Exp %" << (abs(ratio3) - end_point_theoretical) / end_point_theoretical  * 100<< endl;
+
+
+
+
 
 }
