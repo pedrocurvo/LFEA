@@ -1,8 +1,9 @@
-# include <iostream>
-# include <cmath>
-# include <vector>
-# include <string>
+#include <iostream>
 #include <cmath>
+#include <vector>
+#include <string>
+#include <cmath>
+#include <numeric>
 #include <TLegendEntry.h>
 #include "TCanvas.h"
 #include "TApplication.h"
@@ -17,7 +18,7 @@
 #include "TLatex.h"
 #include "ReadEth.h"
 #include "TSpline.h"
-
+#include <TError.h>
 using namespace std;
 
 void CustomizeGraph(TGraphErrors& graph, Color_t markerColor, Color_t lineColor, const std::string& title, const std::string& xAxisTitle, const std::string& yAxisTitle, double xMin = 0.0, double xMax = 300.0, double MarkerStyle = 1) {
@@ -93,6 +94,7 @@ double find_max(double min, double max, vector<pair<double, double>>& cal_1){
 int main(){
     TApplication A("A", nullptr, nullptr);
     TCanvas c1("c1", "c1", 1200, 800); 
+    gErrorIgnoreLevel = kWarning; // Ignore ROOT messages Info: Graph saved as ...
 
     //////////////////////////////// Ambiente ////////////////////////////////
     vector<pair<double, double>> ambiente;
@@ -108,6 +110,7 @@ int main(){
     
 
     //////////////////////////////// Bismuto ////////////////////////////////
+    gStyle->SetOptFit(kFALSE); 
     vector<pair<double, double>> bismuto;
     ReadFile("data/bismuto.dat", bismuto);
     double counts = 0;
@@ -149,7 +152,7 @@ int main(){
     gaus2->SetParLimits(2,0,2);
     gaus2->SetParLimits(3,0,300);
     //gaus2->SetParLimits(4,120,121.87);
-    //gaus2->SetParLimits(5,0,2.48);
+    gaus2->SetParLimits(5,0,1.23);
     gaus4->SetParameters(50,sixth_peak,1,20,sixth_peak+2,1);
 
 
@@ -173,6 +176,8 @@ int main(){
     c1.SaveAs("graphs/Bismuto_peaks.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+
+
 
     /// Find Number of Counts
     double counts_one = 0;
@@ -218,7 +223,7 @@ int main(){
     //////////////////////////////// Open Talium ////////////////////////////////
     vector<pair<double, double>> talium_open;
     ReadFile("data/talium_open.dat", talium_open);
-    counts = 0;
+    counts = 0; 
     for(int i=0; i<talium_open.size(); i++){
         counts += talium_open[i].second;
     }
@@ -330,7 +335,7 @@ int main(){
         talAl.SetPoint(i, taliumAl[i].first, taliumAl[i].second);
         talAl.SetPointError(i, 0, sqrt(taliumAl[i].second));
     }
-    CustomizeGraph(talAl, kBlue, kBlue, "Talio c placa de Aluminio", "Channels", "Counts");
+    CustomizeGraph(talAl, kBlue, kBlue, "Talio com placa de Aluminio", "Channels", "Counts");
     c1.Clear();
     talAl.Draw("APL");
     c1.Update();
@@ -346,7 +351,7 @@ int main(){
         cesAl.SetPoint(i, cesiumAl[i].first, cesiumAl[i].second);
         cesAl.SetPointError(i, 0, sqrt(cesiumAl[i].second));
     }
-    CustomizeGraph(cesAl, kGreen, kGreen, "Cesio c placa de Aluminio", "Channels", "Counts");
+    CustomizeGraph(cesAl, kGreen, kGreen, "Cesio com placa de Aluminio", "Channels", "Counts");
     c1.Clear();
     cesAl.Draw("APL");
     c1.Update();
@@ -362,7 +367,7 @@ int main(){
         bisAir.SetPoint(i, bismuthAir[i].first, bismuthAir[i].second);
         bisAir.SetPointError(i, 0, sqrt(bismuthAir[i].second));
     }
-    CustomizeGraph(bisAir, kBlue, kBlue, "Bismuto c ar", "Channels", "Counts");
+    CustomizeGraph(bisAir, kBlue, kBlue, "Bismuto com ar", "Channels", "Counts");
 
     c1.Clear();
     bisAir.Draw("APL");
@@ -379,8 +384,8 @@ int main(){
         bisCar.SetPoint(i, bismuthCar[i].first, bismuthCar[i].second);
         bisCar.SetPointError(i, 0, sqrt(bismuthCar[i].second));
     }
-    CustomizeGraph(bisCar, kOrange, kOrange, "Bismuto c cartao", "Channels", "Counts");
-
+    CustomizeGraph(bisCar, kOrange, kOrange, "Bismuto com cartao", "Channels", "Counts");
+    
     c1.Clear();
     bisCar.Draw("APL");
     c1.Update();
@@ -388,7 +393,6 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    // Find Peak for X Rays 
 
 
     //////////////////////////////// Bismuth + Acrylic ////////////////////////////////
@@ -409,14 +413,14 @@ int main(){
     gSystem->ProcessEvents();
 
 
-    //////////////////////////////// Bismuth with 3 ////////////////////////////////
+    //////////////////////////////// Bismuth with All 3 Materials ////////////////////////////////
     c1.Clear();
     leg.Clear();
     leg.SetHeader("Bismuto");
     leg.AddEntry(&bis, "Bismuto", "l");
-    leg.AddEntry(&bisAir, "Bismuto c ar", "l");
-    leg.AddEntry(&bisCar, "Bismuto c cartao", "l");
-    leg.AddEntry(&bisAcr, "Bismuto c acrilico", "l");
+    leg.AddEntry(&bisAir, "Bismuto com ar", "l");
+    leg.AddEntry(&bisCar, "Bismuto com cartao", "l");
+    leg.AddEntry(&bisAcr, "Bismuto com acrilico", "l");
     bis.Draw("APL");
     bisAir.Draw("PL");
     bisCar.Draw("PL");
@@ -429,7 +433,7 @@ int main(){
 
     //////////////////////////////// Calibration Function ////////////////////////////////
     // Using Bismuth Peaks 
-    gStyle->SetOptFit(111);
+    gStyle->SetOptFit(kTRUE);
     double first_theoretical = 481.694;
     double second_theoretical = 555.251;
     double third_theoretical = 975.655; 
@@ -454,13 +458,14 @@ int main(){
     calibrationFunction->SetParameter(1, 1);
     calibrationFunction->SetParName(0, "intercept");
     calibrationFunction->SetParName(1, "slope");
-    calibration.Fit("calibrationFunction", "R");
+    calibration.Fit("calibrationFunction", "RQ");
     c1.Clear();
     calibration.Draw("APL");
     c1.Update();
     c1.SaveAs("graphs/Calibration.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    cout << "Pico do Césio Experimental: " << calibrationFunction->Eval(cesium_peak_channels) << endl;
 
     // inverse calibration
     c1.Clear();
@@ -474,7 +479,7 @@ int main(){
     TF1 f = TF1("f", "[0]*x+[1]", 0, 1200);
     f.SetParName(0, "slope");
     f.SetParName(1, "intercept");
-    inverseCalibration.Fit("f", "R");
+    inverseCalibration.Fit("f", "RQ");
     
     inverseCalibration.Draw("APL");
     f.Draw("same");
@@ -483,8 +488,89 @@ int main(){
     c1.SaveAs("graphs/InverseCalibration.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
+    gStyle->SetOptFit(kFALSE); 
 
+    //////////////////////////////// Resolução ////////////////////////////////
 
+    //Os vetores vão ter 6 valores, relativos aos picos K, L, M, K, L, M
+    vector<double> centroides = {
+        calibrationFunction->Eval(gaus1->GetParameter(1)),
+        calibrationFunction->Eval(gaus2->GetParameter(1)),
+        calibrationFunction->Eval(gaus2->GetParameter(4)),
+        calibrationFunction->Eval(gaus3->GetParameter(1)),
+        calibrationFunction->Eval(gaus4->GetParameter(1)),
+        calibrationFunction->Eval(gaus4->GetParameter(4)),
+    };
+    vector<double> erro_centroides = {
+        calibrationFunction->Eval(gaus1->GetParError(1)),
+        calibrationFunction->Eval(gaus2->GetParError(1)),
+        calibrationFunction->Eval(gaus2->GetParError(4)),
+        calibrationFunction->Eval(gaus3->GetParError(1)),
+        calibrationFunction->Eval(gaus4->GetParError(1)),
+        calibrationFunction->Eval(gaus4->GetParError(4)),
+    };
+    /*
+    vector<double> sigma = {
+        calibrationFunction->GetParameter(1)*gaus1->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(5),
+        calibrationFunction->GetParameter(1)*gaus3->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(5)
+    };
+    vector<double> erro_sigma = {
+        calibrationFunction->GetParameter(1)*gaus1->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus2->GetParError(5),
+        calibrationFunction->GetParameter(1)*gaus3->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(2),
+        calibrationFunction->GetParameter(1)*gaus4->GetParError(5)
+    };
+    */
+    vector<double> sigma = {
+        calibrationFunction->GetParameter(1)*1.29,
+        calibrationFunction->GetParameter(1)*1.25,
+        calibrationFunction->GetParameter(1)*1.17,
+        calibrationFunction->GetParameter(1)*0.89,
+        calibrationFunction->GetParameter(1)*0.84,
+        calibrationFunction->GetParameter(1)*0.65
+    };
+    vector<double> erro_sigma = {
+        calibrationFunction->GetParameter(1)*0.05,
+        calibrationFunction->GetParameter(1)*0.11,
+        calibrationFunction->GetParameter(1)*0.07,
+        calibrationFunction->GetParameter(1)*0.08,
+        calibrationFunction->GetParameter(1)*0.13,
+        calibrationFunction->GetParameter(1)*0.12
+    };
+    
+    gStyle->SetOptFit(kTRUE);
+    TGraphErrors G_resolucao;
+    for (int i = 0; i < 6; i++){
+        cout << "Centroide: " << centroides[i]  << " +- " << erro_centroides[i] << endl;
+        cout << "Sigma [CHN]: " << sigma[i]/calibrationFunction->GetParameter(1) << " +- " << erro_sigma[i]/calibrationFunction->GetParameter(1) << endl;
+        cout << "FWHM: " << sigma[i]*2.355 << " +- " << erro_sigma[i]*2.355 << endl;
+        cout << "R: " << sigma[i]*2.355/centroides[i] << " +- " << abs(471 / 200 / centroides[i]) * erro_sigma[i] + abs(sigma[i] * -471 / 200 / (centroides[i]*centroides[i])) * erro_centroides[i] << endl;
+        cout << "------------" << endl;
+        G_resolucao.SetPoint(i, centroides[i], sigma[i]*2.355/centroides[i]);
+        G_resolucao.SetPointError(i, erro_centroides[i], abs(471 / 200 / centroides[i]) * erro_sigma[i] + abs(sigma[i] * -471 / 200 / (centroides[i]*centroides[i])) * erro_centroides[i]);
+    }
+    CustomizeGraph(G_resolucao, kRed, kRed, "Dependencia da Resolucao com a Energia", "Energia [keV]", "Resolucao");
+    TF1 f_resolucao = TF1("f_resolucao", "[0]/sqrt(x)+[1]", 0, 1200);
+    f_resolucao.SetParName(0, "slope");
+    f_resolucao.SetParName(1, "intercept");
+    G_resolucao.Fit("f_resolucao", "R");
+
+    c1.Clear();
+    G_resolucao.Draw("AP");
+    f_resolucao.Draw("same");
+    c1.Update();
+    c1.SaveAs("graphs/Resolucao.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    gStyle->SetOptFit(kFALSE);
+
+    ///////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////// Find Material with Cesium ////////////////////////////////
     double difference = abs(cesium_peak_theoretical_energy - calibrationFunction->Eval(cesium_peak_channels));
@@ -519,7 +605,6 @@ int main(){
 
     // try integration simple
     double integral = 0;
-    double tentauva = 0;
     for(int i = 0; i < KineticalEnergy.size(); i++){
         if(KineticalEnergy[i]*1000 > calibrationFunction->Eval(cesium_peak_channels) && KineticalEnergy[i]*1000 < cesium_peak_theoretical_energy){
             double dx = KineticalEnergy[i] - KineticalEnergy[i - 1];
@@ -599,6 +684,7 @@ int main(){
 
     // Reajust talium spectrum
     double thickness2 = (integral2 - integral3) / density;
+    vector<pair<double, double>> reaj_talium_spectrum;
     TGraphErrors talium_spectrum_reajusted;
     double first2 = 0;
     double energy2 = 0;
@@ -614,6 +700,7 @@ int main(){
             }
             
         }
+        reaj_talium_spectrum.push_back(make_pair(energy2, talium[i].second));
         talium_spectrum_reajusted.SetPoint(i, energy2, talium[i].second);
     }
     CustomizeGraph(talium_spectrum_reajusted, kBlack, kBlack, "Talium Spectrum Reajusted", "Channels", "Counts", 0, 300);
@@ -633,7 +720,37 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    ////////////////////////////// Derivative of Talium Spectrum //////////////////////////////
+    /////////////////////////////////// Derivative of Closed Talium
+    vector<pair<double, long double> > end_point_closed = calculateDerivative(reaj_talium_spectrum);
+    TGraphErrors talium_spectrum_derivative_closed;
+    for (int i = 0; i < end_point_closed.size(); i++){
+        talium_spectrum_derivative_closed.SetPoint(i, end_point_closed[i].first, end_point_closed[i].second);
+        talium_spectrum_derivative_closed.SetPointError(i, 0, sqrt(end_point_closed[i].second));
+    }
+    CustomizeGraph(talium_spectrum_derivative_closed, kBlack, kBlack, "Talium Spectrum Derivative Closed", "Channels", "Counts", 0, 300);
+
+    c1.Clear();
+    talium_spectrum_derivative_closed.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Talium_Spectrum_Derivative_Closed.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
+    double error_end_point_closed = 0.001;
+    double error_end_point_open = 0.001;
+    double value_end_point_closed = 0;
+    for(int i = 0; i < end_point_closed.size(); i++){
+        if(abs(end_point_closed[i].second) < error_end_point_closed && end_point_closed[i].first < 167){
+            value_end_point_closed = end_point_closed[i].first;
+            if(abs(end_point_closed[i].second) > 0){
+
+            value_end_point_closed = end_point_closed[i].first;
+            }
+            //break;
+        }
+    }
+    cout << "Value end point closed: " << calibrationFunction->Eval(value_end_point_closed) << endl;
+
+    ////////////////////////////// Derivative of Talium Open Spectrum //////////////////////////////
     vector<pair<double, double> > der_tal;
     ReadFile("data/talium_open_Smoothed_Smoothed.dat", der_tal);
     vector<pair<double, long double> > end_point = calculateDerivative(der_tal);
@@ -670,7 +787,7 @@ int main(){
     ajuste->SetParameter(2, 167);
     ajuste->SetLineColor(kBlack);
 
-    talium_spectrum_derivative.Fit("ajuste", "R");
+    talium_spectrum_derivative.Fit("ajuste", "RQ");
     c1.Clear();
     talium_spectrum_derivative.Draw("APL");
     ajuste->Draw("same");
@@ -684,6 +801,7 @@ int main(){
 
 
     //////////////// Strontium and Bismuth Spectrum ///////////////////////
+    gStyle->SetOptFit(kFALSE);
     c1.Clear();
     TLegend *leg_str_bis = new TLegend(0.65, 0.65, 0.85, 0.75);
     leg_str_bis->SetHeader("Strontium and Bismuth Spectrum", "C");
@@ -704,8 +822,8 @@ int main(){
     gaus_strontium.SetParameter(0, 600);
     gaus_bismuth.SetParameter(1, 23);
     gaus_strontium.SetParameter(1, 23);
-    bis.Fit("gaus_bismuth", "RL");
-    str.Fit("gaus_strontium", "RL");
+    bis.Fit("gaus_bismuth", "RQ");
+    str.Fit("gaus_strontium", "RQ");
     double mean_bismuth = gaus_bismuth.GetParameter(1);
     double mean_strontium = gaus_strontium.GetParameter(1);
     double sigma_bismuth = gaus_bismuth.GetParameter(2);
@@ -741,14 +859,7 @@ int main(){
         silicon_graph_normal.SetPoint(i, KineticalEnergySilicon[i], TotalSilicon[i]);
         silicon_graph_normal.SetPointError(i, 0, 0);
     }
-    silicon_graph_normal.SetMarkerStyle(1);
-    silicon_graph_normal.SetMarkerColor(kRed);
-    silicon_graph_normal.SetLineColor(kRed);
-    silicon_graph_normal.SetTitle("Silicon Normal");
-    silicon_graph_normal.GetYaxis()->SetTitle("Total Stopping Power [MeV cm^{2} g^{-1}]");
-    silicon_graph_normal.GetXaxis()->SetTitle("Kinetic Energy [MeV]");
-    silicon_graph_normal.GetXaxis()->CenterTitle();
-    silicon_graph_normal.GetYaxis()->CenterTitle();
+    CustomizeGraph(silicon_graph_normal, kRed, kRed, "Silicon Normal", "Kinetic Energy [MeV]", "Total Stopping Power [MeV cm^{2} g^{-1}]", 0, 1000);
     c1.SetLogx();
     c1.SetLogy();
     c1.Clear();
@@ -766,6 +877,20 @@ int main(){
         }
     }
     cout << "Silicon Thickness: " << mean_channels_energy / 1000/ (testar / control * silicon_density) * 10000 << " microns" << endl;
+
+    //////////////// TGraph 1/Stopping Power * density ///////////////////////
+    TGraphErrors silicon_graph_normal_density;
+    for (int i = 0; i < KineticalEnergySilicon.size(); i++){
+        silicon_graph_normal_density.SetPoint(i, KineticalEnergySilicon[i], 1 / TotalSilicon[i] / silicon_density);
+        silicon_graph_normal_density.SetPointError(i, 0, 0);
+    }
+    CustomizeGraph(silicon_graph_normal_density, kRed, kRed, "Silicon Normal", "Kinetic Energy [MeV]", "1 / Stopping Power * Density [cm MeV^{-1}]");
+    c1.Clear();
+    silicon_graph_normal_density.Draw("APL");
+    c1.Update();
+    c1.SaveAs("graphs/Silicon_1_Stopping_Power_Density.png");
+    c1.WaitPrimitive();
+    gSystem->ProcessEvents();
     
     
     
@@ -774,14 +899,7 @@ int main(){
         silicon_graph.SetPoint(i, KineticalEnergySilicon[i], CSDASilicon[i] / silicon_density);
         silicon_graph.SetPointError(i, 0, 0);
     }
-    silicon_graph.SetMarkerStyle(1);
-    silicon_graph.SetMarkerColor(kRed);
-    silicon_graph.SetLineColor(kRed);
-    silicon_graph.SetTitle("Silicon CSDA");
-    silicon_graph.GetXaxis()->SetTitle("Kinetic Energy [MeV]");
-    silicon_graph.GetYaxis()->SetTitle("CSDA [cm]");
-    silicon_graph.GetXaxis()->CenterTitle();
-    silicon_graph.GetYaxis()->CenterTitle();
+    CustomizeGraph(silicon_graph, kRed, kRed, "Silicon CSDA", "Kinetic Energy [MeV]", "CSDA [cm]", 0, 1000);
     c1.Clear();
     silicon_graph.Draw("APL");
     c1.Update();
@@ -802,15 +920,7 @@ int main(){
     }
 
     TSpline5 *kurie_spline = new TSpline5("kurie_spline", &kurie_graph);
-
-    kurie_graph.SetMarkerStyle(1);
-    kurie_graph.SetMarkerColor(kRed);
-    kurie_graph.SetLineColor(kRed);
-    kurie_graph.SetTitle("Fermi Modified Function");
-    kurie_graph.GetXaxis()->SetTitle("P");
-    kurie_graph.GetYaxis()->SetTitle("G(Z, W)");
-    kurie_graph.GetXaxis()->CenterTitle();
-    kurie_graph.GetYaxis()->CenterTitle();
+    CustomizeGraph(kurie_graph, kRed, kRed, "Fermi Modified Function", "P", "G(Z, W)", 0, 2.5);
     c1.Clear();
     kurie_graph.Draw("AP");
     kurie_spline->Draw("same C");
@@ -819,6 +929,7 @@ int main(){
     c1.WaitPrimitive();
 
     // Kurie Plot for Open Talium
+    gStyle->SetOptFit(1);
     TGraphErrors kurie_graph_open_talium;
     for(int i = 0; i < talium_open.size(); i++){
         double x = calibrationFunction->Eval(talium_open[i].first);
@@ -833,23 +944,24 @@ int main(){
         kurie_graph_open_talium.SetPointError(i, 0, set_point_error);
     }
 
-    kurie_graph_open_talium.SetMarkerStyle(2);
-    kurie_graph_open_talium.SetMarkerColor(kRed);
-    kurie_graph_open_talium.SetLineColor(kRed);
-    kurie_graph_open_talium.SetTitle("Kurie Plot for Open Talium");
-    kurie_graph_open_talium.GetXaxis()->SetTitle("Energy [keV]");
-    kurie_graph_open_talium.GetYaxis()->SetTitle("?");
-    kurie_graph_open_talium.GetXaxis()->CenterTitle();
-    kurie_graph_open_talium.GetYaxis()->CenterTitle();
-    kurie_graph_open_talium.GetXaxis()->SetRangeUser(0, 800);
+    CustomizeGraph(kurie_graph_open_talium, kRed, kRed, "Kurie Plot for Open Talium", "Energy [keV]", "#frac{1}{W} #sqrt{#frac{N}{G}}"
+, 0, 800);
+
     TF1 *kurie_fit = new TF1("kurie_fit", "[0] * x + [1]", 70, 720);
-    kurie_graph_open_talium.Fit(kurie_fit, "RL");
+    kurie_graph_open_talium.Fit(kurie_fit, "RQ");
     c1.Clear();
     kurie_graph_open_talium.Draw("AP");
     kurie_fit->Draw("same");
     c1.Update();
     c1.SaveAs("graphs/KuriePlotOpenTalium.png");
     c1.WaitPrimitive();
+    double s_m = kurie_fit->GetParError(0);
+    double s_b = kurie_fit->GetParError(1);
+    double m = kurie_fit->GetParameter(0);
+    double b = kurie_fit->GetParameter(1);
+    double s_ratio = sqrt(pow((s_b/m),2) + pow((pow(b/m, 2) * s_m), 2));
+    double ratio = b/m;
+    cout << "EndPoint for Open Talium: " << abs(ratio) << " +- " << s_ratio << endl;
 
 
     // Kurie Plot for Closed Talium Recalibrated
@@ -867,33 +979,21 @@ int main(){
         kurie_graph_closed_talium.SetPointError(i, 0, set_point_error);
     }
 
-    CustomizeGraph(kurie_graph_closed_talium, kRed, kRed, "Kurie Plot for Closed Talium", "Energy [keV]", "?", 0, 800, 2);
+    CustomizeGraph(kurie_graph_closed_talium, kRed, kRed, "Kurie Plot for Closed Talium", "Energy [keV]", "#frac{1}{W} #sqrt{#frac{N}{G}}", 0, 800, 2);
 
     TF1 *kurie_fit2 = new TF1("kurie_fit2", "[0] * x + [1]", 300, 780);
-    kurie_graph_closed_talium.Fit(kurie_fit2, "RL");
+    kurie_graph_closed_talium.Fit(kurie_fit2, "RQ");
     c1.Clear();
     kurie_graph_closed_talium.Draw("AP");
     kurie_fit2->Draw("same");
     SaveCanvas(c1, "graphs/KuriePlotClosedTaliumReajusted.png");
 
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    double s_m2 = kurie_fit2->GetParError(0);
+    double s_b2 = kurie_fit2->GetParError(1);
+    double m2 = kurie_fit2->GetParameter(0);
+    double b2 = kurie_fit2->GetParameter(1);
+    double s_ratio2 = sqrt(pow((s_b2/m2),2) + pow((pow(b2/m2, 2) * s_m2), 2));
+    double ratio2 = b2/m2;
+    cout << "EndPoint for Closed Talium Recalibrated: " << abs(ratio2) << " +- " << s_ratio2 << endl;
 
 }
