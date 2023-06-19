@@ -335,7 +335,7 @@ int main(){
         talAl.SetPoint(i, taliumAl[i].first, taliumAl[i].second);
         talAl.SetPointError(i, 0, sqrt(taliumAl[i].second));
     }
-    CustomizeGraph(talAl, kBlue, kBlue, "Talio c placa de Aluminio", "Channels", "Counts");
+    CustomizeGraph(talAl, kBlue, kBlue, "Talio com placa de Aluminio", "Channels", "Counts");
     c1.Clear();
     talAl.Draw("APL");
     c1.Update();
@@ -351,7 +351,7 @@ int main(){
         cesAl.SetPoint(i, cesiumAl[i].first, cesiumAl[i].second);
         cesAl.SetPointError(i, 0, sqrt(cesiumAl[i].second));
     }
-    CustomizeGraph(cesAl, kGreen, kGreen, "Cesio c placa de Aluminio", "Channels", "Counts");
+    CustomizeGraph(cesAl, kGreen, kGreen, "Cesio com placa de Aluminio", "Channels", "Counts");
     c1.Clear();
     cesAl.Draw("APL");
     c1.Update();
@@ -367,7 +367,7 @@ int main(){
         bisAir.SetPoint(i, bismuthAir[i].first, bismuthAir[i].second);
         bisAir.SetPointError(i, 0, sqrt(bismuthAir[i].second));
     }
-    CustomizeGraph(bisAir, kBlue, kBlue, "Bismuto c ar", "Channels", "Counts");
+    CustomizeGraph(bisAir, kBlue, kBlue, "Bismuto com ar", "Channels", "Counts");
 
     c1.Clear();
     bisAir.Draw("APL");
@@ -384,7 +384,7 @@ int main(){
         bisCar.SetPoint(i, bismuthCar[i].first, bismuthCar[i].second);
         bisCar.SetPointError(i, 0, sqrt(bismuthCar[i].second));
     }
-    CustomizeGraph(bisCar, kOrange, kOrange, "Bismuto c cartao", "Channels", "Counts");
+    CustomizeGraph(bisCar, kOrange, kOrange, "Bismuto com cartao", "Channels", "Counts");
     
     c1.Clear();
     bisCar.Draw("APL");
@@ -393,7 +393,6 @@ int main(){
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
 
-    // Find Peak for X Rays 
 
 
     //////////////////////////////// Bismuth + Acrylic ////////////////////////////////
@@ -414,14 +413,14 @@ int main(){
     gSystem->ProcessEvents();
 
 
-    //////////////////////////////// Bismuth with 3 ////////////////////////////////
+    //////////////////////////////// Bismuth with All 3 Materials ////////////////////////////////
     c1.Clear();
     leg.Clear();
     leg.SetHeader("Bismuto");
     leg.AddEntry(&bis, "Bismuto", "l");
-    leg.AddEntry(&bisAir, "Bismuto c ar", "l");
-    leg.AddEntry(&bisCar, "Bismuto c cartao", "l");
-    leg.AddEntry(&bisAcr, "Bismuto c acrilico", "l");
+    leg.AddEntry(&bisAir, "Bismuto com ar", "l");
+    leg.AddEntry(&bisCar, "Bismuto com cartao", "l");
+    leg.AddEntry(&bisAcr, "Bismuto com acrilico", "l");
     bis.Draw("APL");
     bisAir.Draw("PL");
     bisCar.Draw("PL");
@@ -466,7 +465,7 @@ int main(){
     c1.SaveAs("graphs/Calibration.png");
     c1.WaitPrimitive();
     gSystem->ProcessEvents();
-    cout << "Bnana" << calibrationFunction->Eval(cesium_peak_channels) << endl;
+    cout << "Pico do Césio Experimental: " << calibrationFunction->Eval(cesium_peak_channels) << endl;
 
     // inverse calibration
     c1.Clear();
@@ -606,7 +605,6 @@ int main(){
 
     // try integration simple
     double integral = 0;
-    double tentauva = 0;
     for(int i = 0; i < KineticalEnergy.size(); i++){
         if(KineticalEnergy[i]*1000 > calibrationFunction->Eval(cesium_peak_channels) && KineticalEnergy[i]*1000 < cesium_peak_theoretical_energy){
             double dx = KineticalEnergy[i] - KineticalEnergy[i - 1];
@@ -861,14 +859,7 @@ int main(){
         silicon_graph_normal.SetPoint(i, KineticalEnergySilicon[i], TotalSilicon[i]);
         silicon_graph_normal.SetPointError(i, 0, 0);
     }
-    silicon_graph_normal.SetMarkerStyle(1);
-    silicon_graph_normal.SetMarkerColor(kRed);
-    silicon_graph_normal.SetLineColor(kRed);
-    silicon_graph_normal.SetTitle("Silicon Normal");
-    silicon_graph_normal.GetYaxis()->SetTitle("Total Stopping Power [MeV cm^{2} g^{-1}]");
-    silicon_graph_normal.GetXaxis()->SetTitle("Kinetic Energy [MeV]");
-    silicon_graph_normal.GetXaxis()->CenterTitle();
-    silicon_graph_normal.GetYaxis()->CenterTitle();
+    CustomizeGraph(silicon_graph_normal, kRed, kRed, "Silicon Normal", "Kinetic Energy [MeV]", "Total Stopping Power [MeV cm^{2} g^{-1}]", 0, 1000);
     c1.SetLogx();
     c1.SetLogy();
     c1.Clear();
@@ -908,14 +899,7 @@ int main(){
         silicon_graph.SetPoint(i, KineticalEnergySilicon[i], CSDASilicon[i] / silicon_density);
         silicon_graph.SetPointError(i, 0, 0);
     }
-    silicon_graph.SetMarkerStyle(1);
-    silicon_graph.SetMarkerColor(kRed);
-    silicon_graph.SetLineColor(kRed);
-    silicon_graph.SetTitle("Silicon CSDA");
-    silicon_graph.GetXaxis()->SetTitle("Kinetic Energy [MeV]");
-    silicon_graph.GetYaxis()->SetTitle("CSDA [cm]");
-    silicon_graph.GetXaxis()->CenterTitle();
-    silicon_graph.GetYaxis()->CenterTitle();
+    CustomizeGraph(silicon_graph, kRed, kRed, "Silicon CSDA", "Kinetic Energy [MeV]", "CSDA [cm]", 0, 1000);
     c1.Clear();
     silicon_graph.Draw("APL");
     c1.Update();
@@ -936,15 +920,7 @@ int main(){
     }
 
     TSpline5 *kurie_spline = new TSpline5("kurie_spline", &kurie_graph);
-
-    kurie_graph.SetMarkerStyle(1);
-    kurie_graph.SetMarkerColor(kRed);
-    kurie_graph.SetLineColor(kRed);
-    kurie_graph.SetTitle("Fermi Modified Function");
-    kurie_graph.GetXaxis()->SetTitle("P");
-    kurie_graph.GetYaxis()->SetTitle("G(Z, W)");
-    kurie_graph.GetXaxis()->CenterTitle();
-    kurie_graph.GetYaxis()->CenterTitle();
+    CustomizeGraph(kurie_graph, kRed, kRed, "Fermi Modified Function", "P", "G(Z, W)", 0, 2.5);
     c1.Clear();
     kurie_graph.Draw("AP");
     kurie_spline->Draw("same C");
@@ -953,6 +929,7 @@ int main(){
     c1.WaitPrimitive();
 
     // Kurie Plot for Open Talium
+    gStyle->SetOptFit(1);
     TGraphErrors kurie_graph_open_talium;
     for(int i = 0; i < talium_open.size(); i++){
         double x = calibrationFunction->Eval(talium_open[i].first);
@@ -967,15 +944,9 @@ int main(){
         kurie_graph_open_talium.SetPointError(i, 0, set_point_error);
     }
 
-    kurie_graph_open_talium.SetMarkerStyle(2);
-    kurie_graph_open_talium.SetMarkerColor(kRed);
-    kurie_graph_open_talium.SetLineColor(kRed);
-    kurie_graph_open_talium.SetTitle("Kurie Plot for Open Talium");
-    kurie_graph_open_talium.GetXaxis()->SetTitle("Energy [keV]");
-    kurie_graph_open_talium.GetYaxis()->SetTitle("?");
-    kurie_graph_open_talium.GetXaxis()->CenterTitle();
-    kurie_graph_open_talium.GetYaxis()->CenterTitle();
-    kurie_graph_open_talium.GetXaxis()->SetRangeUser(0, 800);
+    CustomizeGraph(kurie_graph_open_talium, kRed, kRed, "Kurie Plot for Open Talium", "Energy [keV]", "#frac{1}{W} #sqrt{#frac{N}{G}}"
+, 0, 800);
+
     TF1 *kurie_fit = new TF1("kurie_fit", "[0] * x + [1]", 70, 720);
     kurie_graph_open_talium.Fit(kurie_fit, "RQ");
     c1.Clear();
@@ -984,6 +955,13 @@ int main(){
     c1.Update();
     c1.SaveAs("graphs/KuriePlotOpenTalium.png");
     c1.WaitPrimitive();
+    double s_m = kurie_fit->GetParError(0);
+    double s_b = kurie_fit->GetParError(1);
+    double m = kurie_fit->GetParameter(0);
+    double b = kurie_fit->GetParameter(1);
+    double s_ratio = sqrt(pow((s_b/m),2) + pow((pow(b/m, 2) * s_m), 2));
+    double ratio = b/m;
+    cout << "EndPoint for Open Talium: " << abs(ratio) << " +- " << s_ratio << endl;
 
 
     // Kurie Plot for Closed Talium Recalibrated
@@ -1001,7 +979,7 @@ int main(){
         kurie_graph_closed_talium.SetPointError(i, 0, set_point_error);
     }
 
-    CustomizeGraph(kurie_graph_closed_talium, kRed, kRed, "Kurie Plot for Closed Talium", "Energy [keV]", "?", 0, 800, 2);
+    CustomizeGraph(kurie_graph_closed_talium, kRed, kRed, "Kurie Plot for Closed Talium", "Energy [keV]", "#frac{1}{W} #sqrt{#frac{N}{G}}", 0, 800, 2);
 
     TF1 *kurie_fit2 = new TF1("kurie_fit2", "[0] * x + [1]", 300, 780);
     kurie_graph_closed_talium.Fit(kurie_fit2, "RQ");
@@ -1010,24 +988,12 @@ int main(){
     kurie_fit2->Draw("same");
     SaveCanvas(c1, "graphs/KuriePlotClosedTaliumReajusted.png");
 
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    double s_m2 = kurie_fit2->GetParError(0);
+    double s_b2 = kurie_fit2->GetParError(1);
+    double m2 = kurie_fit2->GetParameter(0);
+    double b2 = kurie_fit2->GetParameter(1);
+    double s_ratio2 = sqrt(pow((s_b2/m2),2) + pow((pow(b2/m2, 2) * s_m2), 2));
+    double ratio2 = b2/m2;
+    cout << "EndPoint for Closed Talium Recalibrated: " << abs(ratio2) << " +- " << s_ratio2 << endl;
 
 }
